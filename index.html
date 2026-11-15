@@ -166,6 +166,8 @@ a{color:var(--court)}
 .facts b{display:block;font:800 clamp(34px,5.4vw,58px)/1 var(--display);font-stretch:110%;font-variant-numeric:tabular-nums}
 .facts b i{font-style:normal;font-size:.5em;font-weight:600;color:var(--ball);margin-left:4px}
 .facts span{display:block;font-size:14px;color:var(--hero-dim);margin-top:8px;max-width:30ch}
+.ai{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font:500 12.5px/1.4 var(--mono);color:var(--hero-fg);border:1px solid var(--hero-line);border-radius:4px;padding:7px 10px}
+.ai::before{content:"";width:8px;height:8px;background:var(--ball);transform:rotate(45deg);flex:none}
 .net{height:30px;border-top:7px solid var(--hero-fg);background-image:linear-gradient(var(--hero-line) 1px,transparent 1px),linear-gradient(90deg,var(--hero-line) 1px,transparent 1px);background-size:13px 13px;-webkit-mask-image:linear-gradient(#000,transparent);mask-image:linear-gradient(#000,transparent)}
 @media (max-width:640px){.facts{grid-template-columns:1fr;gap:16px}.facts div{display:grid;grid-template-columns:120px 1fr;align-items:center;gap:12px}.facts span{margin:0}}
 
@@ -336,6 +338,7 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
     <p class="kick">Säären rasituskipu · lentopalloilijan näkökulma</p>
     <h1>Penikka&shy;tauti<span>Kun hyppykuorma ylittää sen, minkä sääri ehtii korjata</span></h1>
     <p class="lede">Penikkatauti on arkinen yleisnimi usealle eri vaivalle. Useimmiten kyse on sääriluun sisäreunan rasitusoireyhtymästä (MTSS) tai lihasaition paineen noususta (CECS). Hoitamattomana luun rasitus voi edetä rasitusmurtumaksi. Näiden erottaminen ratkaisee, miten ja kuinka kauan kuntoudutaan.</p>
+    <p class="ai">Tekoälyn tuottama sivu: tiedonhaku, sisältö ja toteutus</p>
     <div class="facts">
       <div><b>6<i>× paino</i></b><span>Iskulyönnin alastulon pystyvoima kovalla lattialla yksittäisillä pelaajilla</span></div>
       <div><b>121<i>hyppyä</i></b><span>Passarin keskimääräinen harjoitus ammattilaiskauden seurannassa</span></div>
@@ -871,6 +874,7 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
 </main>
 
 <footer><div class="wrap">
+  <p><b>Tekoälyllä tuotettu.</b> Tämän sivun tiedot on haettu, sisältö luotu ja sivusto kehitetty tekoälyllä. Tiedoissa voi olla virheitä tai puutteita, joten tarkista tärkeät asiat alkuperäisistä lähteistä.</p>
   <p><b>Tämä sivu on tarkoitettu vain tiedoksi.</b> Käänny lääketieteellisen neuvon tai diagnoosin saamiseksi ammattilaisen puoleen.</p>
   <p>Anatomiset kuvat ovat kaaviomaisia. Luvut perustuvat sivun pohjana olleeseen tutkimuskoosteeseen; kaavakuviksi merkityt kuvat havainnollistavat periaatetta eivätkä esitä mittaustuloksia.</p>
 </div></footer>
