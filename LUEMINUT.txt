@@ -1,0 +1,13 @@
+Penikkatauti lentopalloilijalla
+===============================
+
+Avaa index.html selaimessa (kaksoisnapsautus). Asennusta ei tarvita.
+
+- Sivu toimii kokonaan ilman internetyhteyttä. Fontit ovat mukana kansiossa
+  fonts, eikä sivu hae mitään verkosta. Pidä index.html ja fonts-kansio
+  samassa paikassa.
+- Paluun portaiden rastit tallentuvat vain siihen selaimeen, jossa ne tehdään.
+- Sivun voi viedä sellaisenaan mille tahansa verkkopalvelimelle.
+
+Sivu on tarkoitettu vain tiedoksi. Käänny lääketieteellisen neuvon tai
+diagnoosin saamiseksi ammattilaisen puoleen.
