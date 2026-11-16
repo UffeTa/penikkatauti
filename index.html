@@ -169,7 +169,7 @@ a{color:var(--court)}
 .ai{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font:500 12.5px/1.4 var(--mono);color:var(--hero-fg);border:1px solid var(--hero-line);border-radius:4px;padding:7px 10px}
 .ai::before{content:"";width:8px;height:8px;background:var(--ball);transform:rotate(45deg);flex:none}
 .net{height:30px;border-top:7px solid var(--hero-fg);background-image:linear-gradient(var(--hero-line) 1px,transparent 1px),linear-gradient(90deg,var(--hero-line) 1px,transparent 1px);background-size:13px 13px;-webkit-mask-image:linear-gradient(#000,transparent);mask-image:linear-gradient(#000,transparent)}
-@media (max-width:640px){.facts{grid-template-columns:1fr;gap:16px}.facts div{display:grid;grid-template-columns:120px 1fr;align-items:center;gap:12px}.facts span{margin:0}}
+@media (max-width:640px){.facts{grid-template-columns:1fr;gap:16px}.facts div{display:grid;align-items:center}.facts span{margin:0}}
 
 /* nav */
 nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line)}
@@ -337,6 +337,43 @@ table.kg td.buy a{font-weight:500;white-space:nowrap}
 table.kg td small.out{color:var(--crit);font-weight:500}
 table.kg td.buy .na{color:var(--muted);font-size:13.5px}
 #kg-uutta{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:14px}
+
+/* ---------- puhelinleveys ---------- */
+.axis i,.phases{font-size:12px}
+.pill,.cond .tag,dl.kv dt,.dx dt{font-size:12px}
+nav a{padding:12px 10px}
+.src summary{padding:10px 0}
+.progress button{padding:10px 14px}
+.step label{padding:4px 0}
+table.kg td.buy a{display:inline-block;padding:4px 0}
+.rb>span.fl{left:auto;right:100%;margin:0 7px 0 0}
+.rb>span.in{left:auto;right:6px;margin:0;color:#fff}
+@media (max-width:640px){
+  .facts div{grid-template-columns:1fr;gap:4px}
+  .row{grid-template-columns:1fr;gap:5px}
+  .row.axis>span{display:none}
+  .row.axis .track::after{content:attr(data-u);position:absolute;right:0;top:18px;font:400 11.5px var(--mono);color:var(--muted)}
+  .row.axis{margin-bottom:14px}
+  .plate{padding:16px}
+  .legfig{padding:10px 0 10px}
+  .lbl,.zl{font-size:16px}
+  .lbl-s{font-size:14px}
+  .xl{font-size:13px}
+  .scroll{overflow:visible}
+  table.kg,table.cmp{min-width:0;display:block}
+  table.kg thead,table.cmp thead{display:none}
+  table.kg tbody,table.cmp tbody{display:block}
+  table.kg tr{display:grid;grid-template-columns:38px minmax(0,1fr);gap:8px 10px;padding:16px 14px;border-bottom:1px solid var(--line)}
+  table.kg tr:last-child{border-bottom:0}
+  table.kg td{display:block;padding:0;border:0;grid-column:2;min-width:0}
+  table.kg td.rank{grid-column:1;grid-row:1 / span 5;width:auto}
+  table.kg td[data-l]::before,table.cmp td[data-l]::before{content:attr(data-l);display:block;font:500 11.5px/1.5 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  table.kg td.buy a{white-space:normal;padding:6px 0}
+  table.cmp tr{display:block;padding:14px;border-bottom:1px solid var(--line)}
+  table.cmp tr:last-child{border-bottom:0}
+  table.cmp tbody th{display:block;width:auto;padding:0 0 8px;border:0;font:700 17px/1.2 var(--display);letter-spacing:0;text-transform:none;color:var(--ink)}
+  table.cmp td{display:block;padding:6px 0;border:0}
+}
 footer{margin-top:56px;border-top:1px solid var(--line)}
 footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display:grid;gap:8px}
 </style>
@@ -406,44 +443,44 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
         <!-- nimet -->
         <g class="lbl">
           <path class="lead" d="M44 100 L92 106 M44 226 L120 232 M44 330 L96 330 M44 566 L104 566 M258 150 L212 152 M258 196 L172 196 M258 300 L180 300 M258 392 L194 392 M258 545 L198 545"/>
-          <text x="40" y="104" text-anchor="end">Pohjeluun pää</text>
-          <text x="40" y="224" text-anchor="end">Etummainen<tspan x="40" dy="15">säärilihas</tspan></text>
+          <text x="40" y="98" text-anchor="end">Pohjeluun<tspan x="40" dy="1.15em">pää</tspan></text>
+          <text x="40" y="224" text-anchor="end">Etummainen<tspan x="40" dy="1.15em">säärilihas</tspan></text>
           <text x="40" y="334" text-anchor="end">Pohjeluu</text>
-          <text x="40" y="570" text-anchor="end">Ulkokehränen</text>
-          <text x="262" y="154">Kaksoiskantalihas</text>
+          <text x="40" y="564" text-anchor="end">Ulko-<tspan x="40" dy="1.15em">kehränen</tspan></text>
+          <text x="262" y="148">Kaksois-<tspan x="262" dy="1.15em">kantalihas</tspan></text>
           <text x="262" y="200">Sääriluu</text>
           <text x="262" y="304">Sisäreuna</text>
-          <text x="262" y="396">Leveä kantalihas</text>
-          <text x="262" y="549">Sisäkehränen</text>
+          <text x="262" y="390">Leveä<tspan x="262" dy="1.15em">kantalihas</tspan></text>
+          <text x="262" y="543">Sisä-<tspan x="262" dy="1.15em">kehränen</tspan></text>
         </g>
         <!-- oirealueet -->
         <g class="z" data-c="mtss">
           <path class="zs pulse" d="M179 262 C176 340 176 420 180 488" stroke-width="17" stroke-linecap="round" opacity=".6"/>
-          <path class="zlead" d="M258 444 L186 444"/><text class="zl" x="262" y="442">Laaja arkuus,<tspan x="262" dy="15">vähintään 5 cm</tspan></text>
+          <path class="zlead" d="M258 444 L186 444"/><text class="zl" x="262" y="442">Laaja arkuus,<tspan x="262" dy="1.15em">vähintään 5 cm</tspan></text>
         </g>
         <g class="z" data-c="cecs" hidden>
           <path class="zf pulse" d="M112 130 C90 190 90 300 106 392 C116 424 138 424 142 392 C144 300 142 200 134 130 Z" opacity=".5"/>
-          <path class="zlead" d="M44 282 L104 282"/><text class="zl" x="40" y="286" text-anchor="end">Paine ja kiristys</text>
+          <path class="zlead" d="M44 282 L104 282"/><text class="zl" x="40" y="278" text-anchor="end">Paine ja<tspan x="40" dy="1.15em">kiristys</tspan></text>
         </g>
         <g class="z" data-c="atsf" hidden>
           <circle class="zf" cx="158" cy="332" r="7"/><circle class="zs pulse" cx="158" cy="332" r="15" stroke-width="3"/>
-          <path class="zlead" d="M258 340 L174 334"/><text class="zl" x="262" y="338">Pistemäinen,<tspan x="262" dy="15">alle 5 cm</tspan></text>
+          <path class="zlead" d="M258 340 L174 334"/><text class="zl" x="262" y="338">Pistemäinen,<tspan x="262" dy="1.15em">alle 5 cm</tspan></text>
         </g>
         <g class="z" data-c="spne" hidden>
           <ellipse class="zf" cx="112" cy="505" rx="17" ry="82" opacity=".3"/>
           <circle class="zf" cx="104" cy="425" r="7"/><circle class="zs pulse" cx="104" cy="425" r="14" stroke-width="3"/>
-          <path class="zlead" d="M44 425 L90 425"/><text class="zl" x="40" y="422" text-anchor="end">Läpäisykohta 10–13 cm<tspan x="40" dy="15">nilkan yläpuolella</tspan></text>
+          <path class="zlead" d="M44 425 L90 425"/><text class="zl" x="40" y="412" text-anchor="end">Läpäisykohta<tspan x="40" dy="1.15em">10–13 cm</tspan><tspan x="40" dy="1.15em">nilkan yllä</tspan></text>
         </g>
         <g class="z" data-c="paes" hidden>
           <ellipse class="zf" cx="150" cy="232" rx="66" ry="118" opacity=".2"/>
           <ellipse class="zs" cx="150" cy="232" rx="66" ry="118" stroke-width="2" stroke-dasharray="6 5"/>
           <ellipse class="zs pulse" cx="150" cy="50" rx="34" ry="20" stroke-width="3" stroke-dasharray="6 5"/>
-          <path class="zlead" d="M258 60 L186 54"/><text class="zl" x="262" y="58">Pinne polvitaipeessa<tspan x="262" dy="15">(takapuolella)</tspan></text>
+          <path class="zlead" d="M258 60 L186 54"/><text class="zl" x="262" y="52">Pinne polvi-<tspan x="262" dy="1.15em">taipeessa</tspan><tspan x="262" dy="1.15em">(takana)</tspan></text>
           <text class="zl" x="262" y="250">Oire pohkeessa</text>
         </g>
         <g class="z" data-c="tend" hidden>
           <path class="zs pulse" d="M190 462 C192 506 199 532 205 562" stroke-width="11" stroke-linecap="round" opacity=".7"/>
-          <path class="zlead" d="M258 494 L198 494"/><text class="zl" x="262" y="498">Jänteen kulkureitti</text>
+          <path class="zlead" d="M258 494 L198 494"/><text class="zl" x="262" y="490">Jänteen<tspan x="262" dy="1.15em">kulkureitti</tspan></text>
         </g>
       </svg>
       <figcaption>Oikea sääri edestä. Luut on piirretty näkyviin lihasten läpi.</figcaption>
@@ -543,7 +580,7 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
       <p style="font-size:14.5px;color:var(--ink)">Yli kymmenen hypyn onnistuminen puhuu vahvasti murtumaa vastaan. Hyppykipu yksin ei vielä todista murtumaa. Alle 5 cm:n alueelle rajautuva pistemäinen luuarkuus tai arkuus suoraan sääriluun etuharjanteella viittaa vahvasti rasitusmurtumaan.</p>
     </div>
   </div>
-  <div class="scroll"><table>
+  <div class="scroll"><table class="cmp">
     <thead><tr><th></th><th>MTSS<br><span style="font:400 12.5px var(--body);color:var(--muted)">sisäreunan rasitusoireyhtymä</span></th><th>CECS<br><span style="font:400 12.5px var(--body);color:var(--muted)">krooninen lihasaitio-oireyhtymä</span></th><th>Rasitusmurtuma<br><span style="font:400 12.5px var(--body);color:var(--muted)">jatkumon vaikein aste</span></th></tr></thead>
     <tbody>
       <tr><th>Sijainti</th><td>Sääriluun sisä- tai sisä-takareuna, keski- ja alakolmannes</td><td>Etu-ulkosivu tai syvä taka-aitio, usein molemmissa säärissä</td><td>Yksi kohta luussa: sisäreuna tai etukorteksi</td></tr>
@@ -1180,9 +1217,9 @@ upd();
     m.forEach(function(s){var tr=el("tr");
       tr.appendChild(el("td","rank",s[k]==null?"–":String(s[k])));
       var n=el("td");n.appendChild(el("b",null,s.nimi));n.appendChild(el("small",null,s.lesti==="unisex"?"unisex-lesti":"naisten lesti"));if(s.ei_saatavilla)n.appendChild(el("small","out","Ei saatavilla juuri nyt"));tr.appendChild(n);
-      tr.appendChild(el("td",null,s.vaimennus));
-      var t=el("td",null,s.tuki);t.appendChild(el("small",null,s.sopii));tr.appendChild(t);
-      tr.appendChild(osto(s.fi));tr.appendChild(osto(s.eu));tb.appendChild(tr)});
+      var v=el("td",null,s.vaimennus);v.setAttribute("data-l","Vaimennus");tr.appendChild(v);
+      var t=el("td",null,s.tuki);t.setAttribute("data-l","Tuki ja kenelle");t.appendChild(el("small",null,s.sopii));tr.appendChild(t);
+      var f=osto(s.fi);f.setAttribute("data-l","Suomesta");tr.appendChild(f);var e2=osto(s.eu);e2.setAttribute("data-l","Muualta EU:sta");tr.appendChild(e2);tb.appendChild(tr)});
   }
   var p=D.paivitetty.split("-");$("kg-pvm").textContent="Päivitetty "+Number(p[2])+"."+Number(p[1])+"."+p[0];
   var h=$("kg-huom");(D.huomiot||[]).forEach(function(x){h.appendChild(el("li",null,x))});
@@ -1193,6 +1230,34 @@ upd();
   $("kg-sort").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;
     [].forEach.call(this.querySelectorAll("button"),function(x){x.setAttribute("aria-pressed",x===b?"true":"false")});piirra(b.dataset.s)});
   piirra("sija_kokonais");
+})();
+
+/* puhelin: taulukoiden sarakenimet ja kaavioiden arvotekstit */
+(function(){
+  [].forEach.call(document.querySelectorAll("table.cmp"),function(t){
+    var h=[].map.call(t.querySelectorAll("thead th"),function(th){return (th.firstChild&&th.firstChild.textContent||"").trim()});
+    [].forEach.call(t.querySelectorAll("tbody tr"),function(tr){[].forEach.call(tr.children,function(c,i){if(c.tagName==="TD"&&h[i])c.setAttribute("data-l",h[i])})});
+  });
+  [].forEach.call(document.querySelectorAll(".row.axis"),function(r){var s=r.querySelector("span"),t=r.querySelector(".track");if(s&&t)t.setAttribute("data-u",s.textContent)});
+  function fit(){
+    [].forEach.call(document.querySelectorAll(".rb>span"),function(s){
+      s.classList.remove("fl","in");
+      var rb=s.parentNode,t=rb.parentNode.getBoundingClientRect(),b=rb.getBoundingClientRect(),w=s.getBoundingClientRect().width;
+      if(b.right+7+w<=t.right+1)return;
+      var thin=b.height<12,solid=!/iqr|hatch/.test(rb.className);
+      if(solid&&!thin&&b.width>=w+14)s.classList.add("in");
+      else if(b.left-t.left>=w+9)s.classList.add("fl");
+    });
+    [].forEach.call(document.querySelectorAll(".pt"),function(p){
+      if(p.hasAttribute("data-l0"))p.classList.add("l");else p.classList.remove("l");
+      if(!p.textContent.trim())return;
+      var t=p.parentNode.getBoundingClientRect();
+      if(p.getBoundingClientRect().right>t.right+1)p.classList.add("l");
+    });
+  }
+  [].forEach.call(document.querySelectorAll(".pt.l"),function(p){p.setAttribute("data-l0","")});
+  fit();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+  var tm;window.addEventListener("resize",function(){clearTimeout(tm);tm=setTimeout(fit,120)});
 })();
 })();
 </script>
