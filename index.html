@@ -329,6 +329,13 @@ ol.flow{margin:0;padding:0}
 .src{font-size:13.5px;color:var(--muted)}
 .src summary{cursor:pointer;font:500 13px var(--body);color:var(--court);padding:4px 0}
 .src ol{margin:10px 0 0;padding-left:1.4em;display:grid;gap:5px}
+.stamp{font:500 12.5px/1.4 var(--mono);color:var(--muted)}
+table.kg{min-width:860px}
+table.kg td small{display:block;color:var(--muted);font-size:12.5px;margin-top:3px}
+table.kg td.rank{font:800 22px/1 var(--display);font-variant-numeric:tabular-nums;width:56px}
+table.kg td.buy a{font-weight:500;white-space:nowrap}
+table.kg td.buy .na{color:var(--muted);font-size:13.5px}
+#kg-uutta{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:14px}
 footer{margin-top:56px;border-top:1px solid var(--line)}
 footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display:grid;gap:8px}
 </style>
@@ -352,7 +359,7 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
 </header>
 
 <nav aria-label="Sivun osiot"><div class="wrap">
-  <a href="#kartta">Säärikartta</a><a href="#erottelu">Erottelu</a><a href="#halytys">Hälytysmerkit</a><a href="#mekanismi">Mekanismi</a><a href="#pronaatio">Ylipronaatio</a><a href="#lentopallo">Lentopallo</a><a href="#hoito">Hoito</a><a href="#paluu">Paluu kentälle</a><a href="#muut">Muut syyt</a>
+  <a href="#kartta">Säärikartta</a><a href="#erottelu">Erottelu</a><a href="#halytys">Hälytysmerkit</a><a href="#mekanismi">Mekanismi</a><a href="#pronaatio">Ylipronaatio</a><a href="#lentopallo">Lentopallo</a><a href="#hoito">Hoito</a><a href="#paluu">Paluu kentälle</a><a href="#kengat">Kengät</a><a href="#muut">Muut syyt</a>
 </div></nav>
 
 <main>
@@ -959,6 +966,54 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
   <p class="note">Jos lepokipua tai aamujäykkyyttä palaa, kuorma lasketaan heti edelliselle oireettomalle tasolle.</p>
 </div></section>
 
+<!-- ================= KENGÄT ================= -->
+<section id="kengat"><div class="wrap">
+  <div class="head">
+    <p class="kick">Kengät</p>
+    <h2>Naisten lentopallokengät: vaimennus ja vakaus</h2>
+    <p class="lede">Kenkä on tukitoimi, ei hoito. Yhdenkään kenkämallin ei ole osoitettu ehkäisevän penikkatautia, ja kuormituksen hallinta sekä hermo-lihasharjoittelu suojaavat selvemmin. Hyvin vaimennettu ja vakaa kenkä on silti järkevä valinta, kun alastuloja kertyy paljon.</p>
+    <p class="stamp"><span id="kg-pvm"></span> · hinnat ja saatavuus tarkistetaan päivittäin kauppojen sivuilta</p>
+  </div>
+
+  <div class="cols">
+    <div class="plate">
+      <h3>Mitä kengältä kannattaa hakea</h3>
+      <ul class="tight">
+        <li><b>Vaimennus kantapäässä ja päkiässä:</b> nykyaikainen vaahto ja tarvittaessa iskua levittävä levy- tai geelirakenne.</li>
+        <li><b>Vakaus:</b> jäykkä kantakuppi, vääntöjäykkä keskijalka ja leveä pohja.</li>
+        <li><b>Kantakorotus 10–12 mm:</b> äkillinen siirtyminen matalaan kenkään lisää pohkeen ja säären kuormaa.</li>
+        <li><b>Istuvuus:</b> vertaa EU-kokoa tai senttejä. Unisex-mallissa naisen koko on noin 1,5 US-numeroa suurempi. Mizuno on kapea, Nike pieni.</li>
+        <li><b>Vaihtoväli:</b> 80–100 kenttätuntia tai viimeistään kerran kaudessa. Välipohjan painuminen ei näy päältä.</li>
+      </ul>
+    </div>
+    <div class="plate">
+      <h3>Miten järjestys on tehty</h3>
+      <p>Lentopallokengistä ei ole julkaistu riippumattomia laboratoriomittauksia. Järjestys perustuu vaahtotyyppiin, rakenteisiin ja asiantuntija-arvioihin, ja osa arviosivustoista saa tuloja ostolinkeistä.</p>
+      <ul class="tight">
+        <li><b>Kokonaisuus:</b> vakaus, vaimennus kantapäässä ja päkiässä sekä naisten lesti.</li>
+        <li><b>Vaimennus:</b> pelkkä iskunvaimennus alastulossa.</li>
+      </ul>
+      <p class="cap">Vuoden 2025 meta-analyysissä pelkät iskua vaimentavat pohjalliset eivät ehkäisseet penikkatautia. Pehmein kenkä ei siis ole automaattisesti paras. <a href="#pronaatio">Katso Ylipronaatio.</a></p>
+      <div id="kg-uutta"></div>
+    </div>
+  </div>
+
+  <div class="chips" role="group" aria-label="Järjestys" id="kg-sort">
+    <button type="button" data-s="sija_kokonais" aria-pressed="true">Järjestys: kokonaisuus</button>
+    <button type="button" data-s="sija_vaimennus" aria-pressed="false">Järjestys: vaimennus</button>
+  </div>
+  <div class="scroll"><table class="kg">
+    <thead><tr><th>Sija</th><th>Malli</th><th>Vaimennus</th><th>Tuki ja kenelle</th><th>Suomesta</th><th>Muualta EU:sta</th></tr></thead>
+    <tbody id="kg-body"><tr><td colspan="6">Kenkälista latautuu.</td></tr></tbody>
+  </table></div>
+  <p class="note">Sijoittamattomat mallit ovat listan lopussa. Linkit vievät kaupan tuotesivulle uuteen välilehteen. Sivulla ei ole kumppanuuslinkkejä.</p>
+  <div class="plate">
+    <h3>Ennen kuin tilaat</h3>
+    <ul class="tight" id="kg-huom"></ul>
+  </div>
+</div></section>
+<script type="application/json" id="kengat-data">{"paivitetty":"2026-11-16","uutuudet":[],"uutuudet_tarkistettu":"2026-11-16","mallit":[{"nimi":"Mizuno Wave Momentum Elite W","lesti":"naisten","sija_kokonais":1,"sija_vaimennus":3,"vaimennus":"ENERZY XP, päkiän ENERZY CORE ja iskua levittävä Wave-levy","tuki":"Erittäin hyvä: leveä pohja, Dyna-Heel Lock","sopii":"Hyökkääjät, raskaammat pelaajat, aiempi penikkatauti","fi":{"kauppa":"Urheilukauppa.eu","hinta":"161,90 €","url":"https://www.urheilukauppa.eu/product/2644/mizuno-wave-momentum-elite-lentopallokengat-naisille"},"eu":{"kauppa":"Sportano","hinta":"119,99 €","url":"https://sportano.com/p/996841/women-s-volleyball-shoes-mizuno-wave-momentum-elite-blue-finch-white-lava-orange","huom":"varmista toimitus"}},{"nimi":"ASICS Sky Elite FF MT 4 W","lesti":"naisten","sija_kokonais":2,"sija_vaimennus":1,"vaimennus":"FF BLAST MAX; RISETRUSS-rako antaa vaahdon painua alastulossa","tuki":"Hyvä, nilkkavarsi ja kantapään lukitus","sopii":"Paljon hyppivät, nilkkatukea haluavat","fi":null,"eu":{"kauppa":"Boozt","hinta":"170 €","url":"https://www.boozt.com/eu/en/asics/sky-elite-ff-mt-4_32991006/231437609","huom":"toimittaa Suomeen"}},{"nimi":"ASICS Sky Elite FF 4 W","lesti":"naisten","sija_kokonais":3,"sija_vaimennus":2,"vaimennus":"FF BLAST MAX ja RISETRUSS, matala varsi","tuki":"Hyvä","sopii":"Hyökkääjät, kaikki pelipaikat","fi":{"kauppa":"Stadium","hinta":"159 €","url":"https://www.stadium.fi/product/413400101/asics.w-sky-elite-ff-4.white-illuminate"},"eu":{"kauppa":"Boozt","hinta":"160 €","url":"https://www.boozt.com/eu/en/asics/sky-elite-ff-4_32991007/231437599","huom":"toimittaa Suomeen"}},{"nimi":"Mizuno Wave Luminous Elite W","lesti":"naisten","sija_kokonais":4,"sija_vaimennus":5,"vaimennus":"Täyspitkä ENERZY XP ja ENERZY XP -pohjallinen, 270 g","tuki":"Hyvä","sopii":"Kaikki pelipaikat, mukavuutta painottavat","fi":{"kauppa":"Lentiskauppa","hinta":"149,90 €","url":"https://www.lentiskauppa.com/product/17425/mizuno-wave-luminous-elite-women-26-naisten-sisapelikengat-white-aqua-gray-ambrosia"},"eu":{"kauppa":"Sportano","hinta":"99,99 €","url":"https://sportano.com/p/988993/women-s-volleyball-shoes-mizuno-wave-luminous-elite-white-aqua-gray-ambrosia","huom":"varmista toimitus"}},{"nimi":"Puma Accelerate Nitro SQD 5 W","lesti":"naisten","sija_kokonais":5,"sija_vaimennus":6,"vaimennus":"Kaksitiheyksinen NITRO SQD ja OrthoLite X35 -pohjallinen","tuki":"Hyvä: vääntötuki, 3D-kantakuppi, leveämpi W+-lesti","sopii":"Leveähkö jalka","fi":{"kauppa":"Stadium","hinta":"149 €","url":"https://www.stadium.fi/product/413016102/puma.accelerate-nitro-sqd-5-w.puma-white-black"},"eu":{"kauppa":"Sportano","hinta":"109,99 €","url":"https://sportano.com/p/1005187/handball-shoes-puma-accelerate-nitro-sqd-5-puma-white-royal-sapphire-light-lavender","huom":"varmista toimitus"}},{"nimi":"Mizuno Wave Momentum 3 W","lesti":"naisten","sija_kokonais":6,"sija_vaimennus":7,"vaimennus":"Korkea pohja (21/33 mm), vanhempi ENERZY ja Wave","tuki":"Hyvä","sopii":"Momentum-sarjan vakaus edullisemmin","fi":{"kauppa":"Lentiskauppa","hinta":"110 €","url":"https://www.lentiskauppa.com/product/14563/mizuno-wave-momentum-3-24---naisten-sisapelikengat-whitegridgepatinagreen"},"eu":null},{"nimi":"ASICS Blast FF 3 W","lesti":"naisten","sija_kokonais":7,"sija_vaimennus":9,"vaimennus":"FLYTEFOAM Propel, leveä ja suojaava alusta","tuki":"Erittäin vakaa","sopii":"Kovaa laskeutuvat hyökkääjät","fi":null,"eu":{"kauppa":"Handballshop.com","hinta":"89 €","url":"https://www.handballshop.com/asics-blast-ff-3-women-1072a080-400"}},{"nimi":"ASICS Metarise 2","lesti":"unisex","sija_kokonais":8,"sija_vaimennus":4,"vaimennus":"FF BLAST PLUS ECO ja painetta jakava hiilikuitulevy","tuki":"Hyvä, mutta jäykkä","sopii":"Eliittitason hyppääjät; Suomessa pienin koko EU 41,5","fi":{"kauppa":"Lentiskauppa","hinta":"200 €","url":"https://www.lentiskauppa.com/product/15699/asics-metarise-2-25-sisapelikengat-whitemako--blue"},"eu":{"kauppa":"PassaSports","hinta":"150–162,95 €","url":"https://www.passasports.com/asics-metarise-2-1051a089-100"}},{"nimi":"adidas Crazyflight 7 W","lesti":"naisten","sija_kokonais":9,"sija_vaimennus":8,"vaimennus":"Täyspitkä LIGHTSTRIKE PRO, kevyt ja reagoiva","tuki":"Kohtalainen–hyvä, Torsion-vakaus","sopii":"Passarit, liberot, kevyet pelaajat","fi":{"kauppa":"adidas.fi","hinta":"160 €","url":"https://www.adidas.fi/crazyflight-7-shoes/KI7938.html"},"eu":{"kauppa":"Basket-center","hinta":"n. 155 €","url":"https://basket-center.com/ki7938-women-s-training-shoes-adidas-crazyflight-7-ftwbla-grteme-tursol","huom":"varmista toimitus"}},{"nimi":"Mizuno Wave Lightning Elite W","lesti":"naisten","sija_kokonais":10,"sija_vaimennus":10,"vaimennus":"XG+ ja PoWnCe, Wave-levy; vaimennus kohtalainen","tuki":"Kohtalainen","sopii":"Kevyet, nopeat pelaajat, passarit","fi":{"kauppa":"Lentiskauppa","hinta":"149,90 €","url":"https://www.lentiskauppa.com/product/17428/mizuno-wave-lightning-elite-women-26-naisten-sisapelikengat-whitebalsam-greenambrosia"},"eu":{"kauppa":"Mizuno EU","hinta":"128 €","url":"https://emea.mizuno.com/eu/en-nl/wave-lightning-elite/V1GC260073.html"}},{"nimi":"Mizuno Wave Lightning Neo 3","lesti":"unisex","sija_kokonais":null,"sija_vaimennus":null,"vaimennus":"ENERZY NXT ja täyspitkä Wave; vaimennus kohtalainen","tuki":"Kohtalainen","sopii":"Passarit, liberot; naisten kokoja niukasti","fi":{"kauppa":"Urheilukauppa.eu","hinta":"159,90 €","url":"https://www.urheilukauppa.eu/product/2777/mizuno-wave-lightning-neo-3-lentopallokengat"},"eu":null},{"nimi":"ASICS Netburner Ballistic FF 4 W","lesti":"naisten","sija_kokonais":null,"sija_vaimennus":null,"vaimennus":"FLYTEFOAM, matala ja maata tunteva","tuki":"Hyvä ketteryyteen","sopii":"Liberot, passarit","fi":{"kauppa":"Lentiskauppa","hinta":"139,90 €","url":"https://www.lentiskauppa.com/product/17110/asics-netburner-ballistic-ff-4-26-naisten-sisapelikengat-whitesafety-yellow"},"eu":{"kauppa":"SportsShoes","hinta":"n. 140 €","url":"https://www.sportsshoes.com/product/asi16723/netburner-ballistic-ff-4-women%27s-court-shoes---aw26","huom":"tulli ja ALV mahdollisia"}},{"nimi":"Nike HyperAce 3","lesti":"unisex","sija_kokonais":null,"sija_vaimennus":null,"vaimennus":"Päkiän Air Zoom, kiinteä ja matala","tuki":"Hyvä pito","sopii":"Liberot, kevyet pelaajat; penikkatautiherkälle heikoin","fi":{"kauppa":"Lentiskauppa","hinta":"134,90–145,90 €","url":"https://www.lentiskauppa.com/product/17753/nike-air-zoom-hyperace-3-26-lentopallokengat--valkoinen-vaaleanpunainen"},"eu":null},{"nimi":"Mizuno Wave Dimension W","lesti":"naisten","sija_kokonais":null,"sija_vaimennus":null,"vaimennus":"ENERZY kantapäässä, Wave","tuki":"Vakaa","sopii":"Budjetti, tukea haluavat","fi":null,"eu":{"kauppa":"Mizuno EU","hinta":"100 €","url":"https://emea.mizuno.com/eu/en-ie/wave-dimension/V1GC224025.html","huom":"loppuunmyyty 16.11."}},{"nimi":"ASICS Gel-Rocket 12 W","lesti":"naisten","sija_kokonais":null,"sija_vaimennus":null,"vaimennus":"Kantapään GEL, vaimennus vaatimaton","tuki":"TRUSSTIC-keskituki","sopii":"Aloittelijat, harrastajat","fi":{"kauppa":"Prisma","hinta":"74,95 €","url":"https://www.prisma.fi/tuotteet/111287767/asics-gel-rocket-12-naisten-sisapelikenka-111287767"},"eu":{"kauppa":"SportsShoes","hinta":"74,99 €","url":"https://www.sportsshoes.com/product/asi16722/gel-rocket-12-women%27s-indoor-court-shoes---aw26","huom":"tulli ja ALV mahdollisia"}}],"huomiot":["Puolalaisessa Sportanossa kolme kärkimallia on 40–50 € halvempia kuin Suomessa, mutta Suomi ei näkynyt sen maavalikossa. Varmista toimitus kassalla.","SportsShoes.com on brittiläinen, joten Suomeen tilattaessa voi tulla tulli- ja ALV-maksuja. Boozt toimittaa Suomeen.","Lentiskaupan ja Teamstoren Asics Sky Elite FF 4 (26) hintaan 169,90 € on miesten numerointia (EU 41,5–47). Naisten W-malli löytyy Stadiumista, asics.com/fi:stä ja Boozista.","Momentum Eliten edellinen naisten värimalli (2025) maksaa Lentiskaupassa 115 €, mutta varastossa olivat vain koot EU 36,5 ja 38,5."]}</script>
+
 <!-- ================= MUUT ================= -->
 <section id="muut"><div class="wrap">
   <div class="head">
@@ -1109,6 +1164,35 @@ boxes.forEach(function(b){
 });
 $("reset").addEventListener("click",function(){boxes.forEach(function(b){b.checked=false});saved={};try{localStorage.removeItem(KEY)}catch(e){}upd()});
 upd();
+
+/* kengät */
+(function(){
+  var raw=$("kengat-data"),D;try{D=JSON.parse(raw.textContent)}catch(e){D=null}
+  if(!D||!D.mallit){$("kg-body").innerHTML='<tr><td colspan="6">Kenkälistaa ei voitu ladata.</td></tr>';return}
+  function el(t,cls,txt){var e=document.createElement(t);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+  function osto(o){var td=el("td","buy");if(!o){td.appendChild(el("span","na","Ei löytynyt"));return td}
+    var a=el("a",null,o.kauppa+" "+o.hinta);a.href=o.url;a.target="_blank";a.rel="noopener";td.appendChild(a);
+    if(o.huom)td.appendChild(el("small",null,o.huom));return td}
+  function piirra(k){
+    var m=D.mallit.slice().sort(function(a,b){var x=a[k],y=b[k];if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;return x-y});
+    var tb=$("kg-body");tb.innerHTML="";
+    m.forEach(function(s){var tr=el("tr");
+      tr.appendChild(el("td","rank",s[k]==null?"–":String(s[k])));
+      var n=el("td");n.appendChild(el("b",null,s.nimi));n.appendChild(el("small",null,s.lesti==="unisex"?"unisex-lesti":"naisten lesti"));tr.appendChild(n);
+      tr.appendChild(el("td",null,s.vaimennus));
+      var t=el("td",null,s.tuki);t.appendChild(el("small",null,s.sopii));tr.appendChild(t);
+      tr.appendChild(osto(s.fi));tr.appendChild(osto(s.eu));tb.appendChild(tr)});
+  }
+  var p=D.paivitetty.split("-");$("kg-pvm").textContent="Päivitetty "+Number(p[2])+"."+Number(p[1])+"."+p[0];
+  var h=$("kg-huom");(D.huomiot||[]).forEach(function(x){h.appendChild(el("li",null,x))});
+  var u=$("kg-uutta");u.appendChild(el("h3",null,"Uutta markkinoilla"));
+  if(D.uutuudet&&D.uutuudet.length){var ul=el("ul","tight");D.uutuudet.forEach(function(x){var li=el("li");li.appendChild(el("b",null,x.otsikko+". "));li.appendChild(document.createTextNode(x.kuvaus+" "));
+      if(x.url){var a=el("a",null,"Lähde");a.href=x.url;a.target="_blank";a.rel="noopener";li.appendChild(a)}ul.appendChild(li)});u.appendChild(ul)}
+  else u.appendChild(el("p","cap","Viimeisimmässä tarkistuksessa ei löytynyt uusia naisten malleja tai tekniikoita, jotka muuttaisivat järjestystä."));
+  $("kg-sort").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;
+    [].forEach.call(this.querySelectorAll("button"),function(x){x.setAttribute("aria-pressed",x===b?"true":"false")});piirra(b.dataset.s)});
+  piirra("sija_kokonais");
+})();
 })();
 </script>
 
