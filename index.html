@@ -719,6 +719,15 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
 .m3-stage.fs .m3-top{top:max(12px,env(safe-area-inset-top,0px))}
 html.m3-lock,html.m3-lock body{overflow:hidden}
 .m3-tools button[aria-pressed="false"]#m3-fs{color:#f2f8f7;border-style:solid}
+.m3-fsrow{margin:0}
+.m3-fsbig{display:inline-flex;align-items:center;gap:10px;font:600 15px/1 var(--body);color:#fff;background:var(--court);border:1px solid var(--court);border-radius:4px;padding:13px 18px;cursor:pointer}
+.m3-fsbig:hover{background:var(--court-deep);border-color:var(--court-deep)}
+.m3-fsbig span{font-size:19px;line-height:.8}
+.m3-fsinfo{display:none;position:absolute;z-index:3;left:12px;top:100px;width:min(340px,34vw);background:rgba(5,42,49,.7);border:1px solid rgba(255,255,255,.22);border-radius:6px;padding:16px 18px;
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.m3-fsinfo h3{font-size:19px;color:#f2f8f7;margin-bottom:8px}
+.m3-fsinfo p{font-size:14.5px;line-height:1.5;color:#d6e8e7}
+@media (min-width:860px){.m3-stage.fs .m3-fsinfo{display:block}}
 .m3-lab.flat{color:#a9cfd0;text-transform:uppercase;letter-spacing:.1em;font-size:10.5px}
 .m3-lab.flat::before{background:#a9cfd0;width:5px;height:5px;margin-top:-3px}
 .m3-bottom{position:absolute;z-index:3;left:12px;right:12px;bottom:12px;display:grid;gap:8px;pointer-events:none}
@@ -782,6 +791,8 @@ html.m3-lock,html.m3-lock body{overflow:hidden}
     </div>
   </div>
 
+  <p class="m3-fsrow"><button type="button" class="m3-fsbig" id="m3-fs2"><span aria-hidden="true">⛶</span> Avaa 3D-malli koko näytöllä</button></p>
+
   <div class="m3">
     <div class="m3-stage" id="m3-stage" data-three="vendor/three.min.js">
       <canvas id="m3-canvas" tabindex="0" role="img" aria-label="Kolmiulotteinen malli oikeasta säärestä: sääriluu, pohjeluu, lihakset ja peitinkalvo. Kierrä nuolinäppäimillä, zoomaa plus- ja miinusnäppäimillä, vaihda näkymää näppäimillä 1–9, ohjaa animaatiota pilkulla ja pisteellä."></canvas>
@@ -797,6 +808,7 @@ html.m3-lock,html.m3-lock body{overflow:hidden}
         <select class="m3-sel" id="m3-sel" aria-label="Valitse näkymä" hidden></select>
         <button type="button" class="m3-dir" id="m3-dir" title="Vaihda katselusuuntaa"><span id="m3-side"></span><i aria-hidden="true">⟳</i></button>
       </div>
+      <div class="m3-fsinfo" id="m3-fsinfo"><h3 id="m3-fsinfo-h"></h3><p id="m3-fsinfo-p"></p></div>
       <div class="m3-bottom">
       <div class="m3-time" id="m3-time" hidden>
         <span class="m3-phase" id="m3-phase" aria-live="polite"></span>
@@ -856,7 +868,7 @@ html.m3-lock,html.m3-lock body{overflow:hidden}
   </div>
 
   <p class="note"><b>Ohjaus:</b> vedä hiirellä tai sormella kiertääksesi. Oikean yläkulman painike vaihtaa katselusuunnan: edestä, sisäsivulta, takaa ja ulkosivulta. Zoomaa painikkeilla, nipistämällä tai Ctrl + rullalla. Näppäimistöllä: napsauta mallia ja käytä nuolia (kierto), + ja − (zoom), 1–9 (näkymä), välilyöntiä (tauko), pilkkua ja pistettä (animaatio askel taakse tai eteen), N (nimet), F (koko näyttö) ja 0 (palautus). Koko näytön tilassa näkymän voi vaihtaa yläreunan valikosta. Animaatiota voi kelata myös mallin alareunan liukusäätimestä.</p>
-  <p class="note">Malli on pelkistetty havainnekuva. Mittasuhteet ovat suuntaa-antavia, ja liikkeet, hehku ja lukemat on liioiteltu näkyviksi. Hermoista ja verisuonista on piirretty vain pinnallinen pohjehermo ja polvitaivevaltimo niiden omissa näkymissä. Se ei ole diagnoosiväline.</p>
+  <p class="note">Malli on pelkistetty havainnekuva. Mittasuhteet ovat suuntaa-antavia, ja liikkeet, hehku ja lukemat on liioiteltu näkyviksi. Jalkaterän luut ovat oikeilla paikoillaan mutta muodoltaan pelkistettyjä. Hermoista ja verisuonista on piirretty vain pinnallinen pohjehermo ja polvitaivevaltimo niiden omissa näkymissä. Se ei ole diagnoosiväline.</p>
 </div></section>
 <script>
 /* 3D-mallinnus: oikea sääri. Pelkistetty, proseduraalisesti rakennettu malli (Three.js). */
@@ -1034,8 +1046,51 @@ function footGeo(k,na,nr,caps){
   for(var i=0;i<a.count;i++){var x=a.getX(i),z=a.getZ(i);a.setZ(i,z+sst(.72,1.3,z)*(x-.02)*.62)}   /* varvaslinja: isovarvas pisin, pikkuvarvas lyhin */
   g.computeVertexNormals();return g;
 }
-add('foot',footGeo(1,44,36,true),boneMat(true),{layer:'bone',ghost:true});
+/* jalkaterän luut yhtenä verkkona: kantaluu, telaluu, veneluu, kuutioluu, kolme vaajaluuta, viisi jalkapöytäluuta ja varvasluut */
+var footBones=(function(){
+  var P=[],I=[];
+  function push(g){var a=g.attributes.position,o=P.length/3,ix=g.index;for(var i=0;i<a.count;i++)P.push(a.getX(i),a.getY(i),a.getZ(i));for(i=0;i<ix.count;i++)I.push(ix.getX(i)+o)}
+  function ell(c,r,rot){var g=new T.SphereGeometry(1,22,16),m=new T.Matrix4().compose(new T.Vector3(c[0],c[1],c[2]),new T.Quaternion().setFromEuler(new T.Euler(rot?rot[0]:0,rot?rot[1]:0,rot?rot[2]:0)),new T.Vector3(r[0],r[1],r[2]));g.applyMatrix4(m);push(g)}
+  /* putkiluu a→b: tyvi r0, varsi rm, pää r1; sy litistää pystysuunnassa */
+  function bone(a,b,r0,rm,r1,sy){
+    var A=new T.Vector3(a[0],a[1],a[2]),B=new T.Vector3(b[0],b[1],b[2]),d=B.clone().sub(A),L=d.length();d.normalize();
+    var up=new T.Vector3(0,1,0),sx=new T.Vector3().crossVectors(up,d).normalize(),sv=new T.Vector3().crossVectors(d,sx).normalize();
+    var n=18,nr=14,pos=[],idx=[],o=P.length/3;sy=sy||.85;
+    for(var i=0;i<=n;i++){var u=i/n,R=rm+(r0-rm)*(1-sst(.02,.42,u))+(r1-rm)*sst(.58,.98,u);
+      R*=Math.sqrt(Math.min(1,u/.09))*Math.sqrt(Math.min(1,(1-u)/.09));
+      for(var j=0;j<nr;j++){var th=TAU*j/nr,c=Math.cos(th)*R,q=Math.sin(th)*R*sy;
+        P.push(A.x+d.x*L*u+sx.x*c+sv.x*q,A.y+d.y*L*u+sx.y*c+sv.y*q,A.z+d.z*L*u+sx.z*c+sv.z*q)}}
+    for(i=0;i<n;i++)for(j=0;j<nr;j++){var p0=o+i*nr+j,p1=o+i*nr+(j+1)%nr,q0=p0+nr,q1=p1+nr;I.push(p0,q0,p1,p1,q0,q1)}
+  }
+  /* kantaluu ja telaluu */
+  push(loft({axis:'z',na:28,nr:22,keys:[[-.62,.04,-2.3,.03,.04],[-.57,.04,-2.3,.12,.14],[-.38,.03,-2.285,.135,.155],[-.12,0,-2.25,.14,.13],[.08,-.03,-2.235,.14,.11],[.2,-.05,-2.235,.12,.095],[.24,-.05,-2.235,.03,.03]]}));
+  ell([.1,-2.05,.07],[.2,.13,.21]);                       /* telaluun runko ja nivelpinta */
+  bone([.11,-2.09,.18],[.18,-2.13,.42],.11,.09,.115,.8);  /* telaluun kaula ja pää */
+  ell([.2,-2.15,.5],[.115,.09,.06],[0,-.25,0]);           /* veneluu */
+  ell([-.1,-2.24,.41],[.11,.085,.135]);                   /* kuutioluu */
+  ell([.245,-2.195,.63],[.065,.09,.09]);                  /* sisempi vaajaluu */
+  ell([.125,-2.175,.62],[.055,.072,.08]);                 /* keskimmäinen vaajaluu */
+  ell([.015,-2.195,.61],[.06,.072,.09]);                  /* ulompi vaajaluu */
+  /* jalkapöytäluut 1–5 (1 = isovarpaan puoli, sisäsivu) */
+  var MT=[[[.25,-2.215,.71],[.3,-2.365,1.08],.07,.047,.068],[[.125,-2.19,.69],[.14,-2.38,1.14],.05,.03,.045],[[.02,-2.205,.69],[.01,-2.388,1.11],.048,.029,.043],
+          [[-.08,-2.24,.55],[-.11,-2.396,1.05],.048,.028,.041],[[-.165,-2.275,.47],[-.22,-2.402,.97],.062,.028,.04]];
+  MT.forEach(function(m){bone(m[0],m[1],m[2],m[3],m[4])});
+  /* varvasluut: isovarpaassa kaksi, muissa kolme */
+  var TOE=[[[.3,-2.37,1.1],[.325,-2.398,1.275],[.335,-2.408,1.405]],
+           [[.14,-2.386,1.16],[.15,-2.402,1.285],[.153,-2.408,1.355],[.155,-2.412,1.41]],
+           [[.01,-2.392,1.13],[.0,-2.406,1.25],[-.003,-2.411,1.312],[-.005,-2.414,1.36]],
+           [[-.11,-2.4,1.07],[-.128,-2.41,1.172],[-.135,-2.414,1.228],[-.14,-2.416,1.27]],
+           [[-.22,-2.405,.99],[-.248,-2.413,1.078],[-.258,-2.416,1.124],[-.265,-2.418,1.16]]];
+  TOE.forEach(function(t,k){var w=k===0?1.5:1-.05*k;for(var i=0;i<t.length-1;i++){var last=i===t.length-2;bone(t[i],t[i+1],.031*w,.022*w,(last?.024:.028)*w,.8)}});
+  var g=new T.BufferGeometry(),z=new Float32Array(P.length/3);
+  g.setAttribute('position',new T.Float32BufferAttribute(P,3));g.setAttribute('aHeat',new T.BufferAttribute(z,1));g.setAttribute('aHeat2',new T.BufferAttribute(z,1));
+  g.setIndex(I);g.computeVertexNormals();return g;
+})();
+add('foot',footBones,boneMat(),{layer:'bone'});
 byId.foot.geometry.translate(-.05,2.16,0);byId.foot.position.set(.05,-2.16,0);
+/* jalkaterän pehmytkudoksen ääriviiva haaleana */
+var skin=add('footskin',footGeo(1,44,36,true),boneMat(true),{layer:'bone',ghost:.2,alias:'foot'});
+skin.geometry.translate(-.05,2.16,0);byId.foot.add(skin);
 
 /* luuvälikalvo: nauha sääriluun ulkoreunan ja pohjeluun välissä */
 (function(){
@@ -1069,7 +1124,7 @@ muscle('ach',0xe9e2cf,0,[[.4,0,-.41,.2,.02],[.5,0,-.425,.22,.035],[.65,0,-.4,.17
 function tube(pts,r,mat,seg){return new T.TubeGeometry(new T.CatmullRomCurve3(pts.map(function(p){return new T.Vector3(p[0],p[1],p[2])})),seg||80,r,10,false)}
 /* takimmaisen säärilihaksen jänne: kaari sisäkehräksen takaa veneluuhun */
 var tpMat=new T.MeshStandardMaterial({color:0xe9e2cf,roughness:.45,emissive:0xff6a1a,emissiveIntensity:0});
-add('tptendon',tube([[.3,Y(1.03),-.04],[.325,Y(1.07),-.03],[.335,-2.2,.05],[.31,-2.23,.2],[.25,-2.22,.38]],.03,tpMat,40),tpMat,{layer:'deep',alias:'tp',noGlow:true});
+add('tptendon',tube([[.3,Y(1.03),-.04],[.325,Y(1.07),-.03],[.34,-2.2,.06],[.335,-2.2,.24],[.3,-2.17,.45]],.03,tpMat,40),tpMat,{layer:'deep',alias:'tp',noGlow:true});
 /* etukorteksin murtumalinja */
 (function(){
   var pos=[],idx=[],z=[],n=18;
@@ -1081,7 +1136,7 @@ add('tptendon',tube([[.3,Y(1.03),-.04],[.325,Y(1.07),-.03],[.335,-2.2,.05],[.31,
 /* pinnallinen pohjehermo: ulkoaitiosta peitinkalvon läpi jalkapöydälle */
 var NE=new T.Vector3(-.345,Y(.78),.26);
 var nerveMat=new T.MeshStandardMaterial({color:0xe6b21a,roughness:.4,emissive:0xffc21a,emissiveIntensity:.12});
-var nerveCurve=new T.CatmullRomCurve3([[-.4,Y(.1),-.1],[-.41,Y(.3),.06],[-.39,Y(.55),.12],[-.365,Y(.72),.2],[NE.x,NE.y,NE.z],[-.3,Y(.86),.32],[-.18,Y(.97),.37],[-.1,Y(1.06),.42],[-.05,-2.05,.62],[-.02,-2.2,.95]].map(function(p){return new T.Vector3(p[0],p[1],p[2])}));
+var nerveCurve=new T.CatmullRomCurve3([[-.4,Y(.1),-.1],[-.41,Y(.3),.06],[-.39,Y(.55),.12],[-.365,Y(.72),.2],[NE.x,NE.y,NE.z],[-.3,Y(.86),.32],[-.18,Y(.97),.37],[-.1,Y(1.06),.42],[-.03,-2.02,.62],[.0,-2.2,.98]].map(function(p){return new T.Vector3(p[0],p[1],p[2])}));
 add('nerve',new T.TubeGeometry(nerveCurve,120,.017,10,false),nerveMat,{layer:'x',modes:['spne'],noGlow:true});
 var ring=new T.Mesh(new T.TorusGeometry(.08,.014,10,40),new T.MeshBasicMaterial({color:0xff8450,transparent:true,depthTest:false}));
 ring.position.copy(NE);ring.quaternion.setFromUnitVectors(new T.Vector3(0,0,1),new T.Vector3(-.77,0,.64).normalize());ring.renderOrder=8;ring.visible=false;model.add(ring);
@@ -1173,7 +1228,7 @@ var INFO={
  nerve:['Pinnallinen pohjehermo','n. fibularis superficialis','Hermo','Kulkee ulkoaitiossa ja läpäisee peitinkalvon 10–13 cm nilkan yläpuolella. Läpäisykohdassa se voi jäädä puristuksiin kireään kalvoaukkoon, lihastyrän tai arven alle. Oire on polttelua ja pistelyä säären ulko-alaosassa ja jalkapöydällä.'],
  artery:['Polvitaivevaltimo','a. poplitea','Valtimo','Kulkee polvitaipeen läpi kaksoiskantalihaksen päiden välistä ja jatkuu säären valtimoina. Poikkeavasti kulkeva lihaksen pää tai jänne tai harjoittelun kasvattama pohjelihas voi painaa sitä kuormituksessa.'],
  femur:['Reisiluun alapää','femur','Pelkistetty','Mukana vain hahmottamisen vuoksi. Kaksoiskantalihaksen päät lähtevät reisiluun nivelnastojen takaa.'],
- foot:['Oikea jalkaterä','pes dexter','Pelkistetty','Isovarvas ja jalkaholvi ovat sisäsivulla. Mukana vain hahmottamisen vuoksi. Alastulon voima tulee alustasta jalkaterän kautta sääreen.']
+ foot:['Oikea jalkaterä','pes dexter','Luut','Kantaluu, telaluu, veneluu, kuutioluu, kolme vaajaluuta, viisi jalkapöytäluuta ja varvasluut. Isovarvas ja jalkaholvi ovat sisäsivulla. Luiden muodot ovat pelkistettyjä. Alastulon voima tulee alustasta jalkaterän kautta sääreen.']
 };
 function dimMech(keep,lo){return function(u,id){return u.layer==='bone'?1:(keep.indexOf(id)>=0||keep.indexOf(u.layer)>=0?1:lo)}}
 var MODES={
@@ -1199,6 +1254,7 @@ var LABS=[
  ['ach','Akillesjänne',function(){return new T.Vector3(0,Y(.92),-.41)}],
  ['fdl','Varpaiden pitkä koukistaja',function(){return new T.Vector3(.24,Y(.44),.03)},0,0,['pull','mtss']],
  ['fascia','Peitinkalvo',function(){return new T.Vector3(-.5,Y(.12),.3)},1],
+ ['foot','Isovarvas',function(){return new T.Vector3(.34,-2.38,1.4)}],
  ['zone','MTSS-kipualue',function(){return surf(KT,.68,PM,tibShape,1.05)},0,1,['anat','bend','pull','mtss']],
  ['tibia','Etuharjanne: kipukohta',function(){return CR.clone()},0,1,['atsf']],
  ['nerve','Pinnallinen pohjehermo',function(){return new T.Vector3(-.2,Y(.96),.38)},0,0,['spne']],
@@ -1229,7 +1285,7 @@ function setMode(m,keepCam){
   var z=ZON[m]||{};setZone(legShell,z.leg);setZone(footShell,z.foot);painU.uA.value=0;
   var kv=$('m3-mode-kv');kv.innerHTML='';kv.hidden=!d.kv;
   (d.kv||[]).forEach(function(r){var a=document.createElement('dt'),b=document.createElement('dd');a.textContent=r[0];b.textContent=r[1];kv.appendChild(a);kv.appendChild(b)});
-  setPressed($('m3-modes'),function(b){return b.getAttribute('data-mode')===m});$('m3-sel').value=m;
+  setPressed($('m3-modes'),function(b){return b.getAttribute('data-mode')===m});$('m3-sel').value=m;$('m3-fsinfo-h').textContent=d.h;$('m3-fsinfo-p').textContent=d.p;
   $('m3-read').hidden=!d.read;if(d.read)$('m3-read-l').textContent=d.read;
   $('m3-time').hidden=!d.ph;
   if(!keepCam){goCam(d.yaw,d.pitch,d.dist||12.6,d.ty===undefined?-.12:d.ty);st.auto=false}
@@ -1246,7 +1302,7 @@ function applyLook(){
     p.visible=!!vis;
     if(id==='fascia'||u.nodim)return;
     var dim=d.dim&&!u.modes?d.dim(u,id):1;
-    if(u.ghost)dim=Math.min(dim,.46);if(id==='membrane')dim=Math.min(dim,.72);
+    if(u.ghost)dim=Math.min(dim,u.ghost===true?.46:u.ghost);if(id==='membrane')dim=Math.min(dim,.72);
     var mat=p.material,tr=dim<1;
     if(mat.transparent!==tr){mat.transparent=tr;mat.needsUpdate=true}
     mat.opacity=dim;mat.depthWrite=dim>.5;
@@ -1305,7 +1361,7 @@ function setFs(on){
   else{if(fsEl()){var ex=document.exitFullscreen||document.webkitExitFullscreen;if(ex)ex.call(document)}
     stage.classList.remove('fs-css');root.classList.remove('m3-lock');syncFs()}
 }
-fsBtn.addEventListener('click',function(){setFs(!isFs())});
+fsBtn.addEventListener('click',function(){setFs(!isFs())});$('m3-fs2').addEventListener('click',function(){setFs(true)});
 document.addEventListener('fullscreenchange',syncFs);document.addEventListener('webkitfullscreenchange',syncFs);
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&stage.classList.contains('fs-css'))setFs(false)});
 ORDER.forEach(function(k){var o=document.createElement('option');o.value=k;o.textContent=MODES[k].h;sel.appendChild(o)});
