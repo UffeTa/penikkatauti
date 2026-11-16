@@ -697,14 +697,33 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
 .m3-lab.r::before{left:auto;right:0}
 .m3-lab.hot::before{background:#ff8450}
 .m3-tip{position:absolute;z-index:4;left:0;top:0;pointer-events:none;font:500 12.5px/1.2 var(--body);color:#0f2329;background:#f2f8f7;border-radius:4px;padding:6px 8px;box-shadow:0 4px 14px rgba(0,0,0,.35);white-space:nowrap}
-.m3-read{position:absolute;z-index:3;left:12px;top:12px;display:flex;align-items:center;gap:8px;font:500 11.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;
+.m3-read{position:absolute;z-index:3;left:12px;top:54px;display:flex;align-items:center;gap:8px;font:500 11.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;
   background:rgba(5,42,49,.62);border:1px solid rgba(255,255,255,.22);border-radius:4px;padding:8px 10px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .m3-meter{width:86px;height:6px;border-radius:3px;background:rgba(255,255,255,.2);overflow:hidden}
 .m3-meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,#f0bd1e,#ff8450 60%,#ff5a3c);border-radius:3px}
 .m3-read-v{min-width:64px;text-transform:none;letter-spacing:0}
-.m3-compass{position:absolute;z-index:3;right:12px;top:12px;font:500 11.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#a9cfd0;
-  background:rgba(5,42,49,.5);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:8px 10px}
-.m3-tools{position:absolute;z-index:3;left:12px;right:12px;bottom:12px;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.m3-top{position:absolute;z-index:3;left:12px;right:12px;top:12px;display:flex;justify-content:space-between;align-items:center;gap:8px;pointer-events:none}
+.m3-top>*{pointer-events:auto}
+.m3-leg{white-space:nowrap;flex:none;font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#f2f8f7;background:rgba(5,42,49,.62);border:1px solid rgba(255,255,255,.22);border-radius:4px;padding:9px 10px}
+.m3-leg b{font-weight:500;color:#f0bd1e;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.m3-dir{flex:none;display:inline-flex;align-items:center;gap:8px;font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#f2f8f7;background:rgba(5,42,49,.62);border:1px solid rgba(255,255,255,.34);border-radius:4px;padding:9px 10px;cursor:pointer;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.m3-dir:hover{background:rgba(14,124,130,.8)}
+.m3-dir i{font-style:normal;font-size:15px;line-height:.8;color:#f0bd1e}
+.m3-sel{flex:1 1 auto;min-width:0;max-width:340px;font:500 13px/1.2 var(--body);color:#f2f8f7;background:rgba(5,42,49,.8);border:1px solid rgba(255,255,255,.34);border-radius:4px;padding:8px 10px}
+.m3-sel option{color:#0f2329;background:#fff}
+.m3-stage.fs{height:100vh;height:100dvh;min-height:0;max-height:none;width:100%;border:0;border-radius:0;touch-action:none}
+.m3-stage.fs-css{position:fixed;inset:0;z-index:1000;width:100vw}
+.m3-stage.fs .m3-bottom{bottom:max(12px,env(safe-area-inset-bottom,0px))}
+.m3-stage.fs .m3-time{width:100%;max-width:720px;justify-self:center}
+.m3-stage.fs .m3-top{top:max(12px,env(safe-area-inset-top,0px))}
+html.m3-lock,html.m3-lock body{overflow:hidden}
+.m3-tools button[aria-pressed="false"]#m3-fs{color:#f2f8f7;border-style:solid}
+.m3-lab.flat{color:#a9cfd0;text-transform:uppercase;letter-spacing:.1em;font-size:10.5px}
+.m3-lab.flat::before{background:#a9cfd0;width:5px;height:5px;margin-top:-3px}
+.m3-bottom{position:absolute;z-index:3;left:12px;right:12px;bottom:12px;display:grid;gap:8px;pointer-events:none}
+.m3-bottom>*{pointer-events:auto}
+.m3-tools{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .m3-tools button{font:500 13px/1 var(--body);color:#f2f8f7;background:rgba(5,42,49,.62);border:1px solid rgba(255,255,255,.3);border-radius:4px;padding:10px 12px;min-width:40px;cursor:pointer;
   -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .m3-tools button:hover{background:rgba(14,124,130,.8)}
@@ -722,7 +741,7 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
 #m3-info-h small{display:block;font:500 12px/1.4 var(--mono);letter-spacing:.04em;color:var(--muted);font-stretch:100%;margin-top:4px}
 .m3-pick{display:grid;gap:8px}
 .m3-rowlab{font:500 12px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}
-.m3-time{position:absolute;z-index:3;left:12px;right:12px;bottom:62px;display:grid;gap:6px;background:rgba(5,42,49,.66);border:1px solid rgba(255,255,255,.22);border-radius:4px;padding:9px 12px 10px;
+.m3-time{display:grid;gap:6px;background:rgba(5,42,49,.66);border:1px solid rgba(255,255,255,.22);border-radius:4px;padding:9px 12px 10px;
   -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .m3-phase{font:500 13px/1.3 var(--body);color:#f2f8f7}
 .m3-time input{width:100%;margin:0;height:22px;accent-color:#f0bd1e;cursor:pointer;touch-action:none}
@@ -730,8 +749,9 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
 @media (max-width:900px){.m3{grid-template-columns:1fr}}
 @media (max-width:640px){
   .m3-stage{height:72vh;min-height:430px;max-height:620px}
+  .m3-stage.fs{height:100dvh;max-height:none}
+  .m3-tools button{padding:10px 9px}
   .m3-btns button{padding:11px 12px;font-size:14px}
-  .m3-compass{display:none}
   .m3-lab{font-size:11px}
 }
 </style>
@@ -772,7 +792,12 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
         <span class="m3-meter"><i id="m3-read-bar"></i></span>
         <span class="m3-read-v" id="m3-read-v"></span>
       </div>
-      <div class="m3-compass" aria-hidden="true"><span id="m3-side"></span></div>
+      <div class="m3-top">
+        <span class="m3-leg"><b>Oikea</b> sääri</span>
+        <select class="m3-sel" id="m3-sel" aria-label="Valitse näkymä" hidden></select>
+        <button type="button" class="m3-dir" id="m3-dir" title="Vaihda katselusuuntaa"><span id="m3-side"></span><i aria-hidden="true">⟳</i></button>
+      </div>
+      <div class="m3-bottom">
       <div class="m3-time" id="m3-time" hidden>
         <span class="m3-phase" id="m3-phase" aria-live="polite"></span>
         <input type="range" id="m3-seek" min="0" max="1000" value="0" aria-label="Animaation vaihe: vedä ohjataksesi animaatiota itse">
@@ -783,6 +808,8 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
         <button type="button" id="m3-zin" aria-label="Lähennä" title="Lähennä (+)">+</button>
         <button type="button" id="m3-zout" aria-label="Loitonna" title="Loitonna (−)">−</button>
         <button type="button" id="m3-reset" title="Palauta näkymä (0)">Palauta</button>
+        <button type="button" id="m3-fs" aria-pressed="false" title="Koko näyttö (F)">Koko näyttö</button>
+      </div>
       </div>
       <p class="m3-load" id="m3-load">Malli latautuu…</p>
     </div>
@@ -828,7 +855,7 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
     </div>
   </div>
 
-  <p class="note"><b>Ohjaus:</b> vedä hiirellä tai sormella kiertääksesi. Zoomaa painikkeilla, nipistämällä tai Ctrl + rullalla. Näppäimistöllä: napsauta mallia ja käytä nuolia (kierto), + ja − (zoom), 1–9 (näkymä), välilyöntiä (tauko), pilkkua ja pistettä (animaatio askel taakse tai eteen), N (nimet) ja 0 (palautus). Animaatiota voi kelata myös mallin alareunan liukusäätimestä.</p>
+  <p class="note"><b>Ohjaus:</b> vedä hiirellä tai sormella kiertääksesi. Oikean yläkulman painike vaihtaa katselusuunnan: edestä, sisäsivulta, takaa ja ulkosivulta. Zoomaa painikkeilla, nipistämällä tai Ctrl + rullalla. Näppäimistöllä: napsauta mallia ja käytä nuolia (kierto), + ja − (zoom), 1–9 (näkymä), välilyöntiä (tauko), pilkkua ja pistettä (animaatio askel taakse tai eteen), N (nimet), F (koko näyttö) ja 0 (palautus). Koko näytön tilassa näkymän voi vaihtaa yläreunan valikosta. Animaatiota voi kelata myös mallin alareunan liukusäätimestä.</p>
   <p class="note">Malli on pelkistetty havainnekuva. Mittasuhteet ovat suuntaa-antavia, ja liikkeet, hehku ja lukemat on liioiteltu näkyviksi. Hermoista ja verisuonista on piirretty vain pinnallinen pohjehermo ja polvitaivevaltimo niiden omissa näkymissä. Se ei ole diagnoosiväline.</p>
 </div></section>
 <script>
@@ -1057,6 +1084,31 @@ var fasciaMat=patch(new T.MeshPhysicalMaterial({color:0xcdeeed,roughness:.25,met
 var fascia=add('fascia',loft({keys:KFA,na:60,nr:56,caps:false,heat:function(th,t){return gauss(angd(th,115*PI/180),.75)*sst(.06,.2,t)*(1-sst(.62,.82,t))}}),fasciaMat,{layer:'fascia'});
 fascia.renderOrder=5;
 
+/* kipualueet ihon pinnalla: säären ja jalkaterän kuoret, joiden maski vaihtuu kiputilan mukaan */
+var painU={uBend:G.uBend,uCol:{value:new T.Color(0xff3d2e)},uA:{value:0}};
+function painMat(){return new T.ShaderMaterial({uniforms:painU,transparent:true,depthWrite:false,
+  vertexShader:'uniform float uBend;attribute float aHeat;varying float vH;void main(){vH=aHeat;vec3 p=position+normal*.012;float bt=clamp((1.9-p.y)/3.8,0.,1.);p.xz+=uBend*sin(3.14159265*bt)*vec2(-.45,1.);gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);}',
+  fragmentShader:'uniform vec3 uCol;uniform float uA;varying float vH;void main(){float a=smoothstep(.02,.55,vH);float e=smoothstep(.1,.2,vH)*(1.-smoothstep(.2,.34,vH));gl_FragColor=vec4(mix(uCol,vec3(1.,.82,.7),e*.6),(a*.42+e*.5)*uA);}'})}
+var KSK=[[-.02,-.02,-.08,.52,.49],[.12,-.05,-.08,.58,.59],[.28,-.06,-.09,.6,.65],[.5,-.07,-.05,.52,.56],[.7,-.06,-.01,.42,.45],[.85,-.05,0,.36,.39],[1,-.03,-.02,.36,.39],[1.09,-.02,-.02,.37,.4]];
+var KFT=[[-.62,.02,-2.3,.05,.05],[-.55,.02,-2.28,.2,.17],[-.35,.02,-2.23,.25,.21],[-.05,.04,-2.16,.27,.24],[.3,.04,-2.21,.3,.18],[.7,.02,-2.28,.36,.12],[1,0,-2.34,.38,.08],[1.3,-.02,-2.385,.33,.05],[1.38,-.02,-2.395,.1,.03]].map(function(k){return [k[0],k[1],k[2],k[3]*1.07,k[4]*1.1]});
+function shell(keys,axis,na,nr){var g=loft({keys:keys,axis:axis,na:na,nr:nr,caps:false}),m=new T.Mesh(g,painMat());m.renderOrder=6;m.visible=false;
+  m.userData={na:na,nr:nr,t0:keys[0][0],t1:keys[keys.length-1][0]};return m}
+var legShell=shell(KSK,'y',90,72),footShell=shell(KFT,'z',48,40);
+model.add(legShell);footShell.geometry.translate(-.05,2.16,0);byId.foot.add(footShell);
+function setZone(mesh,fn){mesh.visible=!!fn;if(!fn)return;var u=mesh.userData,a=mesh.geometry.attributes.aHeat;
+  for(var i=0;i<=u.na;i++){var t=u.t0+(u.t1-u.t0)*i/u.na;for(var j=0;j<=u.nr;j++)a.setX(i*(u.nr+1)+j,fn(TAU*j/u.nr,t))}a.needsUpdate=true}
+function band(t,a,b,e){e*=1.8;return sst(a-e,a+e,t)*(1-sst(b-e,b+e,t))}
+function ang(th,deg,w){return 1-sst(w*.3,w,Math.abs(angd(th,deg*PI/180)))}
+/* säären kulma: 0° sisäsivu, 90° etupuoli, 180° ulkosivu, 270° takapuoli. Jalkaterän kulma: 0° sisäreuna, 90° jalkapöytä. */
+var ZON={
+ mtss:{leg:function(th,t){return ang(th,335,.8)*band(t,.47,.96,.04)}},
+ cecs:{leg:function(th,t){return ang(th,125,1.15)*band(t,.14,.76,.06)}},
+ atsf:{leg:function(th,t){return ang(th,72,.42)*band(t,.47,.53,.02)}},
+ spne:{leg:function(th,t){return ang(th,140,.85)*band(t,.7,1.08,.05)},foot:function(th,z){return ang(th,100,1.15)*band(z,.02,1.14,.08)*(1-ang(th,55,.5)*sst(.8,1,z))}},
+ paes:{leg:function(th,t){return ang(th,270,1.25)*band(t,.07,.62,.06)},foot:function(th,z){return .5*band(z,-.35,1.3,.1)}},
+ tend:{leg:function(th,t){return ang(th,350,.8)*band(t,.87,1.1,.04)},foot:function(th,z){return ang(th,-8,1.05)*band(z,-.28,.5,.07)}}
+};
+
 /* lattia: kenttämaton kehä */
 (function(){
   var c=document.createElement('canvas');c.width=c.height=512;var x=c.getContext('2d'),g=x.createRadialGradient(256,256,0,256,256,256);
@@ -1114,12 +1166,12 @@ var MODES={
  bend:{k:'Mekanismi',h:'Luu taipuu',p:'Jokainen ponnistus ja alastulo taivuttaa ja vääntää sääriluuta. Rasitus keskittyy taka-sisäreunalle, joka hehkuu mallissa. Kun kuorma kasvaa nopeammin kuin luu ehtii korjata mikrovauriot, syntyy rasitusreaktio.',c:'Taipuma on liioiteltu moninkertaiseksi, jotta se näkyy. Todellinen taipuma on millimetrin osia.',yaw:118,pitch:6,read:'Kuorma',dur:2.6,ph:['Alastulo: kuorma nousee','Luu taipuu ja palautuu','Kuorma poistuu'],dim:dimMech([],.16)},
  pull:{k:'Mekanismi',h:'Kalvo vetää',p:'Leveä kantalihas, varpaiden pitkä koukistaja ja syvä säärifaskia kiinnittyvät sääriluun taka-sisäreunaan. Toistuva lihastyö vetää runsashermoista luukalvoa. Vetoa pidetään nykyään luun taipumista täydentävänä tekijänä, ei pääselityksenä.',c:'Nuolet näyttävät vedon suunnan. Takimmainen säärilihas on himmennetty, koska se ei kiinnity oirealueelle.',yaw:128,pitch:4,read:'Lihasveto',dur:2.4,ph:['Lihas supistuu','Veto luukalvoon on suurimmillaan','Lihas rentoutuu'],dim:function(u,id){return u.layer==='bone'||id==='sol'||id==='fdl'?1:(id==='tp'||id==='tptendon'?.3:.12)}},
  press:{k:'Mekanismi',h:'Aitio ahtautuu',p:'Kuormituksessa lihas turpoaa. Jos peitinkalvo ei jousta, etuaition paine nousee, hiussuonet painuvat kasaan ja hapenpuute sekä hermojen puristus aiheuttavat kivun. Kipu hellittää levossa minuuteissa.',c:'Periaatekuva. Lepopaine on 0–8 mmHg; raja-arvona pidetään vähintään 30 mmHg minuutti rasituksen jälkeen.',yaw:-34,pitch:6,read:'Aitiopaine',dur:7,ph:['Rasitus alkaa','Lihas turpoaa kalvoa vasten','Paine on suurimmillaan','Paine laskee'],dim:dimMech(['ant'],.22),fo:.95},
- mtss:{cond:1,k:'Yleisin rasitusperäinen säärikipu',h:'Sääriluun sisäreunan rasitusoireyhtymä (MTSS)',p:'Toistuvat alastulot taivuttavat sääriluuta, ja kiinnittyvät lihakset ja kalvo vetävät luukalvoa. Kun kuorma kasvaa nopeammin kuin luu ehtii korjautua, taka-sisäreuna ärtyy pitkältä matkalta.',kv:[['Missä','Sääriluun sisä- ja taka-sisäreunalla, keski- ja alakolmanneksessa.'],['Miltä tuntuu','Tylppää ja jomottavaa. Arkuus ulottuu vähintään 5 cm:n matkalle.'],['Tunnusmerkki','Tuntuu treenin alussa ja voi lieventyä lämmetessä, mutta palaa rasituksen jälkeen.']],c:'Taipuma on liioiteltu. Hehku kuvaa rasituksen kertymistä, ei mitattua arvoa.',labs:['sol','tibia'],yaw:118,pitch:6,read:'Kertynyt rasitus',dur:9,ph:['Alastulo taivuttaa sääriluuta','Kuorma toistuu, eikä korjaus ehdi mukaan','Arkuus leviää reunaa pitkin vähintään 5 cm matkalle'],dim:function(u,id){return u.layer==='bone'?1:(id==='sol'||id==='fdl'?.5:.14)}},
- cecs:{cond:1,k:'Paine, ei pistävä kipu',h:'Krooninen rasitusperäinen lihasaitio-oireyhtymä (CECS)',p:'Rasituksessa lihas turpoaa. Kun peitinkalvo ei jousta, aition paine nousee ja puristaa hiussuonia ja hermoja. Oire alkaa lähes aina samalla rasituskynnyksellä.',kv:[['Missä','Säären etu-ulkosivulla tai syvässä taka-aitiossa, useimmiten molemmissa säärissä.'],['Miltä tuntuu','Painetta, kiristystä ja lihaksen kovettumista, joskus pistelyä tai puutumista.'],['Tunnusmerkki','Helpottaa levossa muutamassa minuutissa. Levossa sääri on usein normaali.']],c:'Periaatekuva. Lepopaine on 0–8 mmHg; raja-arvona pidetään vähintään 30 mmHg minuutti rasituksen jälkeen.',labs:['ta','tibia'],yaw:-34,pitch:6,read:'Aitiopaine',dur:10,ph:['Lepo: aition paine on matala','Rasitus: lihas turpoaa, mutta kalvo ei jousta','Lepo: paine laskee ja kipu hellittää minuuteissa'],dim:dimMech(['ant'],.2),fo:.95},
- atsf:{cond:1,k:'Hyppylajien petollinen murtuma',h:'Sääriluun etukorteksin rasitusmurtuma',p:'Ponnistus ja alastulo taivuttavat sääriluuta eteenpäin, jolloin etuharjanne joutuu toistuvaan vetoon. Vetopuolella luu paranee huonosti, ja rasitusreaktio voi edetä murtumalinjaksi.',kv:[['Missä','Tarkkarajaisesti suoraan sääriluun etuharjanteella.'],['Miltä tuntuu','Terävää, pistemäistä luukipua alle 5 cm:n alueella. Etenee usein yö- ja leposäryksi.'],['Tunnusmerkki','Kipu herää yhden jalan hypyssä. Ei useinkaan parane pelkällä levolla, joten vaatii kuvantamisen.']],c:'Taipuma ja murtumalinja on liioiteltu näkyviksi.',yaw:28,pitch:4,dist:9.4,ty:.05,read:'Vetorasitus',dur:9,ph:['Ponnistus ja alastulo taivuttavat luuta eteenpäin','Etuharjanne venyy: pistemäinen rasitusreaktio','Murtumalinja etukorteksissa'],dim:dimMech([],.12)},
- spne:{cond:1,k:'Usein väärin diagnosoitu',h:'Pinnallisen pohjehermon pinne (SPNE)',p:'Hermo nousee ulkoaitiosta peitinkalvon läpi ihon alle 10–13 cm nilkan yläpuolella. Kireä kalvoaukko, lihastyrä tai arpi voi puristaa sitä, ja rasituksessa pullistuva lihas pahentaa puristusta.',kv:[['Missä','Säären ulko-alaosassa ja jalkapöydän päällä.'],['Miltä tuntuu','Polttelua, pistelyä tai puutumista. Sähköistävää pikemmin kuin jomottavaa.'],['Tunnusmerkki','Läpäisykohdan napautus säteilee sähköiskumaisesti alaspäin. Taustalla usein nilkan inversiovenähdys.']],c:'Hermon reitti on pelkistetty. Vaaleat pisteet kuvaavat oireen säteilyä, eivät hermoimpulssin nopeutta.',labs:['per','fibula'],yaw:-58,pitch:8,dist:8.8,ty:-1.05,read:'Hermon puristus',dur:10,ph:['Hermo nousee ulkoaitiosta peitinkalvon läpi ihon alle','Rasitus: lihas pullistuu aukkoon ja hermo jää puristuksiin','Polttelu ja pistely säteilevät jalkapöydälle'],dim:function(u,id){return u.layer==='bone'||u.layer==='lat'?1:(u.layer==='ant'?.45:.1)},fo:.8},
- paes:{cond:1,k:'Harvinainen, tärkeä tunnistaa',h:'Polvitaivevaltimon pinneoireyhtymä (PAES)',p:'Valtimo kulkee polvitaipeessa kaksoiskantalihaksen päiden välistä. Poikkeavasti kulkeva lihaksen pää tai jänne tai harjoittelun kasvattama pohjelihas painaa valtimon kasaan, kun lihas supistuu.',kv:[['Missä','Pinne on polvitaipeessa, oire tuntuu pohkeessa tai jalkaterässä.'],['Miltä tuntuu','Kramppimaista kipua, väsymistä ja raskautta. Jalkaterä voi tuntua kylmältä tai näyttää kalpealta.'],['Tunnusmerkki','Helpottaa yleensä 3–5 minuutin levolla. Jatkuessaan voi vaurioittaa valtimoa.']],c:'Periaatekuva takaa katsottuna. Virtauslukema havainnollistaa muutosta, se ei ole mittaustulos.',yaw:170,pitch:5,dist:8.4,ty:1.2,read:'Virtaus',dur:10,ph:['Lepo: veri virtaa vapaasti lihaksen päiden välistä','Ponnistus: supistuva lihas painaa valtimon kasaan','Pohje jää vähälle verelle, kunnes lihas rentoutuu'],dim:function(u,id){return u.layer==='bone'||id==='gasm'?1:(id==='gasl'?.42:(id==='sol'?.22:.08))},fo:.14},
- tend:{cond:1,k:'Tavallinen hyppylajeissa',h:'Takimmaisen säärilihaksen jännevaiva',p:'Jänne kiertää sisäkehräksen takaa jalkaholviin ja kannattelee holvia. Alastulossa holvi painuu ja jänne venyy kehräksen ympäri. Toistuva kuorma ärsyttää jännettä ja sen tuppea.',kv:[['Missä','Tarkasti jänteen kulkureitillä sisäkehräksen takana.'],['Miltä tuntuu','Paikallista kipua, mahdollisesti näkyvää turvotusta jänteen kohdalla.'],['Tunnusmerkki','Arkuus pysyy jänteen kohdalla eikä leviä sääriluun reunaa pitkin.']],c:'Jalkaterän kallistus on liioiteltu. Jalkaterä on mallissa pelkistetty.',yaw:136,pitch:8,dist:8.2,ty:-1.3,read:'Jänteen kuorma',dur:9,ph:['Jänne kiertää sisäkehräksen takaa jalkaholviin','Alastulo: holvi painuu ja jänne venyy','Toistuva kuorma: kipu ja turvotus jänteen kohdalla'],dim:function(u,id){return u.layer==='bone'||id==='tp'||id==='tptendon'?1:(id==='fdl'?.3:.1)},fo:.16}
+ mtss:{cond:1,k:'Yleisin rasitusperäinen säärikipu',h:'Sääriluun sisäreunan rasitusoireyhtymä (MTSS)',p:'Toistuvat alastulot taivuttavat sääriluuta, ja kiinnittyvät lihakset ja kalvo vetävät luukalvoa. Kun kuorma kasvaa nopeammin kuin luu ehtii korjautua, taka-sisäreuna ärtyy pitkältä matkalta.',kv:[['Missä','Sääriluun taka-sisäreunalla keski- ja alakolmanneksessa: tyypillisesti noin 4 cm sisäkehräksen yläpuolelta 12 cm ylöspäin tai pidemmälle.'],['Miltä tuntuu','Tylppää ja jomottavaa. Arkuus ulottuu vähintään 5 cm:n matkalle.'],['Tunnusmerkki','Tuntuu treenin alussa ja voi lieventyä lämmetessä, mutta palaa rasituksen jälkeen.']],c:'Taipuma on liioiteltu. Hehku kuvaa rasituksen kertymistä, ei mitattua arvoa.',labs:['sol','tibia'],yaw:118,pitch:6,read:'Kertynyt rasitus',dur:9,ph:['Alastulo taivuttaa sääriluuta','Kuorma toistuu, eikä korjaus ehdi mukaan','Arkuus leviää reunaa pitkin vähintään 5 cm matkalle'],dim:function(u,id){return u.layer==='bone'?1:(id==='sol'||id==='fdl'?.5:.14)}},
+ cecs:{cond:1,k:'Paine, ei pistävä kipu',h:'Krooninen rasitusperäinen lihasaitio-oireyhtymä (CECS)',p:'Rasituksessa lihas turpoaa. Kun peitinkalvo ei jousta, aition paine nousee ja puristaa hiussuonia ja hermoja. Oire alkaa lähes aina samalla rasituskynnyksellä.',kv:[['Missä','Säären etu-ulkosivulla sääriluun ja pohjeluun välissä. Etuaitio on selvästi yleisin, ulkoaitio toiseksi yleisin. Harvemmin syvässä taka-aitiossa. Useimmiten molemmissa säärissä.'],['Miltä tuntuu','Painetta, kiristystä ja lihaksen kovettumista, joskus pistelyä tai puutumista.'],['Tunnusmerkki','Helpottaa levossa muutamassa minuutissa. Levossa sääri on usein normaali.']],c:'Periaatekuva. Lepopaine on 0–8 mmHg; raja-arvona pidetään vähintään 30 mmHg minuutti rasituksen jälkeen.',labs:['ta','tibia'],yaw:-34,pitch:6,read:'Aitiopaine',dur:10,ph:['Lepo: aition paine on matala','Rasitus: lihas turpoaa, mutta kalvo ei jousta','Lepo: paine laskee ja kipu hellittää minuuteissa'],dim:dimMech(['ant'],.2),fo:.95},
+ atsf:{cond:1,k:'Hyppylajien petollinen murtuma',h:'Sääriluun etukorteksin rasitusmurtuma',p:'Ponnistus ja alastulo taivuttavat sääriluuta eteenpäin, jolloin etuharjanne joutuu toistuvaan vetoon. Vetopuolella luu paranee huonosti, ja rasitusreaktio voi edetä murtumalinjaksi.',kv:[['Missä','Pistemäisesti sääriluun etuharjanteella varren keskikolmanneksessa.'],['Miltä tuntuu','Terävää, pistemäistä luukipua alle 5 cm:n alueella. Etenee usein yö- ja leposäryksi.'],['Tunnusmerkki','Kipu herää yhden jalan hypyssä. Ei useinkaan parane pelkällä levolla, joten vaatii kuvantamisen.']],c:'Taipuma ja murtumalinja on liioiteltu näkyviksi.',yaw:28,pitch:4,dist:9.4,ty:.05,read:'Vetorasitus',dur:9,ph:['Ponnistus ja alastulo taivuttavat luuta eteenpäin','Etuharjanne venyy: pistemäinen rasitusreaktio','Murtumalinja etukorteksissa'],dim:dimMech([],.12)},
+ spne:{cond:1,k:'Usein väärin diagnosoitu',h:'Pinnallisen pohjehermon pinne (SPNE)',p:'Hermo nousee ulkoaitiosta peitinkalvon läpi ihon alle 10–13 cm nilkan yläpuolella. Kireä kalvoaukko, lihastyrä tai arpi voi puristaa sitä, ja rasituksessa pullistuva lihas pahentaa puristusta.',kv:[['Missä','Säären etu-ulkosivun alakolmanneksessa ja jalkapöydällä. Isovarpaan ja toisen varpaan väli säästyy.'],['Miltä tuntuu','Polttelua, pistelyä tai puutumista. Sähköistävää pikemmin kuin jomottavaa.'],['Tunnusmerkki','Läpäisykohdan napautus säteilee sähköiskumaisesti alaspäin. Taustalla usein nilkan inversiovenähdys.']],c:'Hermon reitti on pelkistetty. Vaaleat pisteet kuvaavat oireen säteilyä, eivät hermoimpulssin nopeutta.',labs:['per','fibula'],yaw:-58,pitch:8,dist:8.8,ty:-1.05,read:'Hermon puristus',dur:10,ph:['Hermo nousee ulkoaitiosta peitinkalvon läpi ihon alle','Rasitus: lihas pullistuu aukkoon ja hermo jää puristuksiin','Polttelu ja pistely säteilevät jalkapöydälle'],dim:function(u,id){return u.layer==='bone'||u.layer==='lat'?1:(u.layer==='ant'?.45:.1)},fo:.8},
+ paes:{cond:1,k:'Harvinainen, tärkeä tunnistaa',h:'Polvitaivevaltimon pinneoireyhtymä (PAES)',p:'Valtimo kulkee polvitaipeessa kaksoiskantalihaksen päiden välistä. Poikkeavasti kulkeva lihaksen pää tai jänne tai harjoittelun kasvattama pohjelihas painaa valtimon kasaan, kun lihas supistuu.',kv:[['Missä','Pinne on polvitaipeessa, mutta kipu tuntuu sen alapuolella pohkeen takaosassa. Jalkaterä voi puutua ja tuntua kylmältä.'],['Miltä tuntuu','Kramppimaista kipua, väsymistä ja raskautta. Jalkaterä voi tuntua kylmältä tai näyttää kalpealta.'],['Tunnusmerkki','Helpottaa yleensä 3–5 minuutin levolla. Jatkuessaan voi vaurioittaa valtimoa.']],c:'Periaatekuva takaa katsottuna. Virtauslukema havainnollistaa muutosta, se ei ole mittaustulos.',yaw:170,pitch:5,dist:8.4,ty:1.2,read:'Virtaus',dur:10,ph:['Lepo: veri virtaa vapaasti lihaksen päiden välistä','Ponnistus: supistuva lihas painaa valtimon kasaan','Pohje jää vähälle verelle, kunnes lihas rentoutuu'],dim:function(u,id){return u.layer==='bone'||id==='gasm'?1:(id==='gasl'?.42:(id==='sol'?.22:.08))},fo:.14},
+ tend:{cond:1,k:'Tavallinen hyppylajeissa',h:'Takimmaisen säärilihaksen jännevaiva',p:'Jänne kiertää sisäkehräksen takaa jalkaholviin ja kannattelee holvia. Alastulossa holvi painuu ja jänne venyy kehräksen ympäri. Toistuva kuorma ärsyttää jännettä ja sen tuppea.',kv:[['Missä','Sisäkehräksen takana ja alla jänteen reitillä veneluuhun asti, joskus myös säären sisäsivun alaosassa.'],['Miltä tuntuu','Paikallista kipua, mahdollisesti näkyvää turvotusta jänteen kohdalla.'],['Tunnusmerkki','Arkuus pysyy jänteen kohdalla eikä leviä sääriluun reunaa pitkin.']],c:'Jalkaterän kallistus on liioiteltu. Jalkaterä on mallissa pelkistetty.',yaw:136,pitch:8,dist:8.2,ty:-1.3,read:'Jänteen kuorma',dur:9,ph:['Jänne kiertää sisäkehräksen takaa jalkaholviin','Alastulo: holvi painuu ja jänne venyy','Toistuva kuorma: kipu ja turvotus jänteen kohdalla'],dim:function(u,id){return u.layer==='bone'||id==='tp'||id==='tptendon'?1:(id==='fdl'?.3:.1)},fo:.16}
 };
 var ORDER=['anat','bend','pull','press','mtss','cecs','atsf','spne','paes','tend'];
 var LABS=[
@@ -1140,23 +1192,29 @@ var LABS=[
  ['artery','Pinnekohta',function(){return new T.Vector3(0,Y(.02),-.34)},1,1,['paes']],
  ['gasm','Kaksoiskantalihaksen sisempi pää',function(){return new T.Vector3(.3,Y(.2),-.56)},0,0,['paes']],
  ['tptendon','Jänteen kipukohta',function(){return new T.Vector3(.345,Y(1.06),-.05)},0,1,['tend']],
- ['tp','Takimmainen säärilihas',function(){return new T.Vector3(.14,Y(.84),-.05)},0,0,['tend']]
+ ['tp','Takimmainen säärilihas',function(){return new T.Vector3(.14,Y(.84),-.05)},0,0,['tend']],
+ ['skin','Kipualue: etu-ulkosivu',function(){return new T.Vector3(-.42,Y(.45),.36)},1,1,['cecs']],
+ ['skin','Kipualue: jalkapöytä',function(){return new T.Vector3(-.02,-2.1,.72)},0,1,['spne']],
+ ['skin','Kipualue: pohje',function(){return new T.Vector3(0,Y(.32),-.74)},0,1,['paes']],
+ ['floor','sisäsivu',function(){return new T.Vector3(1.2,-2.44,.25)},0,0,0,1],
+ ['floor','ulkosivu',function(){return new T.Vector3(-1.2,-2.44,.25)},1,0,0,1]
 ];
 
 /* ---------- tila ---------- */
 var st={mode:'anat',yaw:32*PI/180,pitch:8*PI/180,dist:12.6,gy:32*PI/180,gp:8*PI/180,gd:12.6,auto:!reduce,play:!reduce,names:true,sel:null,hov:null,
   layers:{fascia:true,ant:true,lat:true,sup:true,deep:true},t:0,p:0,ty:-.12,gty:-.12,visible:true};
 var TARGET=new T.Vector3(.02,-.12,.12),DMIN=4.6,DMAX=17;
-var labs=LABS.map(function(l){var e=document.createElement('span');e.className='m3-lab'+(l[3]?' r':'')+(l[4]?' hot':'');e.textContent=l[1];labBox.appendChild(e);
-  var p=l[2]();return {id:l[0],el:e,p:p,right:!!l[3],hot:!!l[4],only:l[5]}});
+var labs=LABS.map(function(l){var e=document.createElement('span');e.className='m3-lab'+(l[3]?' r':'')+(l[4]?' hot':'')+(l[6]?' flat':'');e.textContent=l[1];labBox.appendChild(e);
+  var p=l[2]();return {id:l[0],el:e,p:p,right:!!l[3],hot:!!l[4],only:l[5],flat:!!l[6]}});
 
 function setPressed(box,fn){[].forEach.call(box.querySelectorAll('button'),function(b){var v=fn(b);if(v!==undefined)b.setAttribute('aria-pressed',v?'true':'false')})}
 function setMode(m,keepCam){
   st.mode=m;var d=MODES[m];
-  $('m3-mode-k').textContent=d.k;$('m3-mode-h').textContent=d.h;$('m3-mode-p').textContent=d.p;$('m3-mode-c').textContent=d.c;
+  $('m3-mode-k').textContent=d.k;$('m3-mode-h').textContent=d.h;$('m3-mode-p').textContent=d.p;$('m3-mode-c').textContent=(d.cond?'Punainen alue ihon pinnalla näyttää, missä kipu tyypillisesti tuntuu. ':'')+d.c;
+  var z=ZON[m]||{};setZone(legShell,z.leg);setZone(footShell,z.foot);painU.uA.value=0;
   var kv=$('m3-mode-kv');kv.innerHTML='';kv.hidden=!d.kv;
   (d.kv||[]).forEach(function(r){var a=document.createElement('dt'),b=document.createElement('dd');a.textContent=r[0];b.textContent=r[1];kv.appendChild(a);kv.appendChild(b)});
-  setPressed($('m3-modes'),function(b){return b.getAttribute('data-mode')===m});
+  setPressed($('m3-modes'),function(b){return b.getAttribute('data-mode')===m});$('m3-sel').value=m;
   $('m3-read').hidden=!d.read;if(d.read)$('m3-read-l').textContent=d.read;
   $('m3-time').hidden=!d.ph;
   if(!keepCam){goCam(d.yaw,d.pitch,d.dist||12.6,d.ty===undefined?-.12:d.ty);st.auto=false}
@@ -1220,6 +1278,23 @@ function reset(){var d=MODES[st.mode];goCam(d.yaw,d.pitch,d.dist||12.6,d.ty===un
 $('m3-play').addEventListener('click',togglePlay);$('m3-names').addEventListener('click',toggleNames);
 $('m3-zin').addEventListener('click',function(){zoom(.84)});$('m3-zout').addEventListener('click',function(){zoom(1.19)});$('m3-reset').addEventListener('click',reset);
 if(reduce){st.play=true;togglePlay()}
+/* koko näyttö: selaimen Fullscreen API, ja jos sitä ei ole (esim. iPhone), sivun päälle kiinnitetty näkymä */
+var fsBtn=$('m3-fs'),sel=$('m3-sel'),root=document.documentElement;
+function fsEl(){return document.fullscreenElement||document.webkitFullscreenElement}
+function isFs(){return fsEl()===stage||stage.classList.contains('fs-css')}
+function syncFs(){var on=isFs();stage.classList.toggle('fs',on);fsBtn.setAttribute('aria-pressed',on?'true':'false');fsBtn.textContent=on?'Sulje koko näyttö':'Koko näyttö';sel.hidden=!on;W=0}
+function cssFs(){stage.classList.add('fs-css');root.classList.add('m3-lock');syncFs()}
+function setFs(on){
+  if(on){var rq=stage.requestFullscreen||stage.webkitRequestFullscreen;
+    if(rq){try{var pr=rq.call(stage);if(pr&&pr.catch)pr.catch(cssFs)}catch(e){cssFs()}}else cssFs()}
+  else{if(fsEl()){var ex=document.exitFullscreen||document.webkitExitFullscreen;if(ex)ex.call(document)}
+    stage.classList.remove('fs-css');root.classList.remove('m3-lock');syncFs()}
+}
+fsBtn.addEventListener('click',function(){setFs(!isFs())});
+document.addEventListener('fullscreenchange',syncFs);document.addEventListener('webkitfullscreenchange',syncFs);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&stage.classList.contains('fs-css'))setFs(false)});
+ORDER.forEach(function(k){var o=document.createElement('option');o.value=k;o.textContent=MODES[k].h;sel.appendChild(o)});
+sel.addEventListener('change',function(){setMode(sel.value)});
 var seek=$('m3-seek'),seeking=false;
 seek.addEventListener('input',function(){st.p=Math.min(.999,seek.value/1000);if(st.play)togglePlay()});
 seek.addEventListener('pointerdown',function(){seeking=true});addEventListener('pointerup',function(){seeking=false});
@@ -1271,6 +1346,7 @@ canvas.addEventListener('keydown',function(e){
   else if(k==='0'||k==='r'||k==='R')reset();
   else if(k>='1'&&k<='9')setMode(ORDER[+k-1]);
   else if(k===','||k==='<')step(-.02);else if(k==='.'||k==='>')step(.02);
+  else if(k==='f'||k==='F')setFs(!isFs());
   else if(k===' ')togglePlay();else if(k==='n'||k==='N')toggleNames();
   else if(k==='Escape')select(null);else h=false;
   if(h)e.preventDefault();
@@ -1284,7 +1360,9 @@ function resize(){
   renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));renderer.setSize(w,h,false);
   cam.aspect=w/h;cam.fov=w/h<.62?31:27;cam.updateProjectionMatrix();
 }
-var v3=new T.Vector3(),SIDES=['Edestä','Sisäsivulta','Takaa','Ulkosivulta'];
+var v3=new T.Vector3(),SIDES=['Edestä','Sisäsivulta','Takaa','Ulkosivulta'],dirBtn=$('m3-dir'),dirNow='';
+function quad(){return ((Math.round(st.gy/(PI/2))%4)+4)%4}
+dirBtn.addEventListener('click',function(){st.auto=false;goCam(((quad()+1)%4)*90,6)});
 function frame(dt){
   resize();
   if(st.auto&&!Object.keys(ptrs).length){st.gy+=dt*.22}
@@ -1306,34 +1384,35 @@ function frame(dt){
   G.uBend.value=0;byId.foot.rotation.z=0;
   parts.forEach(function(q){var u=q.material.userData.u;if(u){u.uHeat.value=0;u.uHeat2.value=0;u.uSwell.value=0;u.uPinch.value=0}});
   function U(id){return byId[id].material.userData.u}
-  var tib=U('tibia');
+  var tib=U('tibia'),pain=0;
   if(m==='anat'){tib.uHeat.value=.42}
   else if(m==='bend'){L=p<.1?sst(0,.1,p):Math.exp(-(p-.1)*5.2);G.uBend.value=.075*L;tib.uHeat.value=.25+.75*L}
   else if(m==='pull'){L=.5-.5*Math.cos(TAU*p);tib.uHeat.value=.2+.6*L;U('sol').uSwell.value=U('fdl').uSwell.value=.012*L;U('sol').uHeat.value=U('fdl').uHeat.value=.1*L}
   else if(m==='press'||m==='cecs'){
     L=m==='press'?.5-.5*Math.cos(TAU*p):(p<.1?0:(p<.62?sst(.1,.58,p):1-.92*sst(.64,.97,p)));
     ['ta','edl'].forEach(function(id){U(id).uSwell.value=.03*L;U(id).uHeat.value=.5*L});U('fascia').uHeat.value=.75*L;
-    val='≈ '+Math.round(8+27*L)+' mmHg';
+    val='≈ '+Math.round(8+27*L)+' mmHg';pain=m==='cecs'?sst(.35,.85,L):0;
   }
-  else if(m==='mtss'){var q=land(3);L=sst(0,1,p);G.uBend.value=.07*q;tib.uHeat.value=.15+1.5*L*(.8+.2*q);U('sol').uSwell.value=U('fdl').uSwell.value=.01*q}
+  else if(m==='mtss'){var q=land(3);L=sst(0,1,p);G.uBend.value=.07*q;tib.uHeat.value=.15+1.5*L*(.8+.2*q);U('sol').uSwell.value=U('fdl').uSwell.value=.01*q;pain=sst(.3,.9,p)}
   else if(m==='atsf'){var q2=land(3);L=sst(0,1,p);G.uBend.value=.085*q2;tib.uHeat2.value=.12+1.5*L*(.75+.25*q2);
-    byId.crack.material.opacity=sst(.62,.86,p);
+    byId.crack.material.opacity=sst(.62,.86,p);pain=sst(.3,.62,p);
     aTen[0].set(new T.Vector3(CR.x,CR.y+.06,CR.z),new T.Vector3(CR.x,CR.y+.2+.2*q2,CR.z));
     aTen[1].set(new T.Vector3(CR.x,CR.y-.06,CR.z),new T.Vector3(CR.x,CR.y-.2-.2*q2,CR.z))}
   else if(m==='spne'){L=sst(.3,.62,p);U('per').uSwell.value=.024*L;U('per').uHeat.value=.25*L;
     var rs=1-.42*L+.04*Math.sin(t*6)*L;ring.scale.set(rs,rs,1);ring.material.color.setHSL(.07-.05*L,1,.6);ring.material.opacity=.55+.45*L;
     nerveMat.emissiveIntensity=.12+.9*L;
-    var ra=sst(.6,.72,p);nDots.forEach(function(x,i){var u=((t*.45+i/nDots.length)%1);x.visible=ra>0;x.position.copy(nerveCurve.getPoint(.46+.54*u));x.material.opacity=ra*(1-u*.6);x.scale.setScalar(.7+.6*Math.sin(u*PI))})}
+    var ra=sst(.6,.72,p);pain=sst(.5,.72,p);nDots.forEach(function(x,i){var u=((t*.45+i/nDots.length)%1);x.visible=ra>0;x.position.copy(nerveCurve.getPoint(.46+.54*u));x.material.opacity=ra*(1-u*.6);x.scale.setScalar(.7+.6*Math.sin(u*PI))})}
   else if(m==='paes'){L=p<.18?0:(p<.7?sst(.18,.46,p):1-sst(.72,.94,p));
     U('gasm').uSwell.value=.032*L;U('gasm').uHeat.value=.18*L;var au=U('artery');au.uPinch.value=-.027*L;au.uHeat.value=.9*L;au.uHeat2.value=.95*L;
     aDots.forEach(function(x,i){var u=((t*.3+i/aDots.length)%1),tt=-.42+1.4*u,sp=samp(KA,tt);x.position.set(sp[0],Y(tt),sp[1]);
       x.material.opacity=(tt>.02?1-L:1)*.95;x.scale.setScalar(tt>.25?.7:1)});
-    val=Math.round(100-85*L)+' %';L=1-L}
+    pain=sst(.45,.95,L);val=Math.round(100-85*L)+' %';L=1-L}
   else if(m==='tend'){var q3=land(3);L=.12+.88*sst(.2,.95,p);byId.foot.rotation.z=-.15*q3*(p<.3?sst(.3,.36,p+.3):1);
-    U('tp').uHeat2.value=L;U('tp').uSwell.value=.012*q3;tpMat.emissiveIntensity=.75*L;
+    pain=sst(.3,.85,p);U('tp').uHeat2.value=L;U('tp').uSwell.value=.012*q3;tpMat.emissiveIntensity=.75*L;
     aTp[0].set(new T.Vector3(.36,Y(1.0),-.1),new T.Vector3(.33,Y(1.0)+.2+.22*q3,-.08));
     aTp[1].set(new T.Vector3(.5,-1.98+.1*(1-q3),.3),new T.Vector3(.5,-2.3,.3));aTp[1].userData.m.opacity=.3+.65*q3}
   if(m!=='tend')tpMat.emissiveIntensity=0;
+  painU.uA.value=pain*(.86+.14*Math.sin(t*3.2));
   if(m==='bend'||m==='mtss'||m==='atsf'){var qq=m==='bend'?L:land(3);
     aLoad.set(new T.Vector3(.05,2.75+.2*(1-qq),0),new T.Vector3(.05,2.0,0));
     aGround.set(new T.Vector3(.05,-3.2-.2*(1-qq),.55),new T.Vector3(.05,-2.5,.55));
@@ -1358,7 +1437,8 @@ function frame(dt){
   labs.forEach(function(l){
     var part=byId[l.id]||byId.tibia,on=st.names&&part.visible&&(l.only?l.only.indexOf(m)>=0:(MODES[m].cond?(MODES[m].labs||[]).indexOf(l.id)>=0:(part.userData.layer==='bone'||part.material.opacity>.9)));
     if(l.id==='fascia')on=st.names&&part.visible&&(m==='anat'||m==='press'||m==='cecs');
-    var face=(l.p.x-.0)*cx+(l.p.z-0)*cz;
+    if(l.flat)on=true;
+    var face=l.flat?1:(l.p.x-.0)*cx+(l.p.z-0)*cz;
     v3.copy(l.p).project(cam);
     var x=(v3.x*.5+.5)*W,y=(-v3.y*.5+.5)*H,o=on?Math.max(0,Math.min(1,(face+.08)*6)):0;
     var right=l.right!==(Math.cos(st.yaw+0)<0);          /* peilaa puoli, kun malli on käännetty */
@@ -1367,7 +1447,8 @@ function frame(dt){
     l.el.style.opacity=o;
     l.el.style.transform='translate('+Math.max(2,Math.min(W-lw-2,right?x-lw+4:x-4))+'px,'+(y-11)+'px)';
   });
-  var q=((Math.round(st.yaw/(PI/2))%4)+4)%4;$('m3-side').textContent=st.pitch>.9?'Ylhäältä':SIDES[q];
+  var dn=st.pitch>.9?'Ylhäältä':SIDES[((Math.round(st.yaw/(PI/2))%4)+4)%4];
+  if(dn!==dirNow){dirNow=dn;$('m3-side').textContent=dn;dirBtn.setAttribute('aria-label','Katselusuunta: '+dn+'. Vaihda seuraavaan suuntaan.')}
 }
 var last=0,raf=0;
 function loop(now){raf=0;var dt=Math.min(.05,(now-last)/1000||0);last=now;frame(dt);if(st.visible&&!document.hidden)raf=requestAnimationFrame(loop)}
