@@ -712,8 +712,12 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
 .m3-dir i{font-style:normal;font-size:15px;line-height:.8;color:#f0bd1e}
 .m3-sel{flex:1 1 auto;min-width:0;max-width:340px;font:500 13px/1.2 var(--body);color:#f2f8f7;background:rgba(5,42,49,.8);border:1px solid rgba(255,255,255,.34);border-radius:4px;padding:8px 10px}
 .m3-sel option{color:#0f2329;background:#fff}
-.m3-stage.fs{height:100vh;height:100dvh;min-height:0;max-height:none;width:100%;border:0;border-radius:0;touch-action:none}
-.m3-stage.fs-css{position:fixed;inset:0;z-index:1000;width:100vw}
+.m3.fs{grid-template-columns:minmax(0,1fr) minmax(320px,400px);gap:0;align-items:stretch;background:var(--bg);width:100vw;height:100vh;height:100dvh;overflow:hidden}
+.m3.fs-css{position:fixed;inset:0;z-index:1000}
+.m3.fs .m3-stage{height:100%;min-height:0;max-height:none;border:0;border-radius:0;touch-action:none}
+.m3.fs .m3-side{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px;align-content:start;min-height:0;
+  padding-bottom:max(16px,env(safe-area-inset-bottom,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (max-width:900px){.m3.fs{grid-template-columns:1fr;grid-template-rows:minmax(0,58fr) minmax(0,42fr)}.m3.fs .m3-side{padding:12px}}
 .m3-stage.fs .m3-bottom{bottom:max(12px,env(safe-area-inset-bottom,0px))}
 .m3-stage.fs .m3-time{width:100%;max-width:720px;justify-self:center}
 .m3-stage.fs .m3-top{top:max(12px,env(safe-area-inset-top,0px))}
@@ -723,11 +727,6 @@ html.m3-lock,html.m3-lock body{overflow:hidden}
 .m3-fsbig{display:inline-flex;align-items:center;gap:10px;font:600 15px/1 var(--body);color:#fff;background:var(--court);border:1px solid var(--court);border-radius:4px;padding:13px 18px;cursor:pointer}
 .m3-fsbig:hover{background:var(--court-deep);border-color:var(--court-deep)}
 .m3-fsbig span{font-size:19px;line-height:.8}
-.m3-fsinfo{display:none;position:absolute;z-index:3;left:12px;top:100px;width:min(340px,34vw);background:rgba(5,42,49,.7);border:1px solid rgba(255,255,255,.22);border-radius:6px;padding:16px 18px;
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-.m3-fsinfo h3{font-size:19px;color:#f2f8f7;margin-bottom:8px}
-.m3-fsinfo p{font-size:14.5px;line-height:1.5;color:#d6e8e7}
-@media (min-width:860px){.m3-stage.fs .m3-fsinfo{display:block}}
 .m3-lab.flat{color:#a9cfd0;text-transform:uppercase;letter-spacing:.1em;font-size:10.5px}
 .m3-lab.flat::before{background:#a9cfd0;width:5px;height:5px;margin-top:-3px}
 .m3-bottom{position:absolute;z-index:3;left:12px;right:12px;bottom:12px;display:grid;gap:8px;pointer-events:none}
@@ -758,7 +757,6 @@ html.m3-lock,html.m3-lock body{overflow:hidden}
 @media (max-width:900px){.m3{grid-template-columns:1fr}}
 @media (max-width:640px){
   .m3-stage{height:72vh;min-height:430px;max-height:620px}
-  .m3-stage.fs{height:100dvh;max-height:none}
   .m3-tools button{padding:10px 9px}
   .m3-btns button{padding:11px 12px;font-size:14px}
   .m3-lab{font-size:11px}
@@ -793,7 +791,7 @@ html.m3-lock,html.m3-lock body{overflow:hidden}
 
   <p class="m3-fsrow"><button type="button" class="m3-fsbig" id="m3-fs2"><span aria-hidden="true">⛶</span> Avaa 3D-malli koko näytöllä</button></p>
 
-  <div class="m3">
+  <div class="m3" id="m3-wrap">
     <div class="m3-stage" id="m3-stage" data-three="vendor/three.min.js">
       <canvas id="m3-canvas" tabindex="0" role="img" aria-label="Kolmiulotteinen malli oikeasta säärestä: sääriluu, pohjeluu, lihakset ja peitinkalvo. Kierrä nuolinäppäimillä, zoomaa plus- ja miinusnäppäimillä, vaihda näkymää näppäimillä 1–9, ohjaa animaatiota pilkulla ja pisteellä."></canvas>
       <div class="m3-labels" id="m3-labels" aria-hidden="true"></div>
@@ -808,7 +806,6 @@ html.m3-lock,html.m3-lock body{overflow:hidden}
         <select class="m3-sel" id="m3-sel" aria-label="Valitse näkymä" hidden></select>
         <button type="button" class="m3-dir" id="m3-dir" title="Vaihda katselusuuntaa"><span id="m3-side"></span><i aria-hidden="true">⟳</i></button>
       </div>
-      <div class="m3-fsinfo" id="m3-fsinfo"><h3 id="m3-fsinfo-h"></h3><p id="m3-fsinfo-p"></p></div>
       <div class="m3-bottom">
       <div class="m3-time" id="m3-time" hidden>
         <span class="m3-phase" id="m3-phase" aria-live="polite"></span>
@@ -867,7 +864,7 @@ html.m3-lock,html.m3-lock body{overflow:hidden}
     </div>
   </div>
 
-  <p class="note"><b>Ohjaus:</b> vedä hiirellä tai sormella kiertääksesi. Oikean yläkulman painike vaihtaa katselusuunnan: edestä, sisäsivulta, takaa ja ulkosivulta. Zoomaa painikkeilla, nipistämällä tai Ctrl + rullalla. Näppäimistöllä: napsauta mallia ja käytä nuolia (kierto), + ja − (zoom), 1–9 (näkymä), välilyöntiä (tauko), pilkkua ja pistettä (animaatio askel taakse tai eteen), N (nimet), F (koko näyttö) ja 0 (palautus). Koko näytön tilassa näkymän voi vaihtaa yläreunan valikosta. Animaatiota voi kelata myös mallin alareunan liukusäätimestä.</p>
+  <p class="note"><b>Ohjaus:</b> vedä hiirellä tai sormella kiertääksesi. Oikean yläkulman painike vaihtaa katselusuunnan: edestä, sisäsivulta, takaa ja ulkosivulta. Zoomaa painikkeilla, nipistämällä tai Ctrl + rullalla. Näppäimistöllä: napsauta mallia ja käytä nuolia (kierto), + ja − (zoom), 1–9 (näkymä), välilyöntiä (tauko), pilkkua ja pistettä (animaatio askel taakse tai eteen), N (nimet), F (koko näyttö) ja 0 (palautus). Koko näytön tilassa näkymän voi vaihtaa yläreunan valikosta, ja selitykset, katselukulmat ja kerrokset näkyvät mallin vieressä. Animaatiota voi kelata myös mallin alareunan liukusäätimestä.</p>
   <p class="note">Malli on pelkistetty havainnekuva. Mittasuhteet ovat suuntaa-antavia, ja liikkeet, hehku ja lukemat on liioiteltu näkyviksi. Jalkaterän luut ovat oikeilla paikoillaan mutta muodoltaan pelkistettyjä. Hermoista ja verisuonista on piirretty vain pinnallinen pohjehermo ja polvitaivevaltimo niiden omissa näkymissä. Se ei ole diagnoosiväline.</p>
 </div></section>
 <script>
@@ -1285,7 +1282,7 @@ function setMode(m,keepCam){
   var z=ZON[m]||{};setZone(legShell,z.leg);setZone(footShell,z.foot);painU.uA.value=0;
   var kv=$('m3-mode-kv');kv.innerHTML='';kv.hidden=!d.kv;
   (d.kv||[]).forEach(function(r){var a=document.createElement('dt'),b=document.createElement('dd');a.textContent=r[0];b.textContent=r[1];kv.appendChild(a);kv.appendChild(b)});
-  setPressed($('m3-modes'),function(b){return b.getAttribute('data-mode')===m});$('m3-sel').value=m;$('m3-fsinfo-h').textContent=d.h;$('m3-fsinfo-p').textContent=d.p;
+  setPressed($('m3-modes'),function(b){return b.getAttribute('data-mode')===m});$('m3-sel').value=m;
   $('m3-read').hidden=!d.read;if(d.read)$('m3-read-l').textContent=d.read;
   $('m3-time').hidden=!d.ph;
   if(!keepCam){goCam(d.yaw,d.pitch,d.dist||12.6,d.ty===undefined?-.12:d.ty);st.auto=false}
@@ -1350,20 +1347,20 @@ $('m3-play').addEventListener('click',togglePlay);$('m3-names').addEventListener
 $('m3-zin').addEventListener('click',function(){zoom(.84)});$('m3-zout').addEventListener('click',function(){zoom(1.19)});$('m3-reset').addEventListener('click',reset);
 if(reduce){st.play=true;togglePlay()}
 /* koko näyttö: selaimen Fullscreen API, ja jos sitä ei ole (esim. iPhone), sivun päälle kiinnitetty näkymä */
-var fsBtn=$('m3-fs'),sel=$('m3-sel'),root=document.documentElement;
+var fsBtn=$('m3-fs'),sel=$('m3-sel'),root=document.documentElement,wrap=$('m3-wrap');
 function fsEl(){return document.fullscreenElement||document.webkitFullscreenElement}
-function isFs(){return fsEl()===stage||stage.classList.contains('fs-css')}
-function syncFs(){var on=isFs();stage.classList.toggle('fs',on);fsBtn.setAttribute('aria-pressed',on?'true':'false');fsBtn.textContent=on?'Sulje koko näyttö':'Koko näyttö';sel.hidden=!on;W=0}
-function cssFs(){stage.classList.add('fs-css');root.classList.add('m3-lock');syncFs()}
+function isFs(){return fsEl()===wrap||wrap.classList.contains('fs-css')}
+function syncFs(){var on=isFs();wrap.classList.toggle('fs',on);stage.classList.toggle('fs',on);fsBtn.setAttribute('aria-pressed',on?'true':'false');fsBtn.textContent=on?'Sulje koko näyttö':'Koko näyttö';sel.hidden=!on;W=0}
+function cssFs(){wrap.classList.add('fs-css');root.classList.add('m3-lock');syncFs()}
 function setFs(on){
-  if(on){var rq=stage.requestFullscreen||stage.webkitRequestFullscreen;
-    if(rq){try{var pr=rq.call(stage);if(pr&&pr.catch)pr.catch(cssFs)}catch(e){cssFs()}}else cssFs()}
+  if(on){var rq=wrap.requestFullscreen||wrap.webkitRequestFullscreen;
+    if(rq){try{var pr=rq.call(wrap);if(pr&&pr.catch)pr.catch(cssFs)}catch(e){cssFs()}}else cssFs()}
   else{if(fsEl()){var ex=document.exitFullscreen||document.webkitExitFullscreen;if(ex)ex.call(document)}
-    stage.classList.remove('fs-css');root.classList.remove('m3-lock');syncFs()}
+    wrap.classList.remove('fs-css');root.classList.remove('m3-lock');syncFs()}
 }
 fsBtn.addEventListener('click',function(){setFs(!isFs())});$('m3-fs2').addEventListener('click',function(){setFs(true)});
 document.addEventListener('fullscreenchange',syncFs);document.addEventListener('webkitfullscreenchange',syncFs);
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&stage.classList.contains('fs-css'))setFs(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&wrap.classList.contains('fs-css'))setFs(false)});
 ORDER.forEach(function(k){var o=document.createElement('option');o.value=k;o.textContent=MODES[k].h;sel.appendChild(o)});
 sel.addEventListener('change',function(){setMode(sel.value)});
 var seek=$('m3-seek'),seeking=false;
