@@ -4,8 +4,9 @@ Penikkatauti lentopalloilijalla
 Avaa index.html selaimessa (kaksoisnapsautus). Asennusta ei tarvita.
 
 - Sivu toimii kokonaan ilman internetyhteyttä. Fontit ovat mukana kansiossa
-  fonts, eikä sivu hae mitään verkosta. Pidä index.html ja fonts-kansio
-  samassa paikassa.
+  fonts ja 3D-mallin kirjasto (Three.js, MIT-lisenssi) kansiossa vendor,
+  eikä sivu hae mitään verkosta. Pidä index.html sekä kansiot fonts ja
+  vendor samassa paikassa.
 - Paluun portaiden rastit tallentuvat vain siihen selaimeen, jossa ne tehdään.
 - Sivun voi viedä sellaisenaan mille tahansa verkkopalvelimelle.
 

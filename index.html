@@ -399,7 +399,7 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
 </header>
 
 <nav aria-label="Sivun osiot"><div class="wrap">
-  <a href="#kartta">Säärikartta</a><a href="#erottelu">Erottelu</a><a href="#halytys">Hälytysmerkit</a><a href="#mekanismi">Mekanismi</a><a href="#pronaatio">Ylipronaatio</a><a href="#lentopallo">Lentopallo</a><a href="#hoito">Hoito</a><a href="#paluu">Paluu kentälle</a><a href="#muut">Muut syyt</a><a href="#kengat">Kengät</a>
+  <a href="#kartta">Säärikartta</a><a href="#erottelu">Erottelu</a><a href="#halytys">Hälytysmerkit</a><a href="#mekanismi">Mekanismi</a><a href="#malli3d">3D-malli</a><a href="#pronaatio">Ylipronaatio</a><a href="#lentopallo">Lentopallo</a><a href="#hoito">Hoito</a><a href="#paluu">Paluu kentälle</a><a href="#muut">Muut syyt</a><a href="#kengat">Kengät</a>
 </div></nav>
 
 <main>
@@ -677,6 +677,597 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
   </div>
 </div></section>
 
+<!-- M3:ALKU -->
+<style>
+/* 3D-mallinnus */
+.m3{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr);gap:20px;align-items:start}
+.m3-stage{position:relative;height:min(80vh,700px);min-height:480px;border-radius:6px;overflow:hidden;border:1px solid var(--line);
+  background:radial-gradient(120% 85% at 50% 38%,#17757f 0%,#0b4d57 46%,#052a31 100%);touch-action:pan-y;color:#f2f8f7;
+  -webkit-user-select:none;user-select:none}
+.m3-stage::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;box-shadow:inset 0 0 120px rgba(2,20,24,.55)}
+.m3-stage canvas{display:block;width:100%;height:100%;cursor:grab;outline:none;position:relative;z-index:1}
+.m3-stage canvas.drag{cursor:grabbing}
+.m3-stage canvas.pick{cursor:pointer}
+.m3-stage canvas:focus-visible{outline:3px solid var(--ball);outline-offset:-3px}
+.m3-labels{position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden}
+.m3-lab{position:absolute;left:0;top:0;white-space:nowrap;font:500 11.5px/1 var(--mono);letter-spacing:.04em;color:#f2f8f7;
+  padding:4px 6px 4px 14px;transition:opacity .25s;will-change:transform,opacity;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+.m3-lab::before{content:"";position:absolute;left:0;top:50%;width:7px;height:7px;margin-top:-4px;border-radius:50%;background:var(--ball);box-shadow:0 0 0 2px rgba(5,42,49,.6)}
+.m3-lab.r{padding:4px 14px 4px 6px}
+.m3-lab.r::before{left:auto;right:0}
+.m3-lab.hot::before{background:#ff8450}
+.m3-tip{position:absolute;z-index:4;left:0;top:0;pointer-events:none;font:500 12.5px/1.2 var(--body);color:#0f2329;background:#f2f8f7;border-radius:4px;padding:6px 8px;box-shadow:0 4px 14px rgba(0,0,0,.35);white-space:nowrap}
+.m3-read{position:absolute;z-index:3;left:12px;top:12px;display:flex;align-items:center;gap:8px;font:500 11.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;
+  background:rgba(5,42,49,.62);border:1px solid rgba(255,255,255,.22);border-radius:4px;padding:8px 10px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.m3-meter{width:86px;height:6px;border-radius:3px;background:rgba(255,255,255,.2);overflow:hidden}
+.m3-meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,#f0bd1e,#ff8450 60%,#ff5a3c);border-radius:3px}
+.m3-read-v{min-width:64px;text-transform:none;letter-spacing:0}
+.m3-compass{position:absolute;z-index:3;right:12px;top:12px;font:500 11.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:#a9cfd0;
+  background:rgba(5,42,49,.5);border:1px solid rgba(255,255,255,.18);border-radius:4px;padding:8px 10px}
+.m3-tools{position:absolute;z-index:3;left:12px;right:12px;bottom:12px;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.m3-tools button{font:500 13px/1 var(--body);color:#f2f8f7;background:rgba(5,42,49,.62);border:1px solid rgba(255,255,255,.3);border-radius:4px;padding:10px 12px;min-width:40px;cursor:pointer;
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.m3-tools button:hover{background:rgba(14,124,130,.8)}
+.m3-tools button[aria-pressed="false"]{color:#a9cfd0;border-style:dashed}
+.m3-load{position:absolute;z-index:5;inset:0;display:grid;place-items:center;margin:0;padding:24px;text-align:center;font:500 13px var(--mono);letter-spacing:.06em;color:#a9cfd0;pointer-events:none}
+.m3-side{display:grid;gap:16px;min-width:0}
+.m3-side .plate p{font-size:15px}
+.m3-side .plate p.cap{font-size:13px;color:var(--muted)}
+.m3-btns{display:flex;flex-wrap:wrap;gap:6px}
+.m3-btns button{font:500 13px/1.2 var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:8px 10px;cursor:pointer}
+.m3-btns button:hover{border-color:var(--court)}
+.m3-btns button[aria-pressed="true"]{background:var(--court);border-color:var(--court);color:#fff}
+.m3-btns button[aria-pressed="false"]{color:var(--muted);border-style:dashed}
+.m3-btns button.sel{border-color:var(--zone);box-shadow:inset 0 0 0 1px var(--zone)}
+#m3-info-h small{display:block;font:500 12px/1.4 var(--mono);letter-spacing:.04em;color:var(--muted);font-stretch:100%;margin-top:4px}
+@media (max-width:900px){.m3{grid-template-columns:1fr}}
+@media (max-width:640px){
+  .m3-stage{height:72vh;min-height:430px;max-height:620px}
+  .m3-btns button{padding:11px 12px;font-size:14px}
+  .m3-compass{display:none}
+  .m3-lab{font-size:11px}
+}
+</style>
+<!-- ================= 3D-MALLINNUS ================= -->
+<section id="malli3d"><div class="wrap">
+  <div class="head">
+    <p class="kick">3D-mallinnus</p>
+    <h2>Sääri kolmessa ulottuvuudessa</h2>
+    <p class="lede">Pyöritä oikeaa säärtä ja katso, mihin luun taipuminen, luukalvon veto ja lihasaition paine osuvat. Napauta rakennetta, niin näet sen nimen ja osuuden penikkataudissa.</p>
+  </div>
+
+  <div class="chips" role="group" aria-label="Valitse näkymä" id="m3-modes">
+    <button type="button" data-mode="anat" aria-pressed="true">Anatomia</button>
+    <button type="button" data-mode="bend" aria-pressed="false">Luu taipuu</button>
+    <button type="button" data-mode="pull" aria-pressed="false">Kalvo vetää</button>
+    <button type="button" data-mode="press" aria-pressed="false">Aitio ahtautuu</button>
+  </div>
+
+  <div class="m3">
+    <div class="m3-stage" id="m3-stage" data-three="vendor/three.min.js">
+      <canvas id="m3-canvas" tabindex="0" role="img" aria-label="Kolmiulotteinen malli oikeasta säärestä: sääriluu, pohjeluu, lihakset ja peitinkalvo. Kierrä nuolinäppäimillä, zoomaa plus- ja miinusnäppäimillä, vaihda näkymää näppäimillä 1–4."></canvas>
+      <div class="m3-labels" id="m3-labels" aria-hidden="true"></div>
+      <div class="m3-tip" id="m3-tip" hidden></div>
+      <div class="m3-read" id="m3-read" hidden>
+        <span class="m3-read-l" id="m3-read-l"></span>
+        <span class="m3-meter"><i id="m3-read-bar"></i></span>
+        <span class="m3-read-v" id="m3-read-v"></span>
+      </div>
+      <div class="m3-compass" aria-hidden="true"><span id="m3-side"></span></div>
+      <div class="m3-tools">
+        <button type="button" id="m3-play" aria-pressed="true" title="Tauko tai toisto (välilyönti)">Tauko</button>
+        <button type="button" id="m3-names" aria-pressed="true" title="Nimet näkyviin tai piiloon (N)">Nimet</button>
+        <button type="button" id="m3-zin" aria-label="Lähennä" title="Lähennä (+)">+</button>
+        <button type="button" id="m3-zout" aria-label="Loitonna" title="Loitonna (−)">−</button>
+        <button type="button" id="m3-reset" title="Palauta näkymä (0)">Palauta</button>
+      </div>
+      <p class="m3-load" id="m3-load">Malli latautuu…</p>
+    </div>
+
+    <div class="m3-side">
+      <div class="plate" id="m3-modebox" aria-live="polite">
+        <p class="kick" id="m3-mode-k"></p>
+        <h3 id="m3-mode-h"></h3>
+        <p id="m3-mode-p"></p>
+        <p class="cap" id="m3-mode-c"></p>
+      </div>
+
+      <div class="plate">
+        <h3>Katselukulma</h3>
+        <div class="m3-btns" role="group" aria-label="Katselukulma" id="m3-views">
+          <button type="button" data-yaw="0">Edestä</button>
+          <button type="button" data-yaw="90">Sisäsivu</button>
+          <button type="button" data-yaw="118">Taka-sisäreuna</button>
+          <button type="button" data-yaw="180">Takaa</button>
+          <button type="button" data-yaw="-90">Ulkosivu</button>
+          <button type="button" data-yaw="0" data-pitch="62">Ylhäältä</button>
+        </div>
+        <h3>Näytä kerrokset</h3>
+        <div class="m3-btns" role="group" aria-label="Näytä kerrokset" id="m3-layers">
+          <button type="button" data-layer="fascia" aria-pressed="true">Peitinkalvo</button>
+          <button type="button" data-layer="ant" aria-pressed="true">Etuaitio</button>
+          <button type="button" data-layer="lat" aria-pressed="true">Ulkoaitio</button>
+          <button type="button" data-layer="sup" aria-pressed="true">Pinnallinen taka-aitio</button>
+          <button type="button" data-layer="deep" aria-pressed="true">Syvä taka-aitio</button>
+        </div>
+      </div>
+
+      <div class="plate" id="m3-info" aria-live="polite">
+        <p class="kick" id="m3-info-k">Valittu rakenne</p>
+        <h3 id="m3-info-h">Napauta rakennetta</h3>
+        <p id="m3-info-p">Valitse rakenne mallista tai alla olevasta luettelosta.</p>
+        <details class="src">
+          <summary>Rakenteet luettelona</summary>
+          <div class="m3-btns" id="m3-list"></div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <p class="note"><b>Ohjaus:</b> vedä hiirellä tai sormella kiertääksesi. Zoomaa painikkeilla, nipistämällä tai Ctrl + rullalla. Näppäimistöllä: napsauta mallia ja käytä nuolia (kierto), + ja − (zoom), 1–4 (näkymä), välilyöntiä (tauko), N (nimet) ja 0 (palautus).</p>
+  <p class="note">Malli on pelkistetty havainnekuva. Mittasuhteet ovat suuntaa-antavia, verisuonia ja hermoja ei ole piirretty ja liikkeet on liioiteltu näkyviksi. Se ei ole diagnoosiväline.</p>
+</div></section>
+<script>
+/* 3D-mallinnus: oikea sääri. Pelkistetty, proseduraalisesti rakennettu malli (Three.js). */
+(function(){
+'use strict';
+var stage=document.getElementById('m3-stage');if(!stage)return;
+var $=function(id){return document.getElementById(id)};
+var canvas=$('m3-canvas'),labBox=$('m3-labels'),tip=$('m3-tip'),loadMsg=$('m3-load');
+var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+var started=false;
+
+function fail(msg){loadMsg.hidden=false;loadMsg.textContent=msg;}
+function loadThree(cb){
+  if(window.THREE)return cb();
+  var s=document.createElement('script');s.src=stage.getAttribute('data-three');
+  s.onload=function(){window.THREE?cb():fail('3D-kirjasto ei latautunut.')};
+  s.onerror=function(){fail('3D-mallia ei voitu ladata. Tarkista verkkoyhteys tai että vendor-kansio on index.html:n vieressä.')};
+  document.head.appendChild(s);
+}
+function start(){if(started)return;started=true;loadThree(function(){try{init()}catch(e){console.error(e);fail('Selain ei pystynyt piirtämään 3D-mallia (WebGL puuttuu).')}})}
+if('IntersectionObserver' in window){
+  var pre=new IntersectionObserver(function(en){if(en.some(function(e){return e.isIntersecting})){pre.disconnect();start()}},{rootMargin:'900px 0px'});
+  pre.observe(stage);
+}else start();
+window.__malli3d={start:start};
+
+function init(){
+var T=window.THREE,PI=Math.PI,TAU=PI*2;
+var Y0=1.9,LEN=3.8;                       /* polvinivel y=1.9, nilkkanivel y=-1.9; 1 yksikkö ≈ 10 cm */
+function Y(t){return Y0-LEN*t}
+function sst(a,b,x){x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x)}
+function gauss(x,s){return Math.exp(-(x*x)/(s*s))}
+function angd(a,b){var d=(a-b)%TAU;if(d>PI)d-=TAU;if(d<-PI)d+=TAU;return d}
+
+/* avainkehysten Catmull–Rom-näytteistys: keys = [[t,cx,cz,rx,rz],...] */
+function samp(keys,t){
+  var n=keys.length,i=0;
+  if(t<=keys[0][0])return keys[0].slice(1);
+  if(t>=keys[n-1][0])return keys[n-1].slice(1);
+  while(i<n-2&&t>keys[i+1][0])i++;
+  var k0=keys[Math.max(0,i-1)],k1=keys[i],k2=keys[i+1],k3=keys[Math.min(n-1,i+2)];
+  var u=(t-k1[0])/(k2[0]-k1[0]),u2=u*u,u3=u2*u,o=[];
+  for(var c=1;c<5;c++){
+    var m1=(k2[c]-k0[c])/(k2[0]-k0[0])*(k2[0]-k1[0]),m2=(k3[c]-k1[c])/(k3[0]-k1[0])*(k2[0]-k1[0]);
+    var v=(2*u3-3*u2+1)*k1[c]+(u3-2*u2+u)*m1+(-2*u3+3*u2)*k2[c]+(u3-u2)*m2;
+    o.push(c>2?Math.max(.004,v):v);
+  }
+  return o;
+}
+/* lofti: poikkileikkausrenkaat pitkin akselia. o.axis 'y' (sääri) tai 'z' (jalkaterä) */
+function loft(o){
+  var keys=o.keys,na=o.na||56,nr=o.nr||32,t0=keys[0][0],t1=keys[keys.length-1][0];
+  var pos=[],uv=[],col=[],heat=[],idx=[],c=new T.Color();
+  for(var i=0;i<=na;i++){
+    var t=t0+(t1-t0)*i/na,s=samp(keys,t);
+    for(var j=0;j<=nr;j++){
+      var th=TAU*j/nr,m=o.shape?o.shape(th,t):1;
+      var a=s[0]+s[2]*m*Math.cos(th),b=s[1]+s[3]*m*Math.sin(th);
+      if(o.axis==='z')pos.push(a,b,t);else pos.push(a,Y(t),b);
+      uv.push(j/nr*(o.urep||1),(t-t0)*(o.vrep||1));
+      if(o.color){o.color(t,th,c);col.push(c.r,c.g,c.b)}
+      heat.push(o.heat?o.heat(th,t):0);
+    }
+  }
+  var w=nr+1,flip=o.axis==='z';
+  for(i=0;i<na;i++)for(j=0;j<nr;j++){
+    var p=i*w+j,q=p+w;
+    if(flip)idx.push(p,q,p+1,p+1,q,q+1);else idx.push(p,p+1,q,p+1,q+1,q);
+  }
+  if(o.caps!==false){
+    [[0,t0],[na,t1]].forEach(function(e,k){
+      var s=samp(keys,e[1]),ci=pos.length/3;
+      if(o.axis==='z')pos.push(s[0],s[1],e[1]);else pos.push(s[0],Y(e[1]),s[1]);
+      uv.push(.5,k);if(o.color){o.color(e[1],0,c);col.push(c.r,c.g,c.b)}heat.push(0);
+      for(var j=0;j<nr;j++){var p=e[0]*w+j;if((k===0)!==flip)idx.push(ci,p+1,p);else idx.push(ci,p,p+1)}
+    });
+  }
+  var g=new T.BufferGeometry();
+  g.setAttribute('position',new T.Float32BufferAttribute(pos,3));
+  g.setAttribute('uv',new T.Float32BufferAttribute(uv,2));
+  if(o.color)g.setAttribute('color',new T.Float32BufferAttribute(col,3));
+  g.setAttribute('aHeat',new T.Float32BufferAttribute(heat,1));
+  g.setIndex(idx);g.computeVertexNormals();
+  /* sauma: tasaa normaalit renkaan ensimmäisen ja viimeisen pisteen välillä */
+  var nm=g.attributes.normal;
+  for(i=0;i<=na;i++){var a0=i*w,a1=i*w+nr;
+    var x=nm.getX(a0)+nm.getX(a1),y=nm.getY(a0)+nm.getY(a1),z=nm.getZ(a0)+nm.getZ(a1),l=Math.sqrt(x*x+y*y+z*z)||1;
+    nm.setXYZ(a0,x/l,y/l,z/l);nm.setXYZ(a1,x/l,y/l,z/l)}
+  return g;
+}
+function surf(keys,t,th,shape,k){var s=samp(keys,t),m=(shape?shape(th,t):1)*(k||1);return new T.Vector3(s[0]+s[2]*m*Math.cos(th),Y(t),s[1]+s[3]*m*Math.sin(th))}
+
+/* ---------- renderöinti ---------- */
+var renderer=new T.WebGLRenderer({canvas:canvas,antialias:true,alpha:true,powerPreference:'high-performance'});
+renderer.setClearColor(0x000000,0);
+renderer.outputColorSpace=T.SRGBColorSpace;
+renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.08;
+var scene=new T.Scene(),cam=new T.PerspectiveCamera(27,1,.1,100);
+scene.add(new T.HemisphereLight(0xe8f6f4,0x12313a,1.05));
+var key=new T.DirectionalLight(0xfff1dc,2.3);scene.add(key);
+var rim=new T.DirectionalLight(0x6fe0e4,1.5);scene.add(rim);
+var fill=new T.DirectionalLight(0xffd7c2,.55);scene.add(fill);
+var model=new T.Group();scene.add(model);
+
+/* ---------- materiaalit ja yhteinen varjostinlaajennus ---------- */
+var G={uBend:{value:0}};
+function patch(m,o){
+  o=o||{};var u={uHeat:{value:0},uSwell:{value:0},uHot:{value:new T.Color(o.hot||0xff5a2a)}};
+  m.userData.u=u;
+  m.onBeforeCompile=function(s){
+    s.uniforms.uBend=G.uBend;s.uniforms.uHeat=u.uHeat;s.uniforms.uSwell=u.uSwell;s.uniforms.uHot=u.uHot;
+    s.vertexShader='uniform float uBend;uniform float uSwell;attribute float aHeat;varying float vHeat;\n'+
+      s.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\n vHeat=aHeat;\n transformed+=objectNormal*uSwell;\n float bt=clamp((1.9-transformed.y)/3.8,0.,1.);\n transformed.xz+=uBend*sin(3.14159265*bt)*vec2(-.45,1.);');
+    var f='uniform float uHeat;uniform vec3 uHot;varying float vHeat;\n'+
+      s.fragmentShader.replace('#include <color_fragment>','#include <color_fragment>\n float hh=clamp(vHeat*uHeat,0.,1.);\n diffuseColor.rgb=mix(diffuseColor.rgb,uHot,hh);')
+       .replace('#include <emissivemap_fragment>','#include <emissivemap_fragment>\n totalEmissiveRadiance+=uHot*hh*.5;');
+    if(o.fresnel)f=f.replace('#include <opaque_fragment>',' diffuseColor.a*=mix(.05,1.,pow(1.-abs(dot(normalize(normal),normalize(vViewPosition))),2.4));\n#include <opaque_fragment>');
+    s.fragmentShader=f;
+  };
+  return m;
+}
+/* lihassyykuvio: pitkittäiset juovat */
+function fiberTex(){
+  var c=document.createElement('canvas');c.width=256;c.height=256;var x=c.getContext('2d');
+  x.fillStyle='#fff';x.fillRect(0,0,256,256);
+  for(var i=0;i<420;i++){var px=Math.random()*256,w=.6+Math.random()*1.8;
+    x.fillStyle='rgba('+(Math.random()<.5?'70,20,30':'255,235,235')+','+(.05+Math.random()*.16)+')';
+    x.fillRect(px,0,w,256)}
+  var t=new T.CanvasTexture(c);t.wrapS=t.wrapT=T.RepeatWrapping;t.colorSpace=T.SRGBColorSpace;t.anisotropy=4;return t;
+}
+var fib=fiberTex();
+var TEN=new T.Color(0xe9e2cf);
+function musMat(){return patch(new T.MeshStandardMaterial({vertexColors:true,map:fib,bumpMap:fib,bumpScale:.6,roughness:.5,metalness:.03}),{hot:0xe0231c})}
+function boneMat(ghost){
+  var m=new T.MeshPhysicalMaterial({color:ghost?0xd9d4c0:0xf1e8d0,roughness:.58,metalness:0,clearcoat:.25,clearcoatRoughness:.5,transparent:!!ghost,opacity:ghost?.46:1,depthWrite:!ghost});
+  return patch(m,{hot:0xff4a1c});
+}
+
+/* ---------- rakenteet ---------- */
+var parts=[],byId={};
+function add(id,geo,mat,meta){
+  var mesh=new T.Mesh(geo,mat);mesh.userData=meta||{};mesh.userData.id=id;
+  model.add(mesh);parts.push(mesh);byId[id]=mesh;return mesh;
+}
+/* sääriluu: varressa kolmiomainen poikkileikkaus, etuharju eteen (90°), taka-sisäreuna ~332°, luuvälikalvon reuna ~208° */
+var TN=[35*PI/180,145*PI/180,270*PI/180],PM=332.5*PI/180;
+function triR(th){var s=0;for(var i=0;i<3;i++){var c=Math.cos(th-TN[i]);if(c>0)s+=Math.pow(c,5)}return Math.pow(s,-.2)*.78}
+function tibShape(th,t){
+  var w=sst(.07,.22,t)*(1-sst(.86,.97,t)),r=1+(triR(th)-1)*w;
+  r*=1+.26*gauss(t-.105,.04)*gauss(angd(th,PI/2),.5);           /* sääriluun kyhmy */
+  return r;
+}
+var KT=[[-.006,.04,.06,.3,.22],[0,.04,.06,.43,.31],[.045,.05,.08,.41,.295],[.1,.08,.14,.28,.245],[.18,.11,.2,.195,.205],[.35,.125,.235,.15,.172],[.6,.125,.235,.135,.152],[.82,.11,.2,.136,.142],[.93,.1,.14,.2,.17],[.985,.1,.1,.26,.2],[1.002,.1,.1,.2,.16]];
+function tibHeat(th,t){return sst(.4,.54,t)*(1-sst(.83,.93,t))*gauss(angd(th,PM),.62)}
+add('tibia',loft({keys:KT,na:96,nr:48,shape:tibShape,heat:tibHeat}),boneMat(),{layer:'bone'});
+add('malleolus',loft({keys:[[.95,.24,.1,.05,.06],[.985,.29,.1,.11,.13],[1.03,.305,.1,.1,.115],[1.062,.31,.1,.06,.07],[1.076,.31,.1,.02,.025]],na:18,nr:20}),boneMat(),{layer:'bone',alias:'tibia'});
+var KF=[[.062,-.37,-.12,.02,.02],[.08,-.37,-.12,.1,.1],[.12,-.37,-.11,.085,.085],[.2,-.365,-.08,.055,.055],[.6,-.35,-.05,.05,.05],[.9,-.34,-.03,.058,.06],[1,-.345,-.03,.1,.105],[1.06,-.34,-.04,.085,.09],[1.088,-.34,-.04,.02,.02]];
+add('fibula',loft({keys:KF,na:72,nr:24}),boneMat(),{layer:'bone'});
+/* pelkistetyt naapuriluut */
+add('femur',loft({keys:[[-.42,.02,.02,.2,.19],[-.22,.02,.02,.235,.21],[-.09,.02,0,.42,.3],[-.04,.02,-.02,.44,.33],[-.022,.02,-.02,.36,.27]],na:26,nr:36}),boneMat(true),{layer:'bone',ghost:true});
+add('foot',loft({axis:'z',keys:[[-.62,.02,-2.3,.05,.05],[-.55,.02,-2.28,.2,.17],[-.35,.02,-2.23,.25,.21],[-.05,.04,-2.16,.27,.24],[.3,.04,-2.21,.3,.18],[.7,.02,-2.28,.36,.12],[1,0,-2.34,.38,.08],[1.3,-.02,-2.385,.33,.05],[1.38,-.02,-2.395,.1,.03]],na:40,nr:32}),boneMat(true),{layer:'bone',ghost:true});
+
+/* luuvälikalvo: nauha sääriluun ulkoreunan ja pohjeluun välissä */
+(function(){
+  var pos=[],idx=[],heat=[],n=40;
+  for(var i=0;i<=n;i++){var t=.14+(.94-.14)*i/n,a=surf(KT,t,208*PI/180,tibShape,.92),f=samp(KF,t);
+    pos.push(a.x,a.y,a.z,f[0]+f[2]*.6,Y(t),f[1]+f[3]*.4);heat.push(0,0)}
+  for(i=0;i<n;i++){var p=i*2;idx.push(p,p+1,p+2,p+1,p+3,p+2)}
+  var g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(pos,3));g.setAttribute('aHeat',new T.Float32BufferAttribute(heat,1));g.setIndex(idx);g.computeVertexNormals();
+  add('membrane',g,patch(new T.MeshStandardMaterial({color:0xdfe9dc,roughness:.6,side:T.DoubleSide,transparent:true,opacity:.72})),{layer:'bone'});
+})();
+
+/* lihakset: [id, väri, jännealku (t), avaimet, kerros] */
+function muscle(id,hex,tt,keys,layer,o){
+  o=o||{};var base=new T.Color(hex),t0=keys[0][0],t1=keys[keys.length-1][0];
+  var g=loft({keys:keys,na:o.na||64,nr:o.nr||28,urep:o.urep||3,vrep:1,shape:function(th,t){return Math.min(1,.3+(t1-t)/.03)},heat:function(){return 1},
+    color:function(t,th,c){var k=Math.max(sst(tt-.07,tt+.06,t),o.top?1-sst(t0+.01,t0+o.top,t):0);c.copy(base).lerp(TEN,k*.92)}});
+  return add(id,g,musMat(),{layer:layer,base:base});
+}
+muscle('ta',0xc2545e,.62,[[.05,-.1,.2,.02,.02],[.09,-.12,.27,.07,.06],[.25,-.135,.315,.125,.105],[.45,-.115,.33,.11,.095],[.62,-.06,.34,.06,.05],[.8,0,.33,.036,.026],[1,.1,.31,.036,.022],[1.045,.14,.3,.03,.02]],'ant');
+muscle('edl',0xb24c58,.7,[[.08,-.3,.16,.02,.02],[.13,-.3,.19,.06,.06],[.35,-.3,.22,.085,.08],[.6,-.26,.25,.06,.055],[.76,-.2,.28,.04,.03],[1,-.1,.3,.05,.022],[1.045,-.08,.3,.05,.02]],'ant');
+muscle('per',0xa8475a,.72,[[.09,-.45,-.08,.02,.02],[.14,-.46,-.05,.07,.08],[.35,-.47,-.03,.085,.105],[.6,-.44,-.04,.07,.085],[.8,-.4,-.08,.04,.05],[1,-.4,-.13,.03,.04],[1.075,-.39,-.14,.028,.035]],'lat');
+muscle('tp',0x93394a,.78,[[.12,-.1,-.03,.02,.02],[.2,-.1,-.025,.11,.065],[.45,-.09,-.02,.12,.075],[.7,-.03,-.01,.08,.06],[.86,.12,-.02,.04,.035],[1,.27,-.04,.035,.03],[1.055,.3,-.04,.03,.028]],'deep');
+muscle('fdl',0x9f4352,.8,[[.25,.15,.03,.02,.02],[.32,.16,.04,.06,.05],[.55,.17,.045,.075,.058],[.75,.185,.02,.055,.045],[.88,.22,-.04,.035,.03],[1,.3,-.09,.03,.026],[1.055,.31,-.1,.028,.024]],'deep');
+muscle('fhl',0x8d3b4b,.9,[[.3,-.27,-.11,.02,.02],[.38,-.27,-.11,.07,.06],[.6,-.24,-.11,.085,.07],[.8,-.15,-.12,.06,.05],[.95,-.02,-.14,.035,.03],[1.055,.08,-.17,.03,.028]],'deep');
+muscle('sol',0xa9434f,.68,[[.1,-.12,-.2,.03,.02],[.16,-.1,-.25,.24,.09],[.3,-.03,-.3,.37,.14],[.5,0,-.3,.33,.13],[.66,0,-.29,.22,.1],[.79,0,-.33,.09,.05]],'sup',{nr:36,urep:5});
+muscle('gasm',0xc65f69,.44,[[-.09,.2,-.3,.03,.03],[-.04,.2,-.36,.1,.08],[.1,.19,-.48,.19,.12],[.25,.17,-.515,.2,.13],[.4,.13,-.49,.16,.09],[.5,.08,-.45,.08,.04],[.545,.05,-.44,.03,.02]],'sup',{top:.07,urep:4});
+muscle('gasl',0xc05a65,.4,[[-.09,-.2,-.3,.03,.03],[-.04,-.2,-.36,.1,.08],[.1,-.19,-.47,.17,.11],[.25,-.17,-.495,.17,.115],[.38,-.12,-.47,.13,.08],[.47,-.07,-.45,.06,.035],[.505,-.05,-.44,.03,.02]],'sup',{top:.07,urep:4});
+muscle('ach',0xe9e2cf,0,[[.4,0,-.41,.2,.02],[.5,0,-.425,.22,.035],[.65,0,-.4,.17,.04],[.8,0,-.37,.09,.045],[.95,0,-.37,.06,.04],[1.08,0,-.4,.07,.045],[1.125,0,-.42,.05,.03]],'sup',{urep:6});
+
+/* peitinkalvo (fascia cruris): läpikuultava vaippa */
+var KFA=[[-.02,-.02,-.08,.5,.47],[.12,-.05,-.08,.56,.57],[.28,-.06,-.09,.585,.63],[.5,-.07,-.05,.5,.54],[.7,-.06,-.01,.4,.43],[.85,-.05,0,.34,.375],[1,-.03,-.02,.34,.37],[1.045,-.03,-.02,.335,.365]];
+var fasciaMat=patch(new T.MeshPhysicalMaterial({color:0xcdeeed,roughness:.25,metalness:0,transparent:true,opacity:.5,depthWrite:false,side:T.DoubleSide}),{fresnel:true,hot:0xf0bd1e});
+var fascia=add('fascia',loft({keys:KFA,na:60,nr:56,caps:false,heat:function(th,t){return gauss(angd(th,115*PI/180),.75)*sst(.06,.2,t)*(1-sst(.62,.82,t))}}),fasciaMat,{layer:'fascia'});
+fascia.renderOrder=5;
+
+/* lattia: kenttämaton kehä */
+(function(){
+  var c=document.createElement('canvas');c.width=c.height=512;var x=c.getContext('2d'),g=x.createRadialGradient(256,256,0,256,256,256);
+  g.addColorStop(0,'rgba(2,18,22,.62)');g.addColorStop(.3,'rgba(2,18,22,.3)');g.addColorStop(.62,'rgba(120,220,224,.07)');g.addColorStop(1,'rgba(120,220,224,0)');
+  x.fillStyle=g;x.fillRect(0,0,512,512);
+  x.strokeStyle='rgba(169,207,208,.34)';x.lineWidth=1.5;[150,206].forEach(function(r){x.beginPath();x.arc(256,256,r,0,TAU);x.stroke()});
+  x.strokeStyle='rgba(169,207,208,.16)';for(var i=0;i<24;i++){var a=i*TAU/24;x.beginPath();x.moveTo(256+Math.cos(a)*150,256+Math.sin(a)*150);x.lineTo(256+Math.cos(a)*206,256+Math.sin(a)*206);x.stroke()}
+  var t=new T.CanvasTexture(c);t.colorSpace=T.SRGBColorSpace;
+  var m=new T.Mesh(new T.CircleGeometry(2.9,64),new T.MeshBasicMaterial({map:t,transparent:true,depthWrite:false}));
+  m.rotation.x=-PI/2;m.position.set(0,-2.46,.25);m.renderOrder=-1;scene.add(m);
+})();
+
+/* nuolet */
+function arrow(hex){
+  var g=new T.Group(),m=new T.MeshBasicMaterial({color:hex,transparent:true,opacity:.95,depthTest:false});
+  var sh=new T.Mesh(new T.CylinderGeometry(.018,.018,1,10),m),hd=new T.Mesh(new T.ConeGeometry(.055,.14,14),m);
+  sh.renderOrder=hd.renderOrder=9;g.add(sh,hd);g.userData={sh:sh,hd:hd,m:m};
+  g.set=function(a,b){var d=b.clone().sub(a),l=d.length();if(l<1e-4){g.visible=false;return}
+    g.position.copy(a);g.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),d.normalize());
+    var s=Math.max(.001,l-.14);sh.scale.y=s;sh.position.y=s/2;hd.position.y=s+.07};
+  g.visible=false;model.add(g);return g;
+}
+var aLoad=arrow(0xf0bd1e),aGround=arrow(0xf0bd1e);
+[aLoad,aGround].forEach(function(a){a.userData.sh.scale.x=a.userData.sh.scale.z=2.2;a.userData.hd.scale.set(2,1.6,2)});
+var aPull=[.5,.6,.7,.8].map(function(t){var a=arrow(0xffb347);a.userData.from=surf(KT,t,PM,tibShape,1.04);return a});
+var aPress=[15,70,125,180].map(function(d){var a=arrow(0xf0bd1e),th=d*PI/180;a.userData.dir=new T.Vector3(Math.cos(th),0,Math.sin(th));a.userData.from=new T.Vector3(-.18+Math.cos(th)*.2,Y(.3),.28+Math.sin(th)*.17);return a});
+
+/* ---------- sisältö ---------- */
+var INFO={
+ tibia:['Sääriluu','tibia','Luu','Kantaa valtaosan kehon painosta. Jokainen alastulo taivuttaa sitä hieman, ja suurin rasitus osuu taka-sisäreunan keski- ja alaosaan. Siinä MTSS-kipu tuntuu, yleensä vähintään viiden sentin matkalla.'],
+ fibula:['Pohjeluu','fibula','Luu','Ohut ulkosyrjän luu. Kantaa vain pienen osan kuormasta, mutta antaa kiinnityspinnan ulko- ja taka-aition lihaksille ja muodostaa nilkan ulkokehräksen.'],
+ membrane:['Luuvälikalvo','membrana interossea cruris','Sidekudos','Luiden välinen vahva kalvo. Se siirtää kuormaa sääriluulta pohjeluulle ja erottaa etuaition syvästä taka-aitiosta.'],
+ ta:['Etummainen säärilihas','m. tibialis anterior','Etuaitio','Nostaa jalkaterää ja jarruttaa sen laskua alastulossa. Kun etuaition paine nousee rasituksessa (CECS), puristava kipu tuntuu tämän lihaksen kohdalla sääriluun ulkopuolella.'],
+ edl:['Varpaiden pitkä ojentaja','m. extensor digitorum longus','Etuaitio','Ojentaa varpaita ja avustaa nilkan koukistusta. Jakaa ahtaan etuaition etummaisen säärilihaksen kanssa.'],
+ per:['Pohjeluulihakset','mm. fibulares','Ulkoaitio','Kääntävät jalkaterän ulkoreunaa ylös ja vakauttavat nilkkaa alastulossa. Ulkoaition rasitusaitio-oireyhtymä on mahdollinen mutta harvinaisempi kuin etuaition.'],
+ gasm:['Kaksoiskantalihas, sisempi pää','m. gastrocnemius, caput mediale','Pinnallinen taka-aitio','Ponnistuksen päävoima ja alastulon jarru yhdessä leveän kantalihaksen kanssa. Heikot tai nopeasti väsyvät pohkeet jättävät enemmän iskua luun kannettavaksi.'],
+ gasl:['Kaksoiskantalihas, ulompi pää','m. gastrocnemius, caput laterale','Pinnallinen taka-aitio','Toimii sisemmän pään parina. Molemmat päät lähtevät reisiluusta ja liittyvät akillesjänteeseen.'],
+ sol:['Leveä kantalihas','m. soleus','Pinnallinen taka-aitio','Kiinnittyy sääriluun taka-sisäreunaan ja sen kalvoon. Sen ja syvän säärifaskian toistuva veto kuormittaa luukalvoa juuri MTSS:n oirealueella.'],
+ ach:['Akillesjänne','tendo calcaneus','Pinnallinen taka-aitio','Pohjelihasten yhteinen jänne kantaluuhun. Kireä akillesjänne on yksi kineettisen ketjun tekijöistä, jotka lisäävät säären kuormaa.'],
+ tp:['Takimmainen säärilihas','m. tibialis posterior','Syvä taka-aitio','Tukee jalkaholvia ja hillitsee pronaatiota. Ruumiinavaustutkimusten mukaan se ei kiinnity MTSS:n oirealueelle, vaikka sitä pidettiin pitkään kivun aiheuttajana.'],
+ fdl:['Varpaiden pitkä koukistaja','m. flexor digitorum longus','Syvä taka-aitio','Lähtee sääriluun takapinnalta aivan oirealueen vierestä. Sen kiinnitys ja sitä peittävä kalvo välittävät vetoa luukalvoon.'],
+ fhl:['Isovarpaan pitkä koukistaja','m. flexor hallucis longus','Syvä taka-aitio','Lähtee pohjeluun takapinnalta. Työntää ponnistuksen lopussa isovarpaan kautta.'],
+ fascia:['Peitinkalvo','fascia cruris','Kalvo','Tiukka sidekudosvaippa, joka väliseinineen jakaa säären neljään aitioon. Jos se ei jousta lihaksen turvotessa, aition paine nousee.'],
+ femur:['Reisiluun alapää','femur','Pelkistetty','Mukana vain hahmottamisen vuoksi. Kaksoiskantalihaksen päät lähtevät reisiluun nivelnastojen takaa.'],
+ foot:['Jalkaterä','pes','Pelkistetty','Mukana vain hahmottamisen vuoksi. Alastulon voima tulee alustasta jalkaterän kautta sääreen.']
+};
+var MODES={
+ anat:{k:'Näkymä 1 / 4',h:'Anatomia',p:'Sääriluu ja pohjeluu, niiden välinen kalvo ja neljä lihasaitiota. Piilota kerroksia nähdäksesi syvemmälle ja napauta rakennetta saadaksesi selityksen.',c:'Oikea sääri. Sisäsivu on katsojasta oikealla, kun mallia katsotaan edestä.',yaw:32,pitch:8},
+ bend:{k:'Näkymä 2 / 4',h:'Luu taipuu',p:'Jokainen ponnistus ja alastulo taivuttaa ja vääntää sääriluuta. Rasitus keskittyy taka-sisäreunalle, joka hehkuu mallissa. Kun kuorma kasvaa nopeammin kuin luu ehtii korjata mikrovauriot, syntyy rasitusreaktio.',c:'Taipuma on liioiteltu moninkertaiseksi, jotta se näkyy. Todellinen taipuma on millimetrin osia.',yaw:118,pitch:6,read:'Kuorma'},
+ pull:{k:'Näkymä 3 / 4',h:'Kalvo vetää',p:'Leveä kantalihas, varpaiden pitkä koukistaja ja syvä säärifaskia kiinnittyvät sääriluun taka-sisäreunaan. Toistuva lihastyö vetää runsashermoista luukalvoa. Vetoa pidetään nykyään luun taipumista täydentävänä tekijänä, ei pääselityksenä.',c:'Nuolet näyttävät vedon suunnan. Takimmainen säärilihas on himmennetty, koska se ei kiinnity oirealueelle.',yaw:128,pitch:4,read:'Lihasveto'},
+ press:{k:'Näkymä 4 / 4',h:'Aitio ahtautuu',p:'Kuormituksessa lihas turpoaa. Jos peitinkalvo ei jousta, etuaition paine nousee, hiussuonet painuvat kasaan ja hapenpuute sekä hermojen puristus aiheuttavat kivun. Kipu hellittää levossa minuuteissa.',c:'Periaatekuva. Lepopaine on 0–8 mmHg; raja-arvona pidetään vähintään 30 mmHg minuutti rasituksen jälkeen.',yaw:-34,pitch:6,read:'Aitiopaine'}
+};
+var LABS=[
+ ['tibia','Sääriluu',function(){return surf(KT,.36,60*PI/180,tibShape,1)}],
+ ['fibula','Pohjeluu',function(){var f=samp(KF,.86);return new T.Vector3(f[0]-.06,Y(.86),f[1])},1],
+ ['ta','Etummainen säärilihas',function(){return new T.Vector3(-.2,Y(.27),.4)},1],
+ ['per','Pohjeluulihakset',function(){return new T.Vector3(-.55,Y(.42),-.03)},1],
+ ['gasm','Kaksoiskantalihas',function(){return new T.Vector3(.3,Y(.2),-.56)}],
+ ['sol','Leveä kantalihas',function(){return new T.Vector3(.33,Y(.55),-.3)}],
+ ['ach','Akillesjänne',function(){return new T.Vector3(0,Y(.92),-.41)}],
+ ['fdl','Varpaiden pitkä koukistaja',function(){return new T.Vector3(.24,Y(.44),.03)},0,0,'pull'],
+ ['fascia','Peitinkalvo',function(){return new T.Vector3(-.5,Y(.12),.3)},1],
+ ['zone','MTSS-kipualue',function(){return surf(KT,.68,PM,tibShape,1.05)},0,1]
+];
+
+/* ---------- tila ---------- */
+var st={mode:'anat',yaw:32*PI/180,pitch:8*PI/180,dist:12.6,gy:32*PI/180,gp:8*PI/180,gd:12.6,auto:!reduce,play:!reduce,names:true,sel:null,hov:null,
+  layers:{fascia:true,ant:true,lat:true,sup:true,deep:true},t:0,visible:true};
+var TARGET=new T.Vector3(.02,-.12,.12),DMIN=5.2,DMAX=17;
+var labs=LABS.map(function(l){var e=document.createElement('span');e.className='m3-lab'+(l[3]?' r':'')+(l[4]?' hot':'');e.textContent=l[1];labBox.appendChild(e);
+  var p=l[2]();return {id:l[0],el:e,p:p,right:!!l[3],hot:!!l[4],only:l[5]}});
+
+function setPressed(box,fn){[].forEach.call(box.querySelectorAll('button'),function(b){var v=fn(b);if(v!==undefined)b.setAttribute('aria-pressed',v?'true':'false')})}
+function setMode(m,keepCam){
+  st.mode=m;var d=MODES[m];
+  $('m3-mode-k').textContent=d.k;$('m3-mode-h').textContent=d.h;$('m3-mode-p').textContent=d.p;$('m3-mode-c').textContent=d.c;
+  setPressed($('m3-modes'),function(b){return b.getAttribute('data-mode')===m});
+  $('m3-read').hidden=!d.read;if(d.read)$('m3-read-l').textContent=d.read;
+  if(!keepCam){goCam(d.yaw,d.pitch);st.auto=false}
+  st.t=0;applyLook();
+}
+function goCam(yawDeg,pitchDeg,dist){
+  var gy=yawDeg*PI/180;st.gy=st.yaw+angd(gy,st.yaw);if(pitchDeg!==undefined)st.gp=pitchDeg*PI/180;if(dist)st.gd=dist;
+}
+/* näkyvyys, himmennys ja korostus tilan mukaan */
+function applyLook(){
+  var m=st.mode;
+  parts.forEach(function(p){
+    var u=p.userData,id=u.id,vis=u.layer==='bone'||st.layers[u.layer];
+    p.visible=!!vis;
+    if(id==='fascia')return;
+    var dim=1;
+    if(m==='bend'&&u.layer!=='bone')dim=.16;
+    if(m==='pull'&&u.layer!=='bone'&&id!=='sol'&&id!=='fdl')dim=id==='tp'?.3:.12;
+    if(m==='press'&&u.layer!=='bone'&&u.layer!=='ant')dim=.22;
+    if(u.ghost)dim=.46;if(id==='membrane')dim=Math.min(dim,.72);
+    var mat=p.material,tr=dim<1;
+    if(mat.transparent!==tr){mat.transparent=tr;mat.needsUpdate=true}
+    mat.opacity=dim;mat.depthWrite=dim>.5;
+    p.renderOrder=dim<1?3:0;
+    var e=(st.sel===id||st.sel===u.alias)?.34:(st.hov===id?.16:0);
+    if(mat.emissive){mat.emissive.setRGB(.27*e/.34,.9*e/.34*.9,.95*e/.34*.9).multiplyScalar(e)}
+  });
+  fasciaMat.opacity=m==='press'?.95:(m==='anat'?.5:.3);
+  [aLoad,aGround].forEach(function(a){a.visible=m==='bend'});
+  aPull.forEach(function(a){a.visible=m==='pull'});
+  aPress.forEach(function(a){a.visible=m==='press'&&st.layers.ant});
+}
+function select(id){
+  if(id&&byId[id]&&byId[id].userData.alias)id=byId[id].userData.alias;
+  st.sel=id;var d=id&&INFO[id];
+  $('m3-info-k').textContent=d?d[2]:'Valittu rakenne';
+  $('m3-info-h').innerHTML='';
+  if(d){$('m3-info-h').appendChild(document.createTextNode(d[0]));var s=document.createElement('small');s.textContent=d[1];$('m3-info-h').appendChild(s)}
+  else $('m3-info-h').textContent='Napauta rakennetta';
+  $('m3-info-p').textContent=d?d[3]:'Valitse rakenne mallista tai alla olevasta luettelosta.';
+  [].forEach.call($('m3-list').children,function(b){b.classList.toggle('sel',b.getAttribute('data-id')===id)});
+  applyLook();
+}
+Object.keys(INFO).forEach(function(id){var b=document.createElement('button');b.type='button';b.textContent=INFO[id][0];b.setAttribute('data-id',id);
+  b.addEventListener('click',function(){
+    var u=byId[id].userData;if(u.layer!=='bone'&&!st.layers[u.layer]){st.layers[u.layer]=true;syncLayers()}
+    select(st.sel===id?null:id)});
+  $('m3-list').appendChild(b)});
+function syncLayers(){setPressed($('m3-layers'),function(b){return st.layers[b.getAttribute('data-layer')]});applyLook()}
+
+/* ---------- ohjaimet ---------- */
+$('m3-modes').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setMode(b.getAttribute('data-mode'))});
+$('m3-views').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;st.auto=false;goCam(+b.getAttribute('data-yaw'),+(b.getAttribute('data-pitch')||6))});
+$('m3-layers').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var k=b.getAttribute('data-layer');st.layers[k]=!st.layers[k];syncLayers()});
+function togglePlay(){st.play=!st.play;$('m3-play').setAttribute('aria-pressed',st.play?'true':'false');$('m3-play').textContent=st.play?'Tauko':'Toista'}
+function toggleNames(){st.names=!st.names;$('m3-names').setAttribute('aria-pressed',st.names?'true':'false')}
+function zoom(f){st.gd=Math.min(DMAX,Math.max(DMIN,st.gd*f))}
+function reset(){var d=MODES[st.mode];goCam(d.yaw,d.pitch,12.6)}
+$('m3-play').addEventListener('click',togglePlay);$('m3-names').addEventListener('click',toggleNames);
+$('m3-zin').addEventListener('click',function(){zoom(.84)});$('m3-zout').addEventListener('click',function(){zoom(1.19)});$('m3-reset').addEventListener('click',reset);
+if(reduce){st.play=true;togglePlay()}
+
+var ptrs={},moved=0,pinch=0,ray=new T.Raycaster(),ndc=new T.Vector2();
+function pick(e){
+  var r=canvas.getBoundingClientRect();ndc.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);
+  ray.setFromCamera(ndc,cam);
+  var list=parts.filter(function(p){return p.visible&&(p.userData.id!=='fascia')&&p.material.opacity>.2});
+  var hit=ray.intersectObjects(list,false)[0];
+  if(!hit&&byId.fascia.visible){hit=ray.intersectObject(byId.fascia,false)[0]}
+  return hit?hit.object.userData.id:null;
+}
+canvas.addEventListener('pointerdown',function(e){
+  ptrs[e.pointerId]={x:e.clientX,y:e.clientY};moved=0;st.auto=false;
+  try{canvas.setPointerCapture(e.pointerId)}catch(_){}
+  canvas.classList.add('drag');tip.hidden=true;
+  var k=Object.keys(ptrs);if(k.length===2){var a=ptrs[k[0]],b=ptrs[k[1]];pinch=Math.hypot(a.x-b.x,a.y-b.y)}
+});
+canvas.addEventListener('pointermove',function(e){
+  var p=ptrs[e.pointerId];
+  if(!p){ /* hiiren leijunta */
+    if(e.pointerType==='mouse'){var id=pick(e);if(id!==st.hov){st.hov=id;applyLook()}
+      canvas.classList.toggle('pick',!!id);
+      if(id&&INFO[byId[id].userData.alias||id]){var r=stage.getBoundingClientRect();tip.textContent=INFO[byId[id].userData.alias||id][0];tip.hidden=false;
+        tip.style.transform='translate('+Math.min(r.width-170,e.clientX-r.left+14)+'px,'+(e.clientY-r.top+16)+'px)'}else tip.hidden=true}
+    return;
+  }
+  var dx=e.clientX-p.x,dy=e.clientY-p.y;p.x=e.clientX;p.y=e.clientY;moved+=Math.abs(dx)+Math.abs(dy);
+  var k=Object.keys(ptrs);
+  if(k.length>=2){var a=ptrs[k[0]],b=ptrs[k[1]],d=Math.hypot(a.x-b.x,a.y-b.y);if(pinch>0&&d>0){zoom(pinch/d);st.dist=st.gd}pinch=d;return}
+  st.gy=st.yaw=st.yaw-dx*.0085;
+  st.gp=st.pitch=Math.max(-.5,Math.min(1.25,st.pitch+dy*.006));
+});
+function up(e){
+  var had=ptrs[e.pointerId];delete ptrs[e.pointerId];pinch=0;
+  if(!Object.keys(ptrs).length)canvas.classList.remove('drag');
+  if(had&&e.type==='pointerup'&&moved<7){var id=pick(e);select(id&&id===st.sel?null:id)}
+}
+canvas.addEventListener('pointerup',up);canvas.addEventListener('pointercancel',up);
+canvas.addEventListener('pointerleave',function(){if(st.hov){st.hov=null;applyLook()}tip.hidden=true;canvas.classList.remove('pick')});
+canvas.addEventListener('wheel',function(e){if(!(e.ctrlKey||e.metaKey))return;e.preventDefault();st.auto=false;zoom(Math.exp(e.deltaY*.01))},{passive:false});
+canvas.addEventListener('keydown',function(e){
+  var k=e.key,h=true;st.auto=false;
+  if(k==='ArrowLeft')st.gy-=.16;else if(k==='ArrowRight')st.gy+=.16;
+  else if(k==='ArrowUp')st.gp=Math.min(1.25,st.gp+.1);else if(k==='ArrowDown')st.gp=Math.max(-.5,st.gp-.1);
+  else if(k==='+'||k==='=')zoom(.86);else if(k==='-'||k==='_')zoom(1.16);
+  else if(k==='0'||k==='r'||k==='R')reset();
+  else if(k>='1'&&k<='4')setMode(['anat','bend','pull','press'][+k-1]);
+  else if(k===' ')togglePlay();else if(k==='n'||k==='N')toggleNames();
+  else if(k==='Escape')select(null);else h=false;
+  if(h)e.preventDefault();
+});
+
+/* ---------- piirto ---------- */
+var W=0,H=0;
+function resize(){
+  var r=stage.getBoundingClientRect(),w=Math.max(1,Math.round(r.width)),h=Math.max(1,Math.round(r.height));
+  if(w===W&&h===H)return;W=w;H=h;
+  renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));renderer.setSize(w,h,false);
+  cam.aspect=w/h;cam.fov=w/h<.62?31:27;cam.updateProjectionMatrix();
+}
+var v3=new T.Vector3(),SIDES=['Edestä','Sisäsivulta','Takaa','Ulkosivulta'];
+function frame(dt){
+  resize();
+  if(st.auto&&!Object.keys(ptrs).length){st.gy+=dt*.22}
+  var k=1-Math.exp(-dt*7);
+  st.yaw+=(st.gy-st.yaw)*k;st.pitch+=(st.gp-st.pitch)*k;st.dist+=(st.gd-st.dist)*k;
+  var cp=Math.cos(st.pitch),fit=cam.aspect<.62?1.12:1;
+  cam.position.set(TARGET.x+Math.sin(st.yaw)*cp*st.dist*fit,TARGET.y+Math.sin(st.pitch)*st.dist*fit,TARGET.z+Math.cos(st.yaw)*cp*st.dist*fit);
+  cam.lookAt(TARGET);
+  /* valot seuraavat kameraa, jotta muoto piirtyy joka suunnasta */
+  key.position.set(-.55,.75,.9).applyQuaternion(cam.quaternion);
+  rim.position.set(.9,.25,-1).applyQuaternion(cam.quaternion);
+  fill.position.set(.8,-.3,.6).applyQuaternion(cam.quaternion);
+
+  if(st.play)st.t+=dt;
+  var t=st.t,m=st.mode,L=0;
+  if(m==='bend'){var ph=(t%2.6)/2.6;L=st.play?(ph<.1?sst(0,.1,ph):Math.exp(-(ph-.1)*5.2)):.8}
+  else if(m==='pull'){L=st.play?.5-.5*Math.cos(TAU*t/2.2):.8}
+  else if(m==='press'){L=st.play?.5-.5*Math.cos(TAU*t/7):.85}
+  G.uBend.value=m==='bend'?.075*L:0;
+  parts.forEach(function(p){var u=p.material.userData.u;if(!u)return;var id=p.userData.id,h=0,s=0;
+    if(id==='tibia')h=m==='bend'?.25+.75*L:(m==='pull'?.2+.6*L:(m==='anat'?.42:0));
+    if(m==='pull'&&(id==='sol'||id==='fdl')){s=.012*L;h=.1*L}
+    if(m==='press'&&p.userData.layer==='ant'){s=.03*L;h=.5*L}
+    if(id==='fascia')h=m==='press'?.75*L:0;
+    u.uHeat.value=h;u.uSwell.value=s});
+  if(m==='bend'){
+    aLoad.set(new T.Vector3(.05,2.75+.2*(1-L),0),new T.Vector3(.05,2.0,0));
+    aGround.set(new T.Vector3(.05,-3.2-.2*(1-L),.55),new T.Vector3(.05,-2.5,.55));
+    aLoad.userData.m.opacity=aGround.userData.m.opacity=.35+.6*L;
+  }else if(m==='pull'){
+    aPull.forEach(function(a,i){var f=a.userData.from,l=.14+.2*(.5-.5*Math.cos(TAU*t/2.2-i*.5));
+      a.set(f,new T.Vector3(f.x-.42*l,f.y+.25*l,f.z-.87*l))});
+  }else if(m==='press'){
+    aPress.forEach(function(a){var f=a.userData.from,d=a.userData.dir,l=.1+.16*L;a.set(f,new T.Vector3(f.x+d.x*l,f.y,f.z+d.z*l));a.userData.m.opacity=.3+.65*L});
+  }
+  if(MODES[m].read){$('m3-read-bar').style.width=Math.round(L*100)+'%';
+    $('m3-read-v').textContent=m==='press'?('≈ '+Math.round(8+27*L)+' mmHg'):(L>.66?'huippu':(L>.25?'kohtalainen':'matala'))}
+  renderer.render(scene,cam);
+
+  /* nimet */
+  var cx=Math.sin(st.yaw),cz=Math.cos(st.yaw);
+  labs.forEach(function(l){
+    var part=byId[l.id]||byId.tibia,on=st.names&&part.visible&&(l.hot?m!=='press':(l.only?m===l.only:(part.userData.layer==='bone'||part.material.opacity>.9)));
+    if(l.id==='fascia')on=st.names&&part.visible&&(m==='anat'||m==='press');
+    var face=(l.p.x-.0)*cx+(l.p.z-0)*cz;
+    v3.copy(l.p).project(cam);
+    var x=(v3.x*.5+.5)*W,y=(-v3.y*.5+.5)*H,o=on?Math.max(0,Math.min(1,(face+.08)*6)):0;
+    var right=l.right!==(Math.cos(st.yaw+0)<0);          /* peilaa puoli, kun malli on käännetty */
+    var lw=l.el.offsetWidth;if(right&&x-lw<4)right=false;else if(!right&&x+lw>W-4)right=true;
+    l.el.classList.toggle('r',right);
+    l.el.style.opacity=o;
+    l.el.style.transform='translate('+(right?x-lw+4:x-4)+'px,'+(y-11)+'px)';
+  });
+  var q=((Math.round(st.yaw/(PI/2))%4)+4)%4;$('m3-side').textContent=st.pitch>.9?'Ylhäältä':SIDES[q];
+}
+var last=0,raf=0;
+function loop(now){raf=0;var dt=Math.min(.05,(now-last)/1000||0);last=now;frame(dt);if(st.visible&&!document.hidden)raf=requestAnimationFrame(loop)}
+function wake(){if(!raf&&st.visible&&!document.hidden){last=performance.now();raf=requestAnimationFrame(loop)}}
+if('IntersectionObserver' in window){new IntersectionObserver(function(en){st.visible=en[en.length-1].isIntersecting;wake()},{rootMargin:'120px 0px'}).observe(stage)}
+document.addEventListener('visibilitychange',wake);
+if('ResizeObserver' in window)new ResizeObserver(function(){if(!raf)frame(0)}).observe(stage);
+
+setMode('anat',true);select(null);syncLayers();
+loadMsg.hidden=true;frame(0);wake();
+window.__malli3d={start:start,frame:frame,state:st,setMode:setMode,select:select,goCam:goCam,parts:parts};
+}
+})();
+</script>
+<!-- M3:LOPPU -->
 <!-- ================= YLIPRONAATIO ================= -->
 <section id="pronaatio"><div class="wrap">
   <div class="head">
