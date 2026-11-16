@@ -326,6 +326,9 @@ ol.flow{margin:0;padding:0}
 .dx dl{margin:0;display:grid;gap:8px;font-size:14.5px}
 .dx dt{font:500 11.5px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .dx dd{margin:0}
+.src{font-size:13.5px;color:var(--muted)}
+.src summary{cursor:pointer;font:500 13px var(--body);color:var(--court);padding:4px 0}
+.src ol{margin:10px 0 0;padding-left:1.4em;display:grid;gap:5px}
 footer{margin-top:56px;border-top:1px solid var(--line)}
 footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display:grid;gap:8px}
 </style>
@@ -349,7 +352,7 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
 </header>
 
 <nav aria-label="Sivun osiot"><div class="wrap">
-  <a href="#kartta">Säärikartta</a><a href="#erottelu">Erottelu</a><a href="#halytys">Hälytysmerkit</a><a href="#mekanismi">Mekanismi</a><a href="#lentopallo">Lentopallo</a><a href="#hoito">Hoito</a><a href="#paluu">Paluu kentälle</a><a href="#muut">Muut syyt</a>
+  <a href="#kartta">Säärikartta</a><a href="#erottelu">Erottelu</a><a href="#halytys">Hälytysmerkit</a><a href="#mekanismi">Mekanismi</a><a href="#pronaatio">Ylipronaatio</a><a href="#lentopallo">Lentopallo</a><a href="#hoito">Hoito</a><a href="#paluu">Paluu kentälle</a><a href="#muut">Muut syyt</a>
 </div></nav>
 
 <main>
@@ -585,7 +588,7 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
     </div>
     <div class="plate">
       <h3>Luukalvon vetorasitus</h3>
-      <p>Syvät koukistajat (tibialis posterior, soleus ja varpaiden pitkä koukistaja) sekä säären peitinkalvo kiinnittyvät sääriluun taka- ja sisäpintaan. Toistuva voimakas lihastyö vetää runsashermoista luukalvoa ja ärsyttää sitä.</p>
+      <p>Soleus, varpaiden pitkä koukistaja ja ennen kaikkea syvä säärifaskia kiinnittyvät sääriluun taka-sisäreunaan. Toistuva voimakas lihastyö vetää runsashermoista luukalvoa ja ärsyttää sitä. Takimmainen säärilihas ei ruumiinavaustutkimusten mukaan kiinnity oireiselle alueelle.</p>
       <p style="color:var(--ink);font-size:15px">Ultraäänitutkimuksissa oireisten ja terveiden välillä ei aina näy eroa luukalvon turvotuksessa. Siksi vetorasitusta pidetään nykyään luun taipumiskuormaa täydentävänä tekijänä, ei pääselityksenä.</p>
       <h3 style="margin-top:6px">Lihasaition tilanahtaus</h3>
       <p>Kuormituksessa lihas turpoaa. Jos peitinkalvo ei jousta, aition paine nousee, hiussuonet painuvat kasaan ja hapenpuute sekä hermojen puristus aiheuttavat kivun.</p>
@@ -617,13 +620,153 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
       <h3>Sisäiset ja biomekaaniset tekijät</h3>
       <ul class="tight">
         <li><b>Aiempi MTSS</b> on vahvin yksittäinen uusiutumisen ennustaja.</li>
-        <li><b>Dynaaminen ylipronaatio ja veneluun laskeuma</b> ennustavat riskiä luotettavammin kuin seisten mitattu jalkaholvi. Sisäänkiertyminen nostaa soleuksen huippuaktiivisuutta ponnistuksessa.</li>
+        <li><b>Ylipronaatio</b> on todellinen mutta heikko riskitekijä. Liikkeessä mitattu pronaatio erottelee paremmin kuin seisten mitattu jalkaholvi, mutta näyttö on ohut. <a href="#pronaatio">Katso Ylipronaatio.</a></li>
         <li><b>Heikot tai nopeasti väsyvät pohkeet</b> eivät vaimenna alastulon iskuja riittävästi.</li>
         <li><b>Kineettinen ketju:</b> kireä akillesjänne, kireä reiden ulkosyrjän kalvojänne, lantion ja keskivartalon heikko hallinta, poikkeava lonkan ulkokierto.</li>
         <li><b>Korkeampi painoindeksi</b> lisää riskiä ja pidentää toipumista.</li>
         <li><b>Vähäinen harjoituskokemus</b> ja <b>naissukupuoli</b> (sotilasaineistoissa 2–10-kertainen riski).</li>
       </ul>
     </div>
+  </div>
+</div></section>
+
+<!-- ================= YLIPRONAATIO ================= -->
+<section id="pronaatio"><div class="wrap">
+  <div class="head">
+    <p class="kick">Ylipronaatio</p>
+    <h2>Todellinen mutta heikko riskitekijä</h2>
+    <p class="lede">Jalkaterän liiallista sisäänkiertymistä pidetään usein penikkataudin pääsyynä. Tutkimusnäyttö on laihempi: yhteys on olemassa, mutta se on pieni, ja pronaation korjaamisen ei ole osoitettu parantavan tai ehkäisevän penikkatautia lentopalloilijalla.</p>
+  </div>
+
+  <div class="cols">
+    <figure class="plate">
+      <h3>Ryhmien ero on pienempi kuin mittausvirhe</h3>
+      <p>Ylipronaatiota mitataan tavallisimmin veneluun laskeumalla: kuinka monta millimetriä jalkaholvi painuu, kun jalalle varataan paino.</p>
+      <div class="chart" style="--max:12">
+        <div class="row"><span>Ero: sairastuneet vs. terveet</span><div class="track"><div class="vline" style="--v:10"></div><div class="rb zn" style="--a:.54;--b:1.84"><span>1,19 (0,54–1,84)</span></div></div></div>
+        <div class="row"><span>Testin mittausvirhe</span><div class="track"><div class="vline" style="--v:10"></div><div class="rb mute" style="--a:1.9;--b:2.7"><span>1,9–2,7</span></div></div></div>
+        <div class="row"><span>Sairastuneiden keskiarvot</span><div class="track"><div class="vline" style="--v:10"></div><div class="rb" style="--a:6;--b:7.7"><span>6,0–7,7</span></div></div></div>
+        <div class="row"><span>Terveiden keskiarvot</span><div class="track"><div class="vline" style="--v:10"></div><div class="rb iqr" style="--a:3.6;--b:5.4"><span>3,6–5,4</span></div></div></div>
+        <div class="row axis"><span class="cap">mm</span><div class="track"><i style="--v:0">0</i><i style="--v:2">2</i><i style="--v:4">4</i><i style="--v:6">6</i><i style="--v:8">8</i><i style="--v:10">10</i><i style="--v:12">12</i></div></div>
+      </div>
+      <div class="lgd"><span style="display:inline-flex;align-items:center;gap:6px"><span style="border-left:1.5px dashed var(--ink);height:12px;opacity:.6"></span>10 mm: yleisesti käytetty ylipronaation raja</span></div>
+      <figcaption>Sairastuneidenkin keskiarvo jää selvästi alle 10 mm:n rajan. Koska yhden mittauksen virhe on suurempi kuin ryhmien ero, yksittäistä pelaajaa ei voi mittauksella sijoittaa riskiryhmään. Seisten mitattu painuma ei myöskään kerro, mitä jalka tekee liikkeessä (korrelaatio r &lt; 0,13).</figcaption>
+    </figure>
+    <figure class="plate">
+      <h3>Mitä parempi tutkimusasetelma, sitä pienempi vaikutus</h3>
+      <p>Kolme meta-analyysiä veneluun laskeuman ja penikkataudin yhteydestä.</p>
+      <div class="chart" style="--max:.8">
+        <div class="row"><span>Kaikki asetelmat<small>Reinking 2017</small></span><div class="track"><div class="rb mute" style="--a:.21;--b:.67;top:8px;bottom:8px"><span>0,44</span></div><div class="pt" style="--v:.44"></div></div></div>
+        <div class="row"><span>Juoksijat<small>Newman 2013</small></span><div class="track"><div class="rb mute" style="--a:.02;--b:.50;top:8px;bottom:8px"><span>0,26</span></div><div class="pt" style="--v:.26"></div></div></div>
+        <div class="row"><span>Vain seurantatutkimukset<small>Neal 2014</small></span><div class="track"><div class="rb mute" style="--a:.01;--b:.36;top:8px;bottom:8px"><span>0,19</span></div><div class="pt" style="--v:.19"></div></div></div>
+        <div class="row axis"><span class="cap">vakioitu ero (SMD)</span><div class="track"><i style="--v:0">0</i><i style="--v:.2">0,2</i><i style="--v:.4">0,4</i><i style="--v:.6">0,6</i><i style="--v:.8">0,8</i></div></div>
+      </div>
+      <figcaption>Palkki on 95 %:n luottamusväli. Nyrkkisääntönä 0,2 on pieni ja 0,5 keskisuuri vaikutus. Seurantatutkimuksissa yli 10 mm:n painuma ei ennustanut sairastumista (RR 1,09; 0,78–1,52), kun taas juoksija-analyysissä riski oli kaksinkertainen (RR 1,99; 1,00–3,96). Ristiriitaa ei saatu selvitettyä. Samat kymmenkunta alkuperäistutkimusta toistuvat kaikissa katsauksissa.</figcaption>
+    </figure>
+  </div>
+
+  <div class="cols">
+    <figure class="plate">
+      <h3>Muut riskitekijät painavat enemmän</h3>
+      <div class="chart" style="--max:24">
+        <div class="row"><span>Aiempi penikkatauti</span><div class="track"><div class="vline" style="--v:1"></div><div class="rb zn" style="--a:3.74;--b:18"><span>3,7–18</span></div></div></div>
+        <div class="row"><span>Naissukupuoli</span><div class="track"><div class="vline" style="--v:1"></div><div class="rb zn" style="--a:1.7;--b:4.4"><span>1,7–4,4</span></div></div></div>
+        <div class="row"><span>Korkea painoindeksi</span><div class="track"><div class="vline" style="--v:1"></div><div class="pt" style="--v:2.29">2,3</div></div></div>
+        <div class="row"><span>Veneluun laskeuma yli 10 mm</span><div class="track"><div class="vline" style="--v:1"></div><div class="rb mute" style="--a:1.09;--b:1.99"><span>1,1–2,0</span></div></div></div>
+        <div class="row axis"><span class="cap">riski- tai vetosuhde</span><div class="track"><i style="--v:1">1</i><i style="--v:5">5</i><i style="--v:10">10</i><i style="--v:15">15</i><i style="--v:20">20</i></div></div>
+      </div>
+      <figcaption>Vaihteluväli eri tutkimusten välillä; katkoviiva 1 tarkoittaa, ettei tekijä vaikuta. Luvut ovat osin riskisuhteita ja osin vetosuhteita, joten ne ovat suuntaa-antavasti vertailtavia. Useimmissa monimuuttujamalleissa pronaatiomittari putoaa pois. Yksi validoitu ennustemalli ylsi 82 %:n herkkyyteen pelkällä sukupuolella, aiemmalla penikkataudilla ja lonkan ulkokierrolla.</figcaption>
+    </figure>
+    <figure class="plate">
+      <h3>Liikkeessä mitattu pronaatio lupaa enemmän</h3>
+      <p>Juoksijoilla ratkaisevaa ei ollut pronaation määrä vaan kesto: kuinka suuren osan tukivaiheesta kantaluu pysyy kallistuneena sisäänpäin.</p>
+      <div class="chart" style="--max:100">
+        <div class="row"><span>Penikkatautiset</span><div class="track"><div class="rb zn" style="--a:0;--b:86"><span>86 %</span></div></div></div>
+        <div class="row"><span>Terveet</span><div class="track"><div class="rb mute" style="--a:0;--b:59"><span>59 %</span></div></div></div>
+      </div>
+      <figcaption>Osuus tukivaiheesta eversiossa (Becker 2017). Seurannassa jokainen prosenttiyksikkö lisää nosti vetosuhdetta 1,38-kertaiseksi, mutta tutkittavia oli vain 24.</figcaption>
+      <ul class="tight">
+        <li>Näyttö on pienistä, toistamattomista tutkimuksista. Tuore pieni tutkimus ei löytänyt mitään kinemaattista eroa.</li>
+        <li>Kaikki aineisto on kävelystä tai juoksusta. Alastuloista ei ole mitattu mitään.</li>
+        <li>Väsymys lisää pronaatiota: jalkaterän pienten lihasten väsyttäminen kasvatti veneluun laskeumaa 10,0 mm:stä 11,8 mm:iin.</li>
+      </ul>
+    </figure>
+  </div>
+
+  <div class="cols">
+    <div class="plate">
+      <h3>Hyppylajeissa ennustavat lonkka ja vartalo</h3>
+      <p>Alastulo ei ole juoksuaskel: kontakti tulee päkiä edellä, ja kuorma otetaan vastaan nilkan ja polven joustolla. Juoksijoiden pronaationäyttöä ei voi siirtää suoraan lentopalloon.</p>
+      <ul class="tight">
+        <li><b>Alastulon iskuvoima ei riippunut jalan asennosta.</b> Kolmessa veneluun laskeuman ryhmässä (alle 5, 5–10, yli 10 mm) huippuvoima ja kuormitusnopeus olivat samat. Polven jousto ratkaisi. Toinen pieni tutkimus sai päinvastaisen tuloksen.</li>
+        <li><b>Säärikipua ennustivat lonkan ja rintakehän kiertoliike sekä lonkan loitontajien heikkous</b> yhden jalan pudotushypyssä. Ei jalkaterän pronaatio. Tutkittavat olivat naisopiskelijoita.</li>
+        <li><b>Ainoa lentopalloilijoita sisältävä seuranta:</b> sadasta nuoresta maastojuoksijasta, lentopalloilijasta ja koripalloilijasta 21 % sai penikkataudin, eikä veneluun laskeuma eronnut (0,95 mm, p ≥ 0,27).</li>
+        <li><b>Mittaamatta:</b> pronaatiota tai jalkapohjan painetta iskulyönnin tai torjunnan alastulossa ei ole tutkittu suhteessa penikkatautiin.</li>
+      </ul>
+    </div>
+    <div class="plate">
+      <h3>Mekanismi on uskottava mutta todistamaton</h3>
+      <ul class="tight">
+        <li><b>Luukuorma:</b> pitkittynyt eversio lisää sääriluun sisäkiertoa ja sitä kautta vääntöä ja taivutusta. Näyttö tulee juoksijoiden rasitusmurtumista, ei penikkataudista. Sääriluun venymää ei ole mitattu yhdessäkään tutkimuksessa pronaatiota muuttamalla.</li>
+        <li><b>Veto:</b> ruumiinavaustutkimusten mukaan takimmainen säärilihas ei kiinnity oireiselle alueelle. Sinne kiinnittyvät soleus, varpaiden pitkä koukistaja ja ennen kaikkea syvä säärifaskia.</li>
+        <li><b>Luu on silti mukana:</b> kipualueen luuntiheys oli penikkatautisilla urheilijoilla 23 % pienempi kuin urheilevilla verrokeilla.</li>
+        <li><b>Myös korkea jalkaholvi</b> liittyy luun rasitusvammoihin, joten riski ei ole yksisuuntainen.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="plate">
+    <h3>Auttaako ylipronaation korjaaminen?</h3>
+    <p>Näytön varmuus keinoittain. Arviot on tehty tätä koostetta varten, eivätkä ne ole virallisia luokituksia.</p>
+    <div class="verd">
+      <div><span class="pill" style="--c:var(--warn)">Varhainen apu</span><span><b>Kaaritukipohjalliset hoidossa.</b> Ainoassa lumekontrolloidussa tutkimuksessa (50 naisjuoksijaa) kipu ja oireet olivat lievemmät viikoilla 6 ja 12, mutta viikolla 18 eroa ei ollut. Uusiutumista ei ole raportoitu missään tutkimuksessa.</span></div>
+      <div><span class="pill" style="--c:var(--warn)">Epävarma</span><span><b>Pronaatiota tukevat pohjalliset ehkäisyssä.</b> Varusmiehillä hyötyä näkyi sokkouttamattomissa tutkimuksissa. Parhaiten tehty sokkoutettu tutkimus (306 alokasta) löysi 34 %:n vähenemän, joka ei ollut tilastollisesti merkitsevä (0,39–1,11).</span></div>
+      <div><span class="pill" style="--c:var(--crit)">Ei tehoa</span><span><b>Iskua vaimentavat tasapohjalliset.</b> Eivät ehkäise penikkatautia yhdistetyissä analyyseissä.</span></div>
+      <div><span class="pill" style="--c:var(--soft)">Ei näyttöä</span><span><b>Pronaatiota hallitsevat kengät.</b> Yksikään kenkätutkimus ei raportoi penikkatautia erikseen. Kengän valinta jalkaholvin mukaan ei vähentänyt vammoja kolmessa sotilastutkimuksessa. Yhdessä juoksijatutkimuksessa liikekontrollikenkä auttoi pronatoivia, toisessa se aiheutti eniten kipua. Sisäpelikengistä ei ole tietoa.</span></div>
+      <div><span class="pill" style="--c:var(--soft)">Hetkellinen</span><span><b>Teippaus.</b> Low-Dye-teippaus nosti veneluuta 5,9 mm heti asettamisen jälkeen, mutta vaikutus ei ollut enää merkitsevä liikunnan jälkeen.</span></div>
+      <div><span class="pill" style="--c:var(--crit)">Asento, ei kipu</span><span><b>Jalkaterän ja säären lihasharjoittelu.</b> 40 juoksijalla jalan asento parani, mutta kipu (P = 0,17) ja oireiden vaikeusaste (P = 0,30) eivät eronneet verrokeista. Tämä on suorin testi siitä, auttaako pronaation korjaaminen.</span></div>
+      <div><span class="pill" style="--c:var(--ok)">Vahvin ehkäisy</span><span><b>Monipuolinen neuromuskulaarinen harjoittelu.</b> Hypyt, alastulot, voima, tasapaino ja keskivartalo. Neljä satunnaistettua tutkimusta, 3 887 henkilöä. Ei kohdistu pronaatioon.</span></div>
+      <div><span class="pill" style="--c:var(--court)">Lupaava</span><span><b>Askelluksen ohjattu harjoittelu.</b> Alokkailla, joilla paine kulki askeleessa sisäsyrjällä, harjoittelu vähensi penikkatautia (HR 0,25). Yksi vaatimattoman laatuinen tutkimus. Alastulotekniikan muuttamista ei ole testattu penikkatautia vastaan missään lajissa.</span></div>
+    </div>
+    <p style="font-size:14.5px;color:var(--ink)">Pohjallinen muuttaa liikettä vain vähän: kantaluun huippueversio pieneni terveillä 2,1° ja sääriluun sisäkierto 1,3°. Kahdessa tutkimuksessa asento ja oireet muuttuivat toisistaan riippumatta, joten hyöty voi tulla mukavuudesta ja kuorman jakautumisesta eikä pronaation korjaantumisesta. Pohjallisten haittoja, lähinnä rakkoja ja kaaren kipua, ilmoitti 20,3 % käyttäjistä (tasapohjallisilla 12,4 %).</p>
+  </div>
+
+  <div class="plate">
+    <h3>Mitä tämä tarkoittaa lentopalloilijalle</h3>
+    <ul class="tight">
+      <li>Jalkaterän asento on viimeisiä selvitettäviä asioita, ei ensimmäinen. Aiempi penikkatauti, kuormituksen muutokset ja alastulon hallinta kertovat enemmän.</li>
+      <li>Mukava, muotoiltu kaarituki on vähäriskinen lisäkeino, joka voi helpottaa oireita ensimmäisten 6–12 viikon aikana. Nopeampaa lopullista toipumista tai uusiutumisen estoa sen varaan ei voi luvata.</li>
+      <li>Pohjallisen sopivuutta matalaan sisäpelikenkään ei ole tutkittu. Jos se tuntuu epämukavalta, siitä ei ole syytä pitää kiinni.</li>
+      <li>Ehkäisyssä hyppyjä ja alastuloja sisältävä neuromuskulaarinen harjoittelu sekä lonkan ja keskivartalon hallinta ovat perustellumpi valinta kuin jalan asennon korjaaminen.</li>
+    </ul>
+    <p class="cap">Osion luvut ovat pääosin tutkimusten tiivistelmistä, koska useimpien kokotekstejä ei saatu auki. Lentopallosta tai muista kenttälajeista ei löytynyt yhtään tutkimusta, jossa pronaation korjaamista olisi testattu penikkatautia vastaan.</p>
+    <details class="src"><summary>Keskeiset lähteet</summary>
+      <ol>
+        <li><a href="https://doi.org/10.1177/1941738116673299" target="_blank" rel="noopener">Reinking ym. 2017</a>, Sports Health. Meta-analyysi riskitekijöistä.</li>
+        <li><a href="https://doi.org/10.2147/OAJSM.S39331" target="_blank" rel="noopener">Newman ym. 2013</a>, Open Access J Sports Med. Riskitekijät juoksijoilla.</li>
+        <li><a href="https://doi.org/10.1136/bjsports-2014-093462" target="_blank" rel="noopener">Hamstra-Wright ym. 2015</a>, Br J Sports Med. Veneluun laskeuman keskiero.</li>
+        <li><a href="https://doi.org/10.1186/s13047-014-0055-4" target="_blank" rel="noopener">Neal ym. 2014</a>, J Foot Ankle Res. Vain seurantatutkimukset.</li>
+        <li><a href="https://doi.org/10.2519/jospt.1993.18.4.553" target="_blank" rel="noopener">Picciano ym. 1993</a>, J Orthop Sports Phys Ther. Mittausvirhe.</li>
+        <li><a href="https://doi.org/10.1053/j.jfas.2007.10.015" target="_blank" rel="noopener">Bandholm ym. 2008</a>, J Foot Ankle Surg. Staattinen ja dynaaminen mittaus.</li>
+        <li><a href="https://doi.org/10.1136/bmjsem-2018-000421" target="_blank" rel="noopener">Bliekendaal ym. 2018</a>, BMJ Open Sport Exerc Med. Seurantatutkimus.</li>
+        <li><a href="https://doi.org/10.1016/j.jsams.2017.10.020" target="_blank" rel="noopener">Garnock ym. 2018</a>, J Sci Med Sport. Ennustemalli.</li>
+        <li><a href="https://doi.org/10.1177/0363546517708193" target="_blank" rel="noopener">Becker ym. 2017</a>, Am J Sports Med, ja <a href="https://doi.org/10.1249/MSS.0000000000001674" target="_blank" rel="noopener">Becker ym. 2018</a>, Med Sci Sports Exerc. Eversion kesto.</li>
+        <li><a href="https://doi.org/10.1016/j.jelekin.2006.11.004" target="_blank" rel="noopener">Headlee ym. 2008</a>, J Electromyogr Kinesiol. Väsymys ja veneluun laskeuma.</li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC155506" target="_blank" rel="noopener">Hargrave ym. 2003</a>, J Athl Train. Jalan asento ja alastulovoimat.</li>
+        <li><a href="https://doi.org/10.1136/bjsports-2012-092126" target="_blank" rel="noopener">Verrelst ym. 2014</a>, Br J Sports Med. Lonkan ja vartalon kierto alastulossa.</li>
+        <li><a href="https://scholarcommons.sc.edu/clinat/vol6/iss1/2" target="_blank" rel="noopener">Delgado ym. 2023</a>, Clin Pract Athl Train. Nuoret juoksijat, lentopalloilijat ja koripalloilijat.</li>
+        <li><a href="https://doi.org/10.2106/00004623-199407000-00015" target="_blank" rel="noopener">Beck &amp; Osternig 1994</a>, J Bone Joint Surg Am. Lihasten kiinnityskohdat.</li>
+        <li><a href="https://doi.org/10.1177/03635465010290060701" target="_blank" rel="noopener">Magnusson ym. 2001</a>, Am J Sports Med. Luuntiheys.</li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/33797477/" target="_blank" rel="noopener">Naderi ym. 2022</a>. Kaaritukipohjalliset, lumekontrolloitu tutkimus.</li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11826869/" target="_blank" rel="noopener">Naderi ym. 2025</a>. Lihasharjoittelu, asento ja kipu.</li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/29056595/" target="_blank" rel="noopener">Bonanno ym. 2018</a>, Br J Sports Med. Valmispohjalliset alokkailla.</li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/40633262/" target="_blank" rel="noopener">Marques ym. 2025</a>, Gait Posture. Ehkäisykeinojen meta-analyysi.</li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/25155917/" target="_blank" rel="noopener">Knapik ym. 2014</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/26746907/" target="_blank" rel="noopener">Malisoux ym. 2016</a> ja <a href="https://pubmed.ncbi.nlm.nih.gov/20584759/" target="_blank" rel="noopener">Ryan ym. 2011</a>. Kenkätutkimukset.</li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/16676873/" target="_blank" rel="noopener">Radford ym. 2006</a>. Low-Dye-teippaus.</li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/24500537/" target="_blank" rel="noopener">Sharma ym. 2014</a>, Med Sci Sports Exerc. Askelluksen harjoittelu.</li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/19996330/" target="_blank" rel="noopener">Mills ym. 2010</a>. Pohjallisten vaikutus liikkeeseen.</li>
+      </ol>
+    </details>
   </div>
 </div></section>
 
@@ -761,7 +904,7 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
       <div class="verd">
         <div><span class="pill" style="--c:var(--ok)">Perusta</span><span><b>Progressiivinen kuormituskuntoutus.</b> Uudempi urheilufysioterapian näyttö rakentuu tämän varaan, vaikka vuoden 2013 katsauksessa vahva RCT-näyttö puuttui tutkimusten heikon laadun vuoksi.</span></div>
         <div><span class="pill" style="--c:var(--court)">Lupaava</span><span><b>Paineaaltohoito (ESWT) harjoittelun rinnalla.</b> Sotilaskadeteilla kipu lievittyi 69,6 %:lla, pelkällä harjoittelulla 10,5 %:lla. Hyvä tai erinomainen tyytyväisyys 82,6 % vastaan 36,8 % (p = 0,002).</span></div>
-        <div><span class="pill" style="--c:var(--warn)">Varhainen apu</span><span><b>Jalkaholvia tukevat pohjalliset.</b> 50 naisjuoksijan tutkimuksessa kipu laski nopeammin viikoilla 6 ja 12, mutta viikolla 18 eroa ei enää ollut. Hyöty kohdistuu ylipronatoiviin, eikä tulosta voi suoraan yleistää mieslentopalloilijoihin.</span></div>
+        <div><span class="pill" style="--c:var(--warn)">Varhainen apu</span><span><b>Jalkaholvia tukevat pohjalliset.</b> 50 naisjuoksijan tutkimuksessa kipu laski nopeammin viikoilla 6 ja 12, mutta viikolla 18 eroa ei enää ollut. Sitä, hyötyvätkö ylipronatoivat muita enemmän, ei ole penikkataudissa tutkittu, eikä tulosta voi suoraan yleistää mieslentopalloilijoihin. <a href="#pronaatio">Katso Ylipronaatio.</a></span></div>
         <div><span class="pill" style="--c:var(--crit)">Ei tehoa</span><span><b>Matalateholaser, kompressiosukat, säärituet ja magneettikenttähoito.</b> Wintersin katsaus (11 tutkimusta): ei osoitettua tehoa. Säärituet SMD −0,06, p = 0,76.</span></div>
         <div><span class="pill" style="--c:var(--soft)">Harkiten</span><span><b>Kylmähoito.</b> Voi helpottaa oloa akuutisti, mutta pitkäaikaisen kylmän ei ole osoitettu nopeuttavan paranemista ja se saattaa hidastaa sitä.</span></div>
       </div>
@@ -876,7 +1019,7 @@ footer .wrap{padding-block:26px 40px;font-size:13.5px;color:var(--muted);display
 <footer><div class="wrap">
   <p><b>Tekoälyllä tuotettu.</b> Tämän sivun tiedot on haettu, sisältö luotu ja sivusto kehitetty tekoälyllä. Tiedoissa voi olla virheitä tai puutteita, joten tarkista tärkeät asiat alkuperäisistä lähteistä.</p>
   <p><b>Tämä sivu on tarkoitettu vain tiedoksi.</b> Käänny lääketieteellisen neuvon tai diagnoosin saamiseksi ammattilaisen puoleen.</p>
-  <p>Anatomiset kuvat ovat kaaviomaisia. Luvut perustuvat sivun pohjana olleeseen tutkimuskoosteeseen; kaavakuviksi merkityt kuvat havainnollistavat periaatetta eivätkä esitä mittaustuloksia.</p>
+  <p>Anatomiset kuvat ovat kaaviomaisia. Luvut perustuvat sivun pohjana olleeseen tutkimuskoosteeseen ja Ylipronaatio-osiossa erilliseen kirjallisuushakuun, jonka luvut ovat pääosin tutkimusten tiivistelmistä; kaavakuviksi merkityt kuvat havainnollistavat periaatetta eivätkä esitä mittaustuloksia.</p>
 </div></footer>
 
 <script>
@@ -888,7 +1031,7 @@ var C={
   ["Rasituksessa","Alkuvaiheessa tuntuu treenin alussa ja voi lieventyä lämmetessä. Edetessään alkaa yhä aiemmin ja jatkuu koko suorituksen."],
   ["Jälkeenpäin","Palaa voimakkaampana rasituksen päätyttyä tai seuraavana päivänä. Vaikeutuessaan jää leposäryksi."],
   ["Vihje","Yhden jalan hyppytesti onnistuu yleensä vähintään 10 kertaa. Turvotusta on harvoin."]],
-  xs:"Merkitty sääriluun taka-sisäreuna. Syvän taka-aition lihakset, soleus ja säären peitinkalvo kiinnittyvät siihen.",hot:[],warm:[]},
+  xs:"Merkitty sääriluun taka-sisäreuna. Siihen kiinnittyvät soleus, varpaiden pitkä koukistaja (FDL) ja syvä säärifaskia.",hot:[],warm:[]},
  cecs:{tag:"Paine, ei pistävä kipu",name:"Krooninen rasitusperäinen lihasaitio-oireyhtymä (CECS)",kv:[
   ["Missä","Säären etu-ulkosivulla sääriluun ja pohjeluun välisessä lihasryhmässä tai syvässä taka-aitiossa. Useimmiten molemmissa säärissä."],
   ["Miltä tuntuu","Painetta, kiristystä, puristusta, lihaksen kovettumista tai polttelua, ikään kuin iho olisi ratkeamaisillaan."],
@@ -928,7 +1071,7 @@ var C={
 var P={
  ant:{n:"Etuaitio",kv:[["Lihakset","Tibialis anterior, varpaiden ja isovarpaan pitkät ojentajat"],["Hermo ja suoni","Syvä pohjehermo, etummainen säärivaltimo"],["Merkitys","CECS:n tyypillisin paikka yhdessä ulkoaition kanssa. Lihakset nostavat jalkaterää ja jarruttavat sen laskua alastulossa."]]},
  lat:{n:"Ulkoaitio",kv:[["Lihakset","Pitkä ja lyhyt pohjeluulihas"],["Hermo","Pinnallinen pohjehermo"],["Merkitys","Hermo läpäisee peitinkalvon 10–13 cm nilkan yläpuolella, missä se voi jäädä pinteeseen."]]},
- deep:{n:"Syvä taka-aitio",kv:[["Lihakset","Tibialis posterior, varpaiden ja isovarpaan pitkät koukistajat"],["Hermo ja suonet","Säärihermo, takimmainen säärivaltimo ja pohjeluuvaltimo"],["Merkitys","Lihakset kiinnittyvät sääriluun taka- ja sisäpintaan. Niiden veto luukalvoon on MTSS:n vetorasitusteorian ydin. Myös CECS:n toinen tyyppipaikka."]]},
+ deep:{n:"Syvä taka-aitio",kv:[["Lihakset","Tibialis posterior, varpaiden ja isovarpaan pitkät koukistajat"],["Hermo ja suonet","Säärihermo, takimmainen säärivaltimo ja pohjeluuvaltimo"],["Merkitys","Varpaiden pitkä koukistaja ja syvä säärifaskia kiinnittyvät sääriluun taka-sisäreunaan, mihin MTSS:n vetorasitusteoria nojaa. Tibialis posterior ei kiinnity oireiselle alueelle. Myös CECS:n toinen tyyppipaikka."]]},
  sup:{n:"Pinnallinen taka-aitio",kv:[["Lihakset","Kaksoiskantalihas (gastrocnemius) ja leveä kantalihas (soleus)"],["Hermo","Säärihermon haarat, pinnalla pohjehermo (n. suralis)"],["Merkitys","Pohkeet vaimentavat alastulon iskut. Kun ne väsyvät, kuorma siirtyy sääriluuhun. Soleus kiinnittyy myös sääriluun sisäreunaan."]]}
 };
 function $(id){return document.getElementById(id)}
